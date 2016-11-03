@@ -1,0 +1,65 @@
+AM_CPPFLAGS = \
+	-I$(top_srcdir)/include \
+	-I$(top_srcdir)/common \
+	@LIBCSTRING_CPPFLAGS@ \
+	@LIBCERROR_CPPFLAGS@ \
+	@LIBFPLIST_DLL_IMPORT@
+
+TESTS = \
+	test_api_functions.sh \
+	test_api_types.sh
+
+check_SCRIPTS = \
+	test_api_functions.sh \
+	test_api_types.sh \
+	test_runner.sh
+
+EXTRA_DIST = \
+	$(check_SCRIPTS)
+
+check_PROGRAMS = \
+	fplist_test_error \
+	fplist_test_key \
+	fplist_test_support
+
+fplist_test_error_SOURCES = \
+	fplist_test_error.c \
+	fplist_test_libcstring.h \
+	fplist_test_libfplist.h \
+	fplist_test_macros.h \
+	fplist_test_unused.h
+
+fplist_test_error_LDADD = \
+	../libfplist/libfplist.la \
+	@LIBCSTRING_LIBADD@
+
+fplist_test_key_SOURCES = \
+	fplist_test_key.c \
+	fplist_test_libcstring.h \
+	fplist_test_libfplist.h \
+	fplist_test_macros.h \
+	fplist_test_memory.c fplist_test_memory.h \
+	fplist_test_unused.h
+
+fplist_test_key_LDADD = \
+	../libfplist/libfplist.la \
+	@LIBCERROR_LIBADD@ \
+	@LIBCSTRING_LIBADD@
+
+fplist_test_support_SOURCES = \
+	fplist_test_libcstring.h \
+	fplist_test_libfplist.h \
+	fplist_test_macros.h \
+	fplist_test_support.c \
+	fplist_test_unused.h
+
+fplist_test_support_LDADD = \
+	../libfplist/libfplist.la \
+	@LIBCSTRING_LIBADD@
+
+MAINTAINERCLEANFILES = \
+	Makefile.in
+
+distclean: clean
+	/bin/rm -f Makefile
+

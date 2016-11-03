@@ -1,0 +1,29 @@
+Source: libfplist
+Section: libs
+Priority: extra
+Maintainer: Joachim Metz <joachim.metz@gmail.com>
+Build-Depends: debhelper (>= 7), autotools-dev
+Standards-Version: 3.9.5
+Homepage: https://github.com/libyal/libfplist/
+
+Package: libfplist
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: libfplist-dbg
+Description: Library to support the plist formats
+ libfplist is a library to support the plist formats.
+
+Package: libfplist-dbg
+Architecture: any
+Section: debug
+Depends: libfplist (= ${binary:Version}), ${misc:Depends}
+Description: Debugging symbols for libfplist
+ Debugging symbols for libfplist.
+
+Package: libfplist-dev
+Section: libdevel
+Architecture: any
+Depends: libfplist (= ${binary:Version}), ${misc:Depends}
+Description: Header files and libraries for developing applications for libfplist
+ Header files and libraries for developing applications for libfplist.
+

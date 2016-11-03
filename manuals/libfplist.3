@@ -1,0 +1,54 @@
+.Dd November  3, 2016
+.Dt libfplist 3
+.Os libfplist
+.Sh NAME
+.Nm libfplist.h
+.Nd Library to support the plist formats
+.Sh LIBRARY
+.Lb libfplist
+.Sh SYNOPSIS
+.In libfplist.h
+.Pp
+Support functions
+.Ft const char *
+.Fn libfplist_get_version "void"
+.Pp
+Error functions
+.Ft void
+.Fn libfplist_error_free "libfplist_error_t **error"
+.Ft int
+.Fn libfplist_error_fprint "libfplist_error_t *error, FILE *stream"
+.Ft int
+.Fn libfplist_error_sprint "libfplist_error_t *error, char *string, size_t size"
+.Ft int
+.Fn libfplist_error_backtrace_fprint "libfplist_error_t *error, FILE *stream"
+.Ft int
+.Fn libfplist_error_backtrace_sprint "libfplist_error_t *error, char *string, size_t size"
+.Pp
+Key functions
+.Ft int
+.Fn libfplist_key_initialize "libfplist_key_t **key, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_key_free "libfplist_key_t **key, libfplist_error_t **error"
+.Sh DESCRIPTION
+The
+.Fn libfplist_get_version
+function is used to retrieve the library version.
+.Sh RETURN VALUES
+Most of the functions return NULL or \-1 on error, dependent on the return type.
+For the actual return values see "libfplist.h".
+.Sh ENVIRONMENT
+None
+.Sh FILES
+None
+.Sh BUGS
+Please report bugs of any kind on the project issue tracker: https://github.com/libyal/libfplist/issues
+.Sh AUTHOR
+These man pages are generated from "libfplist.h".
+.Sh COPYRIGHT
+Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>.
+
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+.Sh SEE ALSO
+the libfplist.h include file
