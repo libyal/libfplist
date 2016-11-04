@@ -3,7 +3,7 @@
 # Version: 20160912
 
 $GitUrlPrefix = "https://github.com/libyal"
-$LocalLibs = "libcerror libcstring" -split " "
+$LocalLibs = "libcdata libcerror libcnotify libcstring libfguid libfvalue libuna" -split " "
 
 foreach (${LocalLib} in ${LocalLibs})
 {

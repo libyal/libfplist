@@ -1,5 +1,5 @@
 /*
- * Definitions for libfplist
+ * The internal libcdata header
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,16 +19,36 @@
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBFPLIST_DEFINITIONS_H )
-#define _LIBFPLIST_DEFINITIONS_H
+#if !defined( _LIBFPLIST_LIBCDATA_H )
+#define _LIBFPLIST_LIBCDATA_H
 
-#include <libfplist/types.h>
+#include <common.h>
 
-#define LIBFPLIST_VERSION			20161104
-
-/* The version string
+/* Define HAVE_LOCAL_LIBCDATA for local use of libcdata
  */
-#define LIBFPLIST_VERSION_STRING		"20161104"
+#if defined( HAVE_LOCAL_LIBCDATA )
 
-#endif /* !defined( _LIBFPLIST_DEFINITIONS_H ) */
+#include <libcdata_array.h>
+#include <libcdata_btree.h>
+#include <libcdata_definitions.h>
+#include <libcdata_list.h>
+#include <libcdata_list_element.h>
+#include <libcdata_range_list.h>
+#include <libcdata_tree_node.h>
+#include <libcdata_types.h>
+
+#else
+
+/* If libtool DLL support is enabled set LIBCDATA_DLL_IMPORT
+ * before including libcdata.h
+ */
+#if defined( _WIN32 ) && defined( DLL_IMPORT )
+#define LIBCDATA_DLL_IMPORT
+#endif
+
+#include <libcdata.h>
+
+#endif /* defined( HAVE_LOCAL_LIBCDATA ) */
+
+#endif /* !defined( _LIBFPLIST_LIBCDATA_H ) */
 

@@ -2,7 +2,7 @@ AC_PREREQ( 2.59 )
 
 AC_INIT(
  [libfplist],
- [20161103],
+ [20161104],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
@@ -57,6 +57,24 @@ AX_LIBCSTRING_CHECK_ENABLE
 dnl Check for enabling libcerror for cross-platform C error functions
 AX_LIBCERROR_CHECK_ENABLE
 
+dnl Check for enabling libcdata for cross-platform C generic data functions
+AX_LIBCDATA_CHECK_ENABLE
+
+dnl Check for enabling libcnotify for cross-platform C notification functions
+AX_LIBCNOTIFY_CHECK_ENABLE
+
+dnl Check for enabling libuna for Unicode string support
+AX_LIBUNA_CHECK_ENABLE
+
+dnl Check for enabling libfguid for GUID/UUID format support
+AX_LIBFGUID_CHECK_ENABLE
+
+dnl Check for enabling libfvalue for file value support
+AX_LIBFVALUE_CHECK_ENABLE
+
+dnl Check for library function support
+AX_LIBFPLIST_CHECK_LOCAL
+
 dnl Headers included in various places
 AC_CHECK_HEADERS([stdarg.h varargs.h])
 
@@ -96,7 +114,7 @@ CFLAGS="$CFLAGS -Wall";
 
 dnl Check if requires and build requires should be set in spec file
 AS_IF(
- [test "x$ac_cv_libcstring" = xyes || test "x$ac_cv_libcerror" = xyes],
+ [test "x$ac_cv_libcstring" = xyes || test "x$ac_cv_libcerror" = xyes || test "x$ac_cv_libcdata" = xyes || test "x$ac_cv_libcnotify" = xyes || test "x$ac_cv_libuna" = xyes || test "x$ac_cv_libfguid" = xyes || test "x$ac_cv_libfvalue" = xyes],
  [AC_SUBST(
   [libfplist_spec_requires],
   [Requires:])
@@ -126,6 +144,11 @@ AC_CONFIG_FILES([include/Makefile])
 AC_CONFIG_FILES([common/Makefile])
 AC_CONFIG_FILES([libcstring/Makefile])
 AC_CONFIG_FILES([libcerror/Makefile])
+AC_CONFIG_FILES([libcdata/Makefile])
+AC_CONFIG_FILES([libcnotify/Makefile])
+AC_CONFIG_FILES([libuna/Makefile])
+AC_CONFIG_FILES([libfguid/Makefile])
+AC_CONFIG_FILES([libfvalue/Makefile])
 AC_CONFIG_FILES([libfplist/Makefile])
 AC_CONFIG_FILES([po/Makefile.in])
 AC_CONFIG_FILES([po/Makevars])
@@ -155,5 +178,10 @@ AC_MSG_NOTICE([
 Building:
    libcstring support: $ac_cv_libcstring
    libcerror support:  $ac_cv_libcerror
+   libcdata support:   $ac_cv_libcdata
+   libcnotify support: $ac_cv_libcnotify
+   libuna support:     $ac_cv_libuna
+   libfguid support:   $ac_cv_libfguid
+   libfvalue support:  $ac_cv_libfvalue
 ]);
 

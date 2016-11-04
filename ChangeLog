@@ -1,5 +1,10 @@
 TODO
+* Complete stand-alone library
+* Add binary plist support
+
+20161104
+* Worked on stand-alone version of library
 
 20161103
-* Created stand-alone version of version used in libfvde
+* Initial version based of libfvde
 

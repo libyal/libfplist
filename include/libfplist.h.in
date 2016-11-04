@@ -91,19 +91,50 @@ int libfplist_error_backtrace_sprint(
      size_t size );
 
 /* -------------------------------------------------------------------------
- * Key functions
+ * Plist functions
  * ------------------------------------------------------------------------- */
 
-/* Creates a key
- * Make sure the value key is referencing, is set to NULL
+/* Creates a plist
+ * Make sure the value plist is referencing, is set to NULL
  * Returns 1 if successful or -1 on error
  */
 LIBFPLIST_EXTERN \
-int libfplist_key_initialize(
+int libfplist_plist_initialize(
+     libfplist_plist_t **plist,
+     libfplist_error_t **error );
+
+/* Frees a plist
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_plist_free(
+     libfplist_plist_t **plist,
+     libfplist_error_t **error );
+
+/* Copies the plist from the byte stream
+ * Returns 1 if successful, 0 if not a valid plist or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_plist_copy_from_byte_stream(
+     libfplist_plist_t *plist,
+     const uint8_t *byte_stream,
+     size_t byte_stream_size,
+     libfplist_error_t **error );
+
+/* Retrieves the root key
+ * Returns 1 if successful, 0 if not available or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_plist_get_root_key(
+     libfplist_plist_t *plist,
      libfplist_key_t **key,
      libfplist_error_t **error );
 
-/* Frees an key
+/* -------------------------------------------------------------------------
+ * Key functions
+ * ------------------------------------------------------------------------- */
+
+/* Frees a key
  * Returns 1 if successful or -1 on error
  */
 LIBFPLIST_EXTERN \

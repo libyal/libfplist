@@ -1,5 +1,5 @@
 /*
- * Definitions for libfplist
+ * The libfvalue header wrapper
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,16 +19,38 @@
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBFPLIST_DEFINITIONS_H )
-#define _LIBFPLIST_DEFINITIONS_H
+#if !defined( _LIBFPLIST_LIBFVALUE_H )
+#define _LIBFPLIST_LIBFVALUE_H
 
-#include <libfplist/types.h>
+#include <common.h>
 
-#define LIBFPLIST_VERSION			20161104
-
-/* The version string
+/* Define HAVE_LOCAL_LIBFVALUE for local use of libfvalue
  */
-#define LIBFPLIST_VERSION_STRING		"20161104"
+#if defined( HAVE_LOCAL_LIBFVALUE )
 
-#endif /* !defined( _LIBFPLIST_DEFINITIONS_H ) */
+#include <libfvalue_codepage.h>
+#include <libfvalue_definitions.h>
+#include <libfvalue_floating_point.h>
+#include <libfvalue_integer.h>
+#include <libfvalue_split_string.h>
+#include <libfvalue_string.h>
+#include <libfvalue_table.h>
+#include <libfvalue_types.h>
+#include <libfvalue_value.h>
+#include <libfvalue_value_type.h>
+
+#else
+
+/* If libtool DLL support is enabled set LIBFVALUE_DLL_IMPORT
+ * before including libfvalue.h
+ */
+#if defined( _WIN32 ) && defined( DLL_IMPORT )
+#define LIBFVALUE_DLL_IMPORT
+#endif
+
+#include <libfvalue.h>
+
+#endif
+
+#endif
 

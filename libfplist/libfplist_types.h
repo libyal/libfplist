@@ -35,9 +35,11 @@
  */
 #if defined( HAVE_DEBUG_OUTPUT ) && !defined( WINAPI )
 typedef struct libfplist_key {}	libfplist_key_t;
+typedef struct libfplist_plist {}	libfplist_plist_t;
 
 #else
 typedef intptr_t libfplist_key_t;
+typedef intptr_t libfplist_plist_t;
 
 #endif /* defined( HAVE_DEBUG_OUTPUT ) && !defined( WINAPI ) */
 

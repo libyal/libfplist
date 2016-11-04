@@ -120,11 +120,21 @@ stamp-h[1-9]
 /include/libfplist/types.h
 /libfplist/libfplist.rc
 /libfplist/libfplist_definitions.h
+/libfplist/libfplist_xml_parser.c
+/libfplist/libfplist_xml_parser.h
+/libfplist/libfplist_xml_parser.output
+/libfplist/libfplist_xml_scanner.c
 /tests/fplist_test_error
 /tests/fplist_test_key
+/tests/fplist_test_plist
 /tests/fplist_test_support
 /tests/tmp*
 
 # Local library dependencies specific files
+/libcdata
 /libcerror
+/libcnotify
 /libcstring
+/libfguid
+/libfvalue
+/libuna

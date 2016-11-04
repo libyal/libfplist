@@ -1,5 +1,5 @@
 /*
- * Definitions for libfplist
+ * The internal libcnotify header
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,16 +19,32 @@
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBFPLIST_DEFINITIONS_H )
-#define _LIBFPLIST_DEFINITIONS_H
+#if !defined( _LIBFPLIST_LIBCNOTIFY_H )
+#define _LIBFPLIST_LIBCNOTIFY_H
 
-#include <libfplist/types.h>
+#include <common.h>
 
-#define LIBFPLIST_VERSION			20161104
-
-/* The version string
+/* Define HAVE_LOCAL_LIBCNOTIFY for local use of libcnotify
  */
-#define LIBFPLIST_VERSION_STRING		"20161104"
+#if defined( HAVE_LOCAL_LIBCNOTIFY )
 
-#endif /* !defined( _LIBFPLIST_DEFINITIONS_H ) */
+#include <libcnotify_definitions.h>
+#include <libcnotify_print.h>
+#include <libcnotify_stream.h>
+#include <libcnotify_verbose.h>
+
+#else
+
+/* If libtool DLL support is enabled set LIBCNOTIFY_DLL_IMPORT
+ * before including libcnotify.h
+ */
+#if defined( _WIN32 ) && defined( DLL_IMPORT )
+#define LIBCNOTIFY_DLL_IMPORT
+#endif
+
+#include <libcnotify.h>
+
+#endif /* defined( HAVE_LOCAL_LIBCNOTIFY ) */
+
+#endif /* !defined( _LIBFPLIST_LIBCNOTIFY_H ) */
 

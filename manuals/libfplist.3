@@ -1,4 +1,4 @@
-.Dd November  3, 2016
+.Dd November  4, 2016
 .Dt libfplist 3
 .Os libfplist
 .Sh NAME
@@ -25,9 +25,17 @@ Error functions
 .Ft int
 .Fn libfplist_error_backtrace_sprint "libfplist_error_t *error, char *string, size_t size"
 .Pp
-Key functions
+Plist functions
 .Ft int
-.Fn libfplist_key_initialize "libfplist_key_t **key, libfplist_error_t **error"
+.Fn libfplist_plist_initialize "libfplist_plist_t **plist, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_plist_free "libfplist_plist_t **plist, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_plist_copy_from_byte_stream "libfplist_plist_t *plist, const uint8_t *byte_stream, size_t byte_stream_size, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_plist_get_root_key "libfplist_plist_t *plist, libfplist_key_t **key, libfplist_error_t **error"
+.Pp
+Key functions
 .Ft int
 .Fn libfplist_key_free "libfplist_key_t **key, libfplist_error_t **error"
 .Sh DESCRIPTION

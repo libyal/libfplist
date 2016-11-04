@@ -36,11 +36,11 @@
 #else
 #include <byte_stream.h>
 
-#define LIBFPLIST_VERSION				20161103
+#define LIBFPLIST_VERSION				20161104
 
 /* The version string
  */
-#define LIBFPLIST_VERSION_STRING			"20161103"
+#define LIBFPLIST_VERSION_STRING			"20161104"
 
 #endif /* !defined( HAVE_LOCAL_LIBFPLIST ) */
 

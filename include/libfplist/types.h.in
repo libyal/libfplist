@@ -202,6 +202,7 @@ typedef int64_t off64_t;
 /* The following type definitions hide internal data structures
  */
 typedef intptr_t libfplist_key_t;
+typedef intptr_t libfplist_plist_t;
 
 #ifdef __cplusplus
 }

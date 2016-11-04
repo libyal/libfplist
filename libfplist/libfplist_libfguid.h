@@ -1,5 +1,5 @@
 /*
- * Definitions for libfplist
+ * The libfguid header wrapper
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,16 +19,31 @@
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBFPLIST_DEFINITIONS_H )
-#define _LIBFPLIST_DEFINITIONS_H
+#if !defined( _LIBFPLIST_LIBFGUID_H )
+#define _LIBFPLIST_LIBFGUID_H
 
-#include <libfplist/types.h>
+#include <common.h>
 
-#define LIBFPLIST_VERSION			20161104
-
-/* The version string
+/* Define HAVE_LOCAL_LIBFGUID for local use of libfguid
  */
-#define LIBFPLIST_VERSION_STRING		"20161104"
+#if defined( HAVE_LOCAL_LIBFGUID )
 
-#endif /* !defined( _LIBFPLIST_DEFINITIONS_H ) */
+#include <libfguid_definitions.h>
+#include <libfguid_identifier.h>
+#include <libfguid_types.h>
+
+#else
+
+/* If libtool DLL support is enabled set LIBFGUID_DLL_IMPORT
+ * before including libfguid.h
+ */
+#if defined( _WIN32 ) && defined( DLL_IMPORT )
+#define LIBFGUID_DLL_IMPORT
+#endif
+
+#include <libfguid.h>
+
+#endif /* defined( HAVE_LOCAL_LIBFGUID ) */
+
+#endif /* !defined( _LIBFPLIST_LIBFGUID_H ) */
 
