@@ -135,6 +135,7 @@ stamp-h[1-9]
 /libcerror
 /libcnotify
 /libcstring
+/libcthreads
 /libfguid
 /libfvalue
 /libuna

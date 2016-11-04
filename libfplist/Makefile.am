@@ -51,6 +51,8 @@ libfplist_la_LDFLAGS = -no-undefined -version-info 1:0:0
 
 EXTRA_DIST = \
 	libfplist_definitions.h.in \
+	libfplist_xml_parser.c libfplist_xml_parser.h \
+	libfplist_xml_scanner.c \
 	libfplist.rc \
 	libfplist.rc.in
 
@@ -60,6 +62,10 @@ MAINTAINERCLEANFILES = \
 distclean: clean
 	/bin/rm -f libfplist_definitions.h
 	/bin/rm -f libfplist.rc
+	/bin/rm -f libfplist_xml_parser.c
+	/bin/rm -f libfplist_xml_parser.h
+	/bin/rm -f libfplist_xml_parser.output
+	/bin/rm -f libfplist_xml_scanner.c
 	/bin/rm -f Makefile
 
 splint:

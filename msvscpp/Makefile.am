@@ -7,6 +7,7 @@ MSVSCPP_FILES = \
 	libcerror/libcerror.vcproj \
 	libcnotify/libcnotify.vcproj \
 	libcstring/libcstring.vcproj \
+	libcthreads/libcthreads.vcproj \
 	libfguid/libfguid.vcproj \
 	libfplist/libfplist.vcproj \
 	libfvalue/libfvalue.vcproj \

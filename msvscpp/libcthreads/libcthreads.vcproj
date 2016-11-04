@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="libfplist"
-	ProjectGUID="{87905E2F-9EFA-457B-8582-D2A90EB75B94}"
-	RootNamespace="libfplist"
+	Name="libcthreads"
+	ProjectGUID="{56235593-6E6D-45D3-B2E2-5DB30A548AA7}"
+	RootNamespace="libcthreads"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -19,7 +19,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -39,8 +39,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\include;..\..\common;..\..\libcstring;..\..\libcerror;..\..\libcdata;..\..\libcnotify;..\..\libuna;..\..\libfguid;..\..\libfvalue"
-				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;HAVE_LOCAL_LIBCDATA;HAVE_LOCAL_LIBCNOTIFY;HAVE_LOCAL_LIBUNA;HAVE_LOCAL_LIBFGUID;HAVE_LOCAL_LIBFVALUE;LIBFPLIST_DLL_EXPORT"
+				AdditionalIncludeDirectories="..\..\include;..\..\common;..\..\libcstring;..\..\libcerror"
+				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;HAVE_LOCAL_LIBCTHREADS"
 				RuntimeLibrary="2"
 				WarningLevel="4"
 				CompileAs="1"
@@ -55,19 +55,13 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
-				RandomizedBaseAddress="2"
-				DataExecutionPrevention="2"
-				TargetMachine="1"
-				ImportLibrary="$(OutDir)\$(ProjectName).lib"
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
+				ModuleDefinitionFile=""
+				IgnoreAllDefaultLibraries="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -79,9 +73,6 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -89,7 +80,7 @@
 			Name="VSDebug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -110,8 +101,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\include;..\..\common;..\..\libcstring;..\..\libcerror;..\..\libcdata;..\..\libcnotify;..\..\libuna;..\..\libfguid;..\..\libfvalue"
-				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;HAVE_LOCAL_LIBCDATA;HAVE_LOCAL_LIBCNOTIFY;HAVE_LOCAL_LIBUNA;HAVE_LOCAL_LIBFGUID;HAVE_LOCAL_LIBFVALUE;LIBFPLIST_DLL_EXPORT"
+				AdditionalIncludeDirectories="..\..\include;..\..\common;..\..\libcstring;..\..\libcerror"
+				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;HAVE_LOCAL_LIBCTHREADS"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="3"
@@ -129,20 +120,13 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
-				GenerateDebugInformation="true"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="1"
-				TargetMachine="1"
-				ImportLibrary="$(OutDir)\$(ProjectName).lib"
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
+				ModuleDefinitionFile=""
+				IgnoreAllDefaultLibraries="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -152,9 +136,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -170,39 +151,47 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\libfplist\libfplist.c"
+				RelativePath="..\..\libcthreads\libcthreads_condition.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_error.c"
+				RelativePath="..\..\libcthreads\libcthreads_error.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_key.c"
+				RelativePath="..\..\libcthreads\libcthreads_lock.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_plist.c"
+				RelativePath="..\..\libcthreads\libcthreads_mutex.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_support.c"
+				RelativePath="..\..\libcthreads\libcthreads_queue.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_xml_attribute.c"
+				RelativePath="..\..\libcthreads\libcthreads_read_write_lock.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_xml_parser.c"
+				RelativePath="..\..\libcthreads\libcthreads_repeating_thread.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_xml_scanner.c"
+				RelativePath="..\..\libcthreads\libcthreads_support.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_xml_tag.c"
+				RelativePath="..\..\libcthreads\libcthreads_thread.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libcthreads\libcthreads_thread_attributes.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libcthreads\libcthreads_thread_pool.c"
 				>
 			</File>
 		</Filter>
@@ -212,75 +201,71 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\libfplist\libfplist_definitions.h"
+				RelativePath="..\..\libcthreads\libcthreads_condition.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_error.h"
+				RelativePath="..\..\libcthreads\libcthreads_definitions.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_extern.h"
+				RelativePath="..\..\libcthreads\libcthreads_error.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_key.h"
+				RelativePath="..\..\libcthreads\libcthreads_extern.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_libcdata.h"
+				RelativePath="..\..\libcthreads\libcthreads_libcerror.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_libcerror.h"
+				RelativePath="..\..\libcthreads\libcthreads_libcstring.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_libcnotify.h"
+				RelativePath="..\..\libcthreads\libcthreads_lock.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_libcstring.h"
+				RelativePath="..\..\libcthreads\libcthreads_mutex.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_libfguid.h"
+				RelativePath="..\..\libcthreads\libcthreads_queue.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_libfvalue.h"
+				RelativePath="..\..\libcthreads\libcthreads_read_write_lock.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_libuna.h"
+				RelativePath="..\..\libcthreads\libcthreads_repeating_thread.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_plist.h"
+				RelativePath="..\..\libcthreads\libcthreads_support.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_support.h"
+				RelativePath="..\..\libcthreads\libcthreads_thread.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_types.h"
+				RelativePath="..\..\libcthreads\libcthreads_thread_attributes.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_unused.h"
+				RelativePath="..\..\libcthreads\libcthreads_thread_pool.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_xml_attribute.h"
+				RelativePath="..\..\libcthreads\libcthreads_types.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_xml_parser.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libfplist\libfplist_xml_tag.h"
+				RelativePath="..\..\libcthreads\libcthreads_unused.h"
 				>
 			</File>
 		</Filter>
@@ -289,10 +274,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath="..\..\libfplist\libfplist.rc"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
