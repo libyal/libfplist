@@ -1,5 +1,5 @@
-= The binary plist format
-Analysis of binary plists
+= The plist formats
+Analysis of plist formats
 
 :toc:
 :toclevels: 4
@@ -7,22 +7,20 @@ Analysis of binary plists
 :numbered!:
 [abstract]
 == Summary
-The binary plist format is used by Apple MacOS-X to store various kinds of
-data, e.g. configuration data. This specification is based on available
+The plist formats are used by Apple Mac OS to store various kinds of
+data, for example configuration data. This specification is based on available
 documentation and was enhanced by analyzing test data.
 
-This document is intended as a working document for the binary plist format
-specification. Which should allow existing Open Source forensic tooling to be
-able to process this file type.
+This document is intended as a working document for the libfplist project.
 
 [preface]
 == Document information
 [cols="1,5"]
 |===
 | Author(s): | Joachim Metz <joachim.metz@gmail.com>
-| Abstract: | This document contains information about the MacOS-X binary plist file format
+| Abstract: | This document contains information about Mac OS plist formats
 | Classification: | Public
-| Keywords: | MacOS-X binary plist
+| Keywords: | Mac OS plist
 |===
 
 [preface]
@@ -44,16 +42,39 @@ in the section entitled "GNU Free Documentation License".
 | 0.0.1 | J.B. Metz | July 2012 | Initial version.
 | 0.0.2 | J.B. Metz | December 2014 | Switched to asccidoc format.
 | 0.0.3 | J.B. Metz | November 2016 | Textual changes.
+| 0.0.4 | J.B. Metz | November 2016 | Added information about XML plist format.
 |===
 
 :numbered:
 == Overview
-The binary plist format is used by Apple MacOS-X to store various kinds of
-data, e.g. configuration data. Besides the binary plist format there is also an
-XML plist format.
+The plist formats are used by Apple Mac OS to store various kinds of
+data, for example configuration data. A plist can be stored in different
+formats, namely:
+
+* ASCII plist format
+* Binary plist format
+* XML plist format
 
 [yellow-background]*What about other plist formats like JSON?*
 
+=== Plist value types
+
+[cols="1,1,5",options="header"]
+|===
+| Type | Description
+| array | Collection of plist values without key
+| boolean | Boolean value
+| data | Binary data
+| date | Date and time value +
+[yellow-background]*TODO add type information*
+| dictionary | Collection of plist values with key
+| integer | Integer value
+| real | Floating-point value
+| string | String +
+[yellow-background]*TODO add type information*
+|===
+
+== Binary plist format
 A binary plist file consists of:
 
 * header
@@ -70,8 +91,9 @@ A binary plist file consists of:
 Unicode stored in big-endian UTF-16
 |===
 
-== Header
-The header (CFBinaryPlistHeader) is 8 bytes of size and consists of:
+=== Binary plist header
+The binary plist header (CFBinaryPlistHeader) is 8 bytes of size and consists
+of:
 
 [cols="1,1,1,5",options="header"]
 |===
@@ -83,14 +105,14 @@ The header (CFBinaryPlistHeader) is 8 bytes of size and consists of:
 "0x" => Supported as of Snow Leopard, where x is any character
 |===
 
-== Object table
+=== Object table
 In the binary plist the objects are stored in the object table.
 
 Objects are variable of size and consist of:
 an object maker byte
 (optional) object data
 
-=== Object marker byte
+==== Object marker byte
 
 [cols="1,1,5",options="header"]
 |===
@@ -130,7 +152,7 @@ Where # is the number of key value pairs. If # is 15 then the object marker byte
 | 0xf# | | Unused
 |===
 
-=== Array object
+==== Array object
 The array object consists of:
 
 * array object marker with number of elements
@@ -141,7 +163,7 @@ The byte size of the object reference is defined in the trailer. Where the
 object reference of 1 will refer to the first object in the (object) offset
 table.
 
-=== Set object
+==== Set object
 The set object consists of:
 
 * set object marker with number of elements
@@ -152,7 +174,7 @@ The byte size of the object reference is defined in the trailer. Where the
 object reference of 1 will refer to the first object in the (object) offset
 table.
 
-=== Dictionary object
+==== Dictionary object
 The dictionary object consists of:
 
 * dictionary object marker with number of key and value pairs
@@ -164,7 +186,7 @@ The byte size of the key and object reference is defined in the trailer. Where
 a key and object reference of 1 will refer to the first object in the (object)
 offset table.
 
-== (Object) offset table
+=== (Object) offset table
 The offset table consists of an array of offsets. The trailer defines:
 
 * The location of the offset table
@@ -173,8 +195,9 @@ The offset table consists of an array of offsets. The trailer defines:
 
 The offset values are relative from the start of the file.
 
-== Trailer
-The trailer (CFBinaryPlistTrailer) is 32 bytes of size and consists of:
+=== Binary plist trailer
+The binary plist trailer (CFBinaryPlistTrailer) is 32 bytes of size and
+consists of:
 
 [cols="1,1,1,5",options="header"]
 |===
@@ -189,19 +212,23 @@ The trailer (CFBinaryPlistTrailer) is 32 bytes of size and consists of:
 The offset is relative to the start of the file
 |===
 
-== Binary and XML plists
-Binary plist
-....
-00000000  62 70 6c 69 73 74 30 30                           |bplist00        |
-....
+== XML plist format
+A binary plist file consists of:
 
-XML plist
+* XML declaration
+* Document Type Definition (DTD)
+* plist root XML element
+* key-value pair XML elements
+
+The XML declaration, Document Type Definition (DTD) and plist root XML element
+are not always present.
+
 [source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
 <plist version="1.0">
-    ...
+...
 </plist>
 ----
 
@@ -219,6 +246,27 @@ XML plist
 | URL: | http://www.opensource.apple.com/source/CF/CF-476.10/CFBinaryPList.c +
 http://opensource.apple.com/source/CF/CF-550/CFBinaryPList.c +
 http://www.opensource.apple.com/source/CF/CF-550/ForFoundationOnly.h
+|===
+
+[cols="1,5",options="header"]
+|===
+| Title: | About Property Lists
+| Author(s): | Apple Inc.
+| URL: | https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html
+|===
+
+[cols="1,5",options="header"]
+|===
+| Title: | Old-Style ASCII Property Lists
+| Author(s): | Apple Inc.
+| URL: | https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/PropertyLists/OldStylePlists/OldStylePLists.html
+|===
+
+[cols="1,5",options="header"]
+|===
+| Title: | Understanding XML Property Lists
+| Author(s): | Apple Inc.
+| URL: | https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/PropertyLists/UnderstandXMLPlist/UnderstandXMLPlist.html
 |===
 
 [appendix]
