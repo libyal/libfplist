@@ -34,6 +34,24 @@
 #include "fplist_test_memory.h"
 #include "fplist_test_unused.h"
 
+char *fplist_test_plist_byte_stream = \
+	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+	"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+	"<plist version=\"1.0\">\n"
+	"<dict>\n"
+	"	<key>CFBundleInfoDictionaryVersion</key>\n"
+	"	<string>6.0</string>\n"
+	"	<key>band-size</key>\n"
+	"	<integer>8388608</integer>\n"
+	"	<key>bundle-backingstore-version</key>\n"
+	"	<integer>1</integer>\n"
+	"	<key>diskimage-bundle-type</key>\n"
+	"	<string>com.apple.diskimage.sparsebundle</string>\n"
+	"	<key>size</key>\n"
+	"	<integer>102400000</integer>\n"
+	"</dict>\n"
+	"</plist>\n";
+
 /* Tests the libfplist_plist_initialize function
  * Returns 1 if successful or 0 if not
  */
@@ -41,7 +59,7 @@ int fplist_test_plist_initialize(
      void )
 {
 	libcerror_error_t *error = NULL;
-	libfplist_plist_t *plist      = NULL;
+	libfplist_plist_t *plist = NULL;
 	int result               = 0;
 
 	/* Test libfplist_plist_initialize
@@ -251,6 +269,298 @@ on_error:
 	return( 0 );
 }
 
+/* Tests the libfplist_plist_copy_from_byte_stream function
+ * Returns 1 if successful or 0 if not
+ */
+int fplist_test_plist_copy_from_byte_stream(
+     void )
+{
+	libcerror_error_t *error = NULL;
+	libfplist_plist_t *plist = NULL;
+	int result               = 0;
+
+	/* Initialize test
+	 */
+	result = libfplist_plist_initialize(
+	          &plist,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "plist",
+         plist );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	/* Test copy from byte stream
+	 */
+	result = libfplist_plist_copy_from_byte_stream(
+	          plist,
+	          (uint8_t *) fplist_test_plist_byte_stream,
+	          496,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	/* Test error cases
+	 */
+	result = libfplist_plist_copy_from_byte_stream(
+	          NULL,
+	          (uint8_t *) fplist_test_plist_byte_stream,
+	          496,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "error",
+         error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfplist_plist_copy_from_byte_stream(
+	          plist,
+	          NULL,
+	          496,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "error",
+         error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfplist_plist_copy_from_byte_stream(
+	          plist,
+	          (uint8_t *) fplist_test_plist_byte_stream,
+	          (size_t) SSIZE_MAX + 1,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "error",
+         error );
+
+	libcerror_error_free(
+	 &error );
+
+	/* Clean up
+	 */
+	result = libfplist_plist_free(
+	          &plist,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	if( plist != NULL )
+	{
+		libfplist_plist_free(
+		 &plist,
+		 NULL );
+	}
+	return( 0 );
+}
+
+/* Tests the libfplist_plist_get_root_key function
+ * Returns 1 if successful or 0 if not
+ */
+int fplist_test_plist_get_root_key(
+     void )
+{
+	libcerror_error_t *error = NULL;
+	libfplist_key_t *key     = NULL;
+	libfplist_plist_t *plist = NULL;
+	int result               = 0;
+
+	/* Initialize test
+	 */
+	result = libfplist_plist_initialize(
+	          &plist,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "plist",
+         plist );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	result = libfplist_plist_copy_from_byte_stream(
+	          plist,
+	          (uint8_t *) fplist_test_plist_byte_stream,
+	          496,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	/* Test retrieve root key
+	 */
+	result = libfplist_plist_get_root_key(
+	          plist,
+	          &key,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "key",
+         key );
+
+	libfplist_key_free(
+	 &key,
+	 NULL );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	/* Test error cases
+	 */
+	result = libfplist_plist_get_root_key(
+	          NULL,
+	          &key,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "error",
+         error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfplist_plist_get_root_key(
+	          plist,
+	          NULL,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "error",
+         error );
+
+	libcerror_error_free(
+	 &error );
+
+	key = (libfplist_key_t *) 0x12345678UL;
+
+	result = libfplist_plist_get_root_key(
+	          plist,
+	          &key,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "error",
+         error );
+
+	libcerror_error_free(
+	 &error );
+
+	key = NULL;
+
+	/* Clean up
+	 */
+	result = libfplist_plist_free(
+	          &plist,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	if( plist != NULL )
+	{
+		libfplist_plist_free(
+		 &plist,
+		 NULL );
+	}
+	return( 0 );
+}
+
 /* The main program
  */
 #if defined( LIBCSTRING_HAVE_WIDE_SYSTEM_CHARACTER )
@@ -273,6 +583,14 @@ int main(
 	FPLIST_TEST_RUN(
 	 "libfplist_plist_free",
 	 fplist_test_plist_free );
+
+	FPLIST_TEST_RUN(
+	 "libfplist_plist_copy_from_byte_stream",
+	 fplist_test_plist_copy_from_byte_stream );
+
+	FPLIST_TEST_RUN(
+	 "libfplist_plist_get_root_key",
+	 fplist_test_plist_get_root_key );
 
 	return( EXIT_SUCCESS );
 
