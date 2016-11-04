@@ -588,6 +588,8 @@ int main(
 	 "libfplist_plist_copy_from_byte_stream",
 	 fplist_test_plist_copy_from_byte_stream );
 
+	/* TODO add tests for libfplist_plist_has_plist_root_element */
+
 	FPLIST_TEST_RUN(
 	 "libfplist_plist_get_root_key",
 	 fplist_test_plist_get_root_key );

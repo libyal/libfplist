@@ -121,6 +121,14 @@ int libfplist_plist_copy_from_byte_stream(
      size_t byte_stream_size,
      libfplist_error_t **error );
 
+/* Determines if the plist is an XML plist with a plist root element
+ * Returns 1 if true, 0 if not or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_plist_has_plist_root_element(
+     libfplist_plist_t *plist,
+     libfplist_error_t **error );
+
 /* Retrieves the root key
  * Returns 1 if successful, 0 if not available or -1 on error
  */

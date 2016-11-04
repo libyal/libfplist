@@ -69,6 +69,11 @@ int libfplist_plist_copy_from_byte_stream(
      libcerror_error_t **error );
 
 LIBFPLIST_EXTERN \
+int libfplist_plist_has_plist_root_element(
+     libfplist_plist_t *plist,
+     libcerror_error_t **error );
+
+LIBFPLIST_EXTERN \
 int libfplist_plist_get_root_key(
      libfplist_plist_t *plist,
      libfplist_key_t **key,

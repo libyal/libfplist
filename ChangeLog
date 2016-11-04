@@ -1,5 +1,6 @@
 TODO
-* Complete stand-alone library
+* API
+  - add function to retrieve format version
 * Add binary plist support
 
 20161104

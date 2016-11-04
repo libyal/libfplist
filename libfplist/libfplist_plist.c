@@ -293,6 +293,36 @@ on_error:
 	return( -1 );
 }
 
+/* Determines if the plist is an XML plist with a plist root element
+ * Returns 1 if true, 0 if not or -1 on error
+ */
+int libfplist_plist_has_plist_root_element(
+     libfplist_plist_t *plist,
+     libcerror_error_t **error )
+{
+	libfplist_internal_plist_t *internal_plist = NULL;
+	static char *function                      = "libfplist_plist_has_plist_root_element";
+
+	if( plist == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid plist.",
+		 function );
+
+		return( -1 );
+	}
+	internal_plist = (libfplist_internal_plist_t *) plist;
+
+	if( internal_plist->plist_tag == NULL )
+	{
+		return( 0 );
+	}
+	return( 1 );
+}
+
 /* Retrieves the root key
  * Returns 1 if successful, 0 if not available or -1 on error
  */

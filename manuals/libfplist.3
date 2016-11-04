@@ -33,6 +33,8 @@ Plist functions
 .Ft int
 .Fn libfplist_plist_copy_from_byte_stream "libfplist_plist_t *plist, const uint8_t *byte_stream, size_t byte_stream_size, libfplist_error_t **error"
 .Ft int
+.Fn libfplist_plist_has_plist_root_element "libfplist_plist_t *plist, libfplist_error_t **error"
+.Ft int
 .Fn libfplist_plist_get_root_key "libfplist_plist_t *plist, libfplist_key_t **key, libfplist_error_t **error"
 .Pp
 Key functions
