@@ -75,6 +75,11 @@ int libfplist_xml_tag_free(
      libfplist_xml_tag_t **tag,
      libcerror_error_t **error );
 
+int libfplist_xml_tag_get_value_type(
+     libfplist_xml_tag_t *tag,
+     int *value_type,
+     libcerror_error_t **error );
+
 int libfplist_xml_tag_compare_name(
      libfplist_xml_tag_t *tag,
      const uint8_t *name,

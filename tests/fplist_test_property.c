@@ -1,5 +1,5 @@
 /*
- * Library key type testing program
+ * Library property type testing program
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -34,10 +34,10 @@
 #include "fplist_test_memory.h"
 #include "fplist_test_unused.h"
 
-/* Tests the libfplist_key_free function
+/* Tests the libfplist_property_free function
  * Returns 1 if successful or 0 if not
  */
-int fplist_test_key_free(
+int fplist_test_property_free(
      void )
 {
 	libcerror_error_t *error = NULL;
@@ -45,7 +45,7 @@ int fplist_test_key_free(
 
 	/* Test error cases
 	 */
-	result = libfplist_key_free(
+	result = libfplist_property_free(
 	          NULL,
 	          &error );
 
@@ -87,9 +87,16 @@ int main(
 	FPLIST_TEST_UNREFERENCED_PARAMETER( argc )
 	FPLIST_TEST_UNREFERENCED_PARAMETER( argv )
 
+	/* TODO add tests for libfplist_property_initialize */
+
 	FPLIST_TEST_RUN(
-	 "libfplist_key_free",
-	 fplist_test_key_free );
+	 "libfplist_property_free",
+	 fplist_test_property_free );
+
+	/* TODO add tests for libfplist_property_get_value_type */
+	/* TODO add tests for libfplist_property_get_value_data_size */
+	/* TODO add tests for libfplist_property_get_value_data */
+	/* TODO add tests for libfplist_property_get_value_integer */
 
 	return( EXIT_SUCCESS );
 

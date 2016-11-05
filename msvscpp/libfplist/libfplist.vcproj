@@ -178,11 +178,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_key.c"
+				RelativePath="..\..\libfplist\libfplist_property.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_plist.c"
+				RelativePath="..\..\libfplist\libfplist_property_list.c"
 				>
 			</File>
 			<File
@@ -224,10 +224,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_key.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\libfplist\libfplist_libcdata.h"
 				>
 			</File>
@@ -256,7 +252,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\libfplist\libfplist_plist.h"
+				RelativePath="..\..\libfplist\libfplist_property.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libfplist\libfplist_property_list.h"
 				>
 			</File>
 			<File

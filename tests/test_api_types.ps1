@@ -10,7 +10,7 @@ $TestPrefix = Split-Path -path ${Pwd}.Path -parent
 $TestPrefix = Split-Path -path ${TestPrefix} -leaf
 $TestPrefix = ${TestPrefix}.Substring(3)
 
-$TestTypes = "plist key" -split " "
+$TestTypes = "property property_list" -split " "
 
 $TestToolDirectory = "..\vs2010\Release"
 

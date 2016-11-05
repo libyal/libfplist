@@ -3,6 +3,9 @@ TODO
   - add function to retrieve format version
 * Add binary plist support
 
+20161105
+* Worked on API
+
 20161104
 * Added documenation from libyal assorted project
 * Worked on stand-alone version of library

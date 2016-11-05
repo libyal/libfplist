@@ -19,8 +19,8 @@ EXTRA_DIST = \
 
 check_PROGRAMS = \
 	fplist_test_error \
-	fplist_test_key \
-	fplist_test_plist \
+	fplist_test_property \
+	fplist_test_property_list \
 	fplist_test_support
 
 fplist_test_error_SOURCES = \
@@ -34,28 +34,28 @@ fplist_test_error_LDADD = \
 	../libfplist/libfplist.la \
 	@LIBCSTRING_LIBADD@
 
-fplist_test_key_SOURCES = \
-	fplist_test_key.c \
+fplist_test_property_SOURCES = \
+	fplist_test_property.c \
 	fplist_test_libcstring.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_memory.c fplist_test_memory.h \
 	fplist_test_unused.h
 
-fplist_test_key_LDADD = \
+fplist_test_property_LDADD = \
 	../libfplist/libfplist.la \
 	@LIBCERROR_LIBADD@ \
 	@LIBCSTRING_LIBADD@
 
-fplist_test_plist_SOURCES = \
+fplist_test_property_list_SOURCES = \
 	fplist_test_libcstring.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_memory.c fplist_test_memory.h \
-	fplist_test_plist.c \
+	fplist_test_property_list.c \
 	fplist_test_unused.h
 
-fplist_test_plist_LDADD = \
+fplist_test_property_list_LDADD = \
 	../libfplist/libfplist.la \
 	@LIBCERROR_LIBADD@ \
 	@LIBCSTRING_LIBADD@

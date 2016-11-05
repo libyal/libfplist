@@ -1,7 +1,7 @@
 MSVSCPP_FILES = \
 	fplist_test_error/fplist_test_error.vcproj \
-	fplist_test_key/fplist_test_key.vcproj \
-	fplist_test_plist/fplist_test_plist.vcproj \
+	fplist_test_property/fplist_test_property.vcproj \
+	fplist_test_property_list/fplist_test_property_list.vcproj \
 	fplist_test_support/fplist_test_support.vcproj \
 	libcdata/libcdata.vcproj \
 	libcerror/libcerror.vcproj \

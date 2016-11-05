@@ -125,8 +125,8 @@ stamp-h[1-9]
 /libfplist/libfplist_xml_parser.output
 /libfplist/libfplist_xml_scanner.c
 /tests/fplist_test_error
-/tests/fplist_test_key
-/tests/fplist_test_plist
+/tests/fplist_test_property
+/tests/fplist_test_property_list
 /tests/fplist_test_support
 /tests/tmp*
 

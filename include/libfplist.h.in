@@ -91,63 +91,100 @@ int libfplist_error_backtrace_sprint(
      size_t size );
 
 /* -------------------------------------------------------------------------
- * Plist functions
+ * Property list functions
  * ------------------------------------------------------------------------- */
 
-/* Creates a plist
- * Make sure the value plist is referencing, is set to NULL
+/* Creates a property list
+ * Make sure the value property_list is referencing, is set to NULL
  * Returns 1 if successful or -1 on error
  */
 LIBFPLIST_EXTERN \
-int libfplist_plist_initialize(
-     libfplist_plist_t **plist,
+int libfplist_property_list_initialize(
+     libfplist_property_list_t **property_list,
      libfplist_error_t **error );
 
-/* Frees a plist
+/* Frees a property list
  * Returns 1 if successful or -1 on error
  */
 LIBFPLIST_EXTERN \
-int libfplist_plist_free(
-     libfplist_plist_t **plist,
+int libfplist_property_list_free(
+     libfplist_property_list_t **property_list,
      libfplist_error_t **error );
 
-/* Copies the plist from the byte stream
- * Returns 1 if successful, 0 if not a valid plist or -1 on error
+/* Copies the property list from the byte stream
+ * Returns 1 if successful, 0 if not a valid property list or -1 on error
  */
 LIBFPLIST_EXTERN \
-int libfplist_plist_copy_from_byte_stream(
-     libfplist_plist_t *plist,
+int libfplist_property_list_copy_from_byte_stream(
+     libfplist_property_list_t *property_list,
      const uint8_t *byte_stream,
      size_t byte_stream_size,
      libfplist_error_t **error );
 
-/* Determines if the plist is an XML plist with a plist root element
+/* Determines if the property list is XML with a plist root element
  * Returns 1 if true, 0 if not or -1 on error
  */
 LIBFPLIST_EXTERN \
-int libfplist_plist_has_plist_root_element(
-     libfplist_plist_t *plist,
+int libfplist_property_list_has_plist_root_element(
+     libfplist_property_list_t *property_list,
      libfplist_error_t **error );
 
-/* Retrieves the root key
+/* Retrieves the root property
  * Returns 1 if successful, 0 if not available or -1 on error
  */
 LIBFPLIST_EXTERN \
-int libfplist_plist_get_root_key(
-     libfplist_plist_t *plist,
-     libfplist_key_t **key,
+int libfplist_property_list_get_root_property(
+     libfplist_property_list_t *property_list,
+     libfplist_property_t **property,
      libfplist_error_t **error );
 
 /* -------------------------------------------------------------------------
- * Key functions
+ * Property functions
  * ------------------------------------------------------------------------- */
 
-/* Frees a key
+/* Frees a property
  * Returns 1 if successful or -1 on error
  */
 LIBFPLIST_EXTERN \
-int libfplist_key_free(
-     libfplist_key_t **key,
+int libfplist_property_free(
+     libfplist_property_t **property,
+     libfplist_error_t **error );
+
+/* Retrieves the value type
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_value_type(
+     libfplist_property_t *property,
+     int *value_type,
+     libfplist_error_t **error );
+
+/* Retrieves the value (binary) data size
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_value_data_size(
+     libfplist_property_t *property,
+     size_t *data_size,
+     libfplist_error_t **error );
+
+/* Copies the value (binary) data
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_value_data(
+     libfplist_property_t *property,
+     uint8_t *data,
+     size_t data_size,
+     libfplist_error_t **error );
+
+/* Retrieves an integer value
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_value_integer(
+     libfplist_property_t *property,
+     uint64_t *value_64bit,
      libfplist_error_t **error );
 
 #if defined( __cplusplus )

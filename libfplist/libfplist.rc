@@ -22,12 +22,12 @@ BEGIN
     BLOCK "040904E4"
     BEGIN
       VALUE "FileDescription",		"Library to support the plist formats\0"
-      VALUE "FileVersion",		"20161104" "\0"
+      VALUE "FileVersion",		"20161105" "\0"
       VALUE "InternalName",		"libfplist.dll\0"
       VALUE "LegalCopyright",		"(C) 2016, Joachim Metz <joachim.metz@gmail.com>\0"
       VALUE "OriginalFilename",		"libfplist.dll\0"
       VALUE "ProductName",		"libfplist\0"
-      VALUE "ProductVersion",		"20161104" "\0"
+      VALUE "ProductVersion",		"20161105" "\0"
       VALUE "Comments",			"For more information visit https://github.com/libyal/libfplist/\0"
     END
   END

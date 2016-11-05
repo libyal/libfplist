@@ -21,7 +21,6 @@ libfplist_la_SOURCES = \
 	libfplist_definitions.h \
 	libfplist_extern.h \
 	libfplist_error.c libfplist_error.h \
-	libfplist_key.c libfplist_key.h \
 	libfplist_libcdata.h \
 	libfplist_libcerror.h \
 	libfplist_libcnotify.h \
@@ -29,7 +28,8 @@ libfplist_la_SOURCES = \
 	libfplist_libfguid.h \
 	libfplist_libfvalue.h \
 	libfplist_libuna.h \
-	libfplist_plist.c libfplist_plist.h \
+	libfplist_property.c libfplist_property.h \
+	libfplist_property_list.c libfplist_property_list.h \
 	libfplist_support.c libfplist_support.h \
 	libfplist_types.h \
 	libfplist_unused.h \

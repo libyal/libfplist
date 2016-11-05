@@ -1,5 +1,5 @@
 /*
- * Plist functions
+ * Property list functions
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -23,128 +23,128 @@
 #include <memory.h>
 #include <types.h>
 
-#include "libfplist_key.h"
 #include "libfplist_libcerror.h"
 #include "libfplist_libcnotify.h"
-#include "libfplist_plist.h"
+#include "libfplist_property.h"
+#include "libfplist_property_list.h"
 #include "libfplist_types.h"
 #include "libfplist_xml_parser.h"
 
 extern \
 int xml_parser_parse_buffer(
-     libfplist_plist_t *plist,
+     libfplist_property_list_t *property_list,
      const uint8_t *buffer,
      size_t buffer_size,
      libcerror_error_t **error );
 
-/* Creates a plist
- * Make sure the value plist is referencing, is set to NULL
+/* Creates a property list
+ * Make sure the value property_list is referencing, is set to NULL
  * Returns 1 if successful or -1 on error
  */
-int libfplist_plist_initialize(
-    libfplist_plist_t **plist,
+int libfplist_property_list_initialize(
+    libfplist_property_list_t **property_list,
     libcerror_error_t **error )
 {
-	libfplist_internal_plist_t *internal_plist = NULL;
-	static char *function                      = "libfplist_plist_initialize";
+	libfplist_internal_property_list_t *internal_property_list = NULL;
+	static char *function                                      = "libfplist_property_list_initialize";
 
-	if( plist == NULL )
+	if( property_list == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid plist.",
+		 "%s: invalid property list.",
 		 function );
 
 		return( -1 );
 	}
-	if( *plist != NULL )
+	if( *property_list != NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_ALREADY_SET,
-		 "%s: invalid plist value already set.",
+		 "%s: invalid property list value already set.",
 		 function );
 
 		return( -1 );
 	}
-	internal_plist = memory_allocate_structure(
-	                  libfplist_internal_plist_t );
+	internal_property_list = memory_allocate_structure(
+	                          libfplist_internal_property_list_t );
 
-	if( internal_plist == NULL )
+	if( internal_property_list == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_MEMORY,
 		 LIBCERROR_MEMORY_ERROR_INSUFFICIENT,
-		 "%s: unable to create plist.",
+		 "%s: unable to create property list.",
 		 function );
 
 		goto on_error;
 	}
 	if( memory_set(
-	     internal_plist,
+	     internal_property_list,
 	     0,
-	     sizeof( libfplist_internal_plist_t ) ) == NULL )
+	     sizeof( libfplist_internal_property_list_t ) ) == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_MEMORY,
 		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
-		 "%s: unable to clear plist.",
+		 "%s: unable to clear property list.",
 		 function );
 	
 		memory_free(
-		 internal_plist );
+		 internal_property_list );
 
 		return( -1 );
 	}
-	*plist = (libfplist_plist_t *) internal_plist;
+	*property_list = (libfplist_property_list_t *) internal_property_list;
 
 	return( 1 );
 
 on_error:
-	if( internal_plist != NULL )
+	if( internal_property_list != NULL )
 	{
 		memory_free(
-		 internal_plist );
+		 internal_property_list );
 	}
 	return( -1 );
 }
 
-/* Frees a plist
+/* Frees a property list
  * Returns 1 if successful or -1 on error
  */
-int libfplist_plist_free(
-    libfplist_plist_t **plist,
+int libfplist_property_list_free(
+    libfplist_property_list_t **property_list,
     libcerror_error_t **error )
 {
-	libfplist_internal_plist_t *internal_plist = NULL;
-	static char *function                      = "libfplist_plist_free";
-	int result                                 = 1;
+	libfplist_internal_property_list_t *internal_property_list = NULL;
+	static char *function                                      = "libfplist_property_list_free";
+	int result                                                 = 1;
 
-	if( plist == NULL )
+	if( property_list == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid plist.",
+		 "%s: invalid property list.",
 		 function );
 
 		return( -1 );
 	}
-	if( *plist != NULL )
+	if( *property_list != NULL )
 	{
-		internal_plist = (libfplist_internal_plist_t *) *plist;
-		*plist         = NULL;
+		internal_property_list = (libfplist_internal_property_list_t *) *property_list;
+		*property_list         = NULL;
 
 		/* The root_tag and dict_tag are referenced and freed elsewhere */
 
 		if( libfplist_xml_tag_free(
-		     &( internal_plist->root_tag ),
+		     &( internal_property_list->root_tag ),
 		     error ) != 1 )
 		{
 			libcerror_error_set(
@@ -157,46 +157,46 @@ int libfplist_plist_free(
 			result = -1;
 		}
 		memory_free(
-		 internal_plist );
+		 internal_property_list );
 	}
 	return( result );
 }
 
-/* Copies the plist from the byte stream
- * Returns 1 if successful, 0 if not a valid plist or -1 on error
+/* Copies the property list from the byte stream
+ * Returns 1 if successful, 0 if not a valid property list or -1 on error
  */
-int libfplist_plist_copy_from_byte_stream(
-     libfplist_plist_t *plist,
+int libfplist_property_list_copy_from_byte_stream(
+     libfplist_property_list_t *property_list,
      const uint8_t *byte_stream,
      size_t byte_stream_size,
      libcerror_error_t **error )
 {
-	libfplist_internal_plist_t *internal_plist = NULL;
-	uint8_t *buffer                            = NULL;
-	static char *function                      = "libfplist_plist_copy_from_byte_stream";
-	size_t buffer_size                         = 0;
-	int result                                 = 0;
+	libfplist_internal_property_list_t *internal_property_list = NULL;
+	uint8_t *buffer                                            = NULL;
+	static char *function                                      = "libfplist_property_list_copy_from_byte_stream";
+	size_t buffer_size                                         = 0;
+	int result                                                 = 0;
 
-	if( plist == NULL )
+	if( property_list == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid plist.",
+		 "%s: invalid property list.",
 		 function );
 
 		return( -1 );
 	}
-	internal_plist = (libfplist_internal_plist_t *) plist;
+	internal_property_list = (libfplist_internal_property_list_t *) property_list;
 
-	if( internal_plist->root_tag != NULL )
+	if( internal_property_list->root_tag != NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_ALREADY_SET,
-		 "%s: invalid plist - root XML tag already set.",
+		 "%s: invalid property list - root XML tag already set.",
 		 function );
 
 		return( -1 );
@@ -261,7 +261,7 @@ int libfplist_plist_copy_from_byte_stream(
 	buffer[ buffer_size - 1 ] = 0;
 
 	result = xml_parser_parse_buffer(
-	          plist,
+	          property_list,
 	          buffer,
 	          buffer_size,
 	          error );
@@ -293,94 +293,94 @@ on_error:
 	return( -1 );
 }
 
-/* Determines if the plist is an XML plist with a plist root element
+/* Determines if the property list is XML with a plist root element
  * Returns 1 if true, 0 if not or -1 on error
  */
-int libfplist_plist_has_plist_root_element(
-     libfplist_plist_t *plist,
+int libfplist_property_list_has_plist_root_element(
+     libfplist_property_list_t *property_list,
      libcerror_error_t **error )
 {
-	libfplist_internal_plist_t *internal_plist = NULL;
-	static char *function                      = "libfplist_plist_has_plist_root_element";
+	libfplist_internal_property_list_t *internal_property_list = NULL;
+	static char *function                                      = "libfplist_property_list_has_plist_root_element";
 
-	if( plist == NULL )
+	if( property_list == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid plist.",
+		 "%s: invalid property list.",
 		 function );
 
 		return( -1 );
 	}
-	internal_plist = (libfplist_internal_plist_t *) plist;
+	internal_property_list = (libfplist_internal_property_list_t *) property_list;
 
-	if( internal_plist->plist_tag == NULL )
+	if( internal_property_list->plist_tag == NULL )
 	{
 		return( 0 );
 	}
 	return( 1 );
 }
 
-/* Retrieves the root key
+/* Retrieves the root property
  * Returns 1 if successful, 0 if not available or -1 on error
  */
-int libfplist_plist_get_root_key(
-     libfplist_plist_t *plist,
-     libfplist_key_t **key,
+int libfplist_property_list_get_root_property(
+     libfplist_property_list_t *property_list,
+     libfplist_property_t **property,
      libcerror_error_t **error )
 {
-	libfplist_internal_plist_t *internal_plist = NULL;
-	libfplist_xml_tag_t *element_tag           = NULL;
-	static char *function                      = "libfplist_plist_get_root_key";
-	int element_index                          = 0;
-	int number_of_elements                     = 0;
-	int result                                 = 0;
+	libfplist_internal_property_list_t *internal_property_list = NULL;
+	libfplist_xml_tag_t *element_tag                           = NULL;
+	static char *function                                      = "libfplist_property_list_get_root_property";
+	int element_index                                          = 0;
+	int number_of_elements                                     = 0;
+	int result                                                 = 0;
 
-	if( plist == NULL )
+	if( property_list == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid plist.",
+		 "%s: invalid property list.",
 		 function );
 
 		return( -1 );
 	}
-	internal_plist = (libfplist_internal_plist_t *) plist;
+	internal_property_list = (libfplist_internal_property_list_t *) property_list;
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	if( *key != NULL )
+	if( *property != NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_ALREADY_SET,
-		 "%s: invalid key value already set.",
+		 "%s: invalid property value already set.",
 		 function );
 
 		return( -1 );
 	}
-	if( internal_plist->root_tag == NULL )
+	if( internal_property_list->root_tag == NULL )
 	{
 		return( 0 );
 	}
-	if( internal_plist->dict_tag == NULL )
+	if( internal_property_list->dict_tag == NULL )
 	{
 		result = libfplist_xml_tag_compare_name(
-		          internal_plist->root_tag,
+		          internal_property_list->root_tag,
 		          (uint8_t *) "dict",
 		          4,
 		          error );
@@ -398,16 +398,16 @@ int libfplist_plist_get_root_key(
 		}
 		else if( result != 0 )
 		{
-			internal_plist->dict_tag = internal_plist->root_tag;
+			internal_property_list->dict_tag = internal_property_list->root_tag;
 		}
 	}
-	if( internal_plist->dict_tag == NULL )
+	if( internal_property_list->dict_tag == NULL )
 	{
 		/* Ignore the plist XML node
 		 * <plist version="1.0">
 		 */
 		result = libfplist_xml_tag_compare_name(
-		          internal_plist->root_tag,
+		          internal_property_list->root_tag,
 		          (uint8_t *) "plist",
 		          5,
 		          error );
@@ -425,10 +425,10 @@ int libfplist_plist_get_root_key(
 		}
 		else if( result != 0 )
 		{
-			internal_plist->plist_tag = internal_plist->root_tag;
+			internal_property_list->plist_tag = internal_property_list->root_tag;
 
 			if( libfplist_xml_tag_get_number_of_elements(
-			     internal_plist->root_tag,
+			     internal_property_list->root_tag,
 			     &number_of_elements,
 			     error ) != 1 )
 			{
@@ -446,7 +446,7 @@ int libfplist_plist_get_root_key(
 			     element_index++ )
 			{
 				if( libfplist_xml_tag_get_element(
-				     internal_plist->root_tag,
+				     internal_property_list->root_tag,
 				     element_index,
 				     &element_tag,
 				     error ) != 1 )
@@ -505,7 +505,7 @@ int libfplist_plist_get_root_key(
 				}
 				else if( result != 0 )
 				{
-					internal_plist->dict_tag = element_tag;
+					internal_property_list->dict_tag = element_tag;
 				}
 				else
 				{
@@ -514,21 +514,21 @@ int libfplist_plist_get_root_key(
 			}
 		}
 	}
-	if( internal_plist->dict_tag == NULL )
+	if( internal_property_list->dict_tag == NULL )
 	{
 		return( 0 );
 	}
-	if( libfplist_key_initialize(
-	     key,
+	if( libfplist_property_initialize(
+	     property,
 	     NULL,
-	     internal_plist->dict_tag,
+	     internal_property_list->dict_tag,
 	     error ) != 1 )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_INITIALIZE_FAILED,
-		 "%s: unable to create key.",
+		 "%s: unable to create property.",
 		 function );
 
 		return( -1 );
@@ -539,26 +539,26 @@ int libfplist_plist_get_root_key(
 /* Sets the root tag
  * Returns 1 if successful or -1 on error
  */
-int libfplist_plist_set_root_tag(
-     libfplist_plist_t *plist,
+int libfplist_property_list_set_root_tag(
+     libfplist_property_list_t *property_list,
      libfplist_xml_tag_t *tag,
      libcerror_error_t **error )
 {
-	libfplist_internal_plist_t *internal_plist = NULL;
-	static char *function                      = "libfplist_plist_set_root_tag";
+	libfplist_internal_property_list_t *internal_property_list = NULL;
+	static char *function                                      = "libfplist_property_list_set_root_tag";
 
-	if( plist == NULL )
+	if( property_list == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid plist.",
+		 "%s: invalid property list.",
 		 function );
 
 		return( -1 );
 	}
-	internal_plist = (libfplist_internal_plist_t *) plist;
+	internal_property_list = (libfplist_internal_property_list_t *) property_list;
 
 	if( tag == NULL )
 	{
@@ -571,7 +571,7 @@ int libfplist_plist_set_root_tag(
 
 		return( -1 );
 	}
-	internal_plist->root_tag = tag;
+	internal_property_list->root_tag = tag;
 
 	return( 1 );
 }

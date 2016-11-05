@@ -1,5 +1,5 @@
 /*
- * Library plist type testing program
+ * Library property list type testing program
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -34,7 +34,7 @@
 #include "fplist_test_memory.h"
 #include "fplist_test_unused.h"
 
-char *fplist_test_plist_byte_stream = \
+char *fplist_test_property_list_byte_stream = \
 	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 	"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
 	"<plist version=\"1.0\">\n"
@@ -52,20 +52,20 @@ char *fplist_test_plist_byte_stream = \
 	"</dict>\n"
 	"</plist>\n";
 
-/* Tests the libfplist_plist_initialize function
+/* Tests the libfplist_property_list_initialize function
  * Returns 1 if successful or 0 if not
  */
-int fplist_test_plist_initialize(
+int fplist_test_property_list_initialize(
      void )
 {
-	libcerror_error_t *error = NULL;
-	libfplist_plist_t *plist = NULL;
-	int result               = 0;
+	libcerror_error_t *error                 = NULL;
+	libfplist_property_list_t *property_list = NULL;
+	int result                               = 0;
 
-	/* Test libfplist_plist_initialize
+	/* Test libfplist_property_list_initialize
 	 */
-	result = libfplist_plist_initialize(
-	          &plist,
+	result = libfplist_property_list_initialize(
+	          &property_list,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -74,15 +74,15 @@ int fplist_test_plist_initialize(
 	 1 );
 
         FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "plist",
-         plist );
+         "property_list",
+         property_list );
 
         FPLIST_TEST_ASSERT_IS_NULL(
          "error",
          error );
 
-	result = libfplist_plist_free(
-	          &plist,
+	result = libfplist_property_list_free(
+	          &property_list,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -91,8 +91,8 @@ int fplist_test_plist_initialize(
 	 1 );
 
         FPLIST_TEST_ASSERT_IS_NULL(
-         "plist",
-         plist );
+         "property_list",
+         property_list );
 
         FPLIST_TEST_ASSERT_IS_NULL(
          "error",
@@ -100,7 +100,7 @@ int fplist_test_plist_initialize(
 
 	/* Test error cases
 	 */
-	result = libfplist_plist_initialize(
+	result = libfplist_property_list_initialize(
 	          NULL,
 	          &error );
 
@@ -116,10 +116,10 @@ int fplist_test_plist_initialize(
 	libcerror_error_free(
 	 &error );
 
-	plist = (libfplist_plist_t *) 0x12345678UL;
+	property_list = (libfplist_property_list_t *) 0x12345678UL;
 
-	result = libfplist_plist_initialize(
-	          &plist,
+	result = libfplist_property_list_initialize(
+	          &property_list,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -134,26 +134,26 @@ int fplist_test_plist_initialize(
 	libcerror_error_free(
 	 &error );
 
-	plist = NULL;
+	property_list = NULL;
 
 #if defined( HAVE_FPLIST_TEST_MEMORY )
 
-	/* Test libfplist_plist_initialize with malloc failing
+	/* Test libfplist_property_list_initialize with malloc failing
 	 */
 	fplist_test_malloc_attempts_before_fail = 0;
 
-	result = libfplist_plist_initialize(
-	          &plist,
+	result = libfplist_property_list_initialize(
+	          &property_list,
 	          &error );
 
 	if( fplist_test_malloc_attempts_before_fail != -1 )
 	{
 		fplist_test_malloc_attempts_before_fail = -1;
 
-		if( plist != NULL )
+		if( property_list != NULL )
 		{
-			libfplist_plist_free(
-			 &plist,
+			libfplist_property_list_free(
+			 &property_list,
 			 NULL );
 		}
 	}
@@ -165,8 +165,8 @@ int fplist_test_plist_initialize(
 		 -1 );
 
 		FPLIST_TEST_ASSERT_IS_NULL(
-		 "plist",
-		 plist );
+		 "property_list",
+		 property_list );
 
 		FPLIST_TEST_ASSERT_IS_NOT_NULL(
 		 "error",
@@ -175,22 +175,22 @@ int fplist_test_plist_initialize(
 		libcerror_error_free(
 		 &error );
 	}
-	/* Test libfplist_plist_initialize with memset failing
+	/* Test libfplist_property_list_initialize with memset failing
 	 */
 	fplist_test_memset_attempts_before_fail = 0;
 
-	result = libfplist_plist_initialize(
-	          &plist,
+	result = libfplist_property_list_initialize(
+	          &property_list,
 	          &error );
 
 	if( fplist_test_memset_attempts_before_fail != -1 )
 	{
 		fplist_test_memset_attempts_before_fail = -1;
 
-		if( plist != NULL )
+		if( property_list != NULL )
 		{
-			libfplist_plist_free(
-			 &plist,
+			libfplist_property_list_free(
+			 &property_list,
 			 NULL );
 		}
 	}
@@ -202,8 +202,8 @@ int fplist_test_plist_initialize(
 		 -1 );
 
 		FPLIST_TEST_ASSERT_IS_NULL(
-		 "plist",
-		 plist );
+		 "property_list",
+		 property_list );
 
 		FPLIST_TEST_ASSERT_IS_NOT_NULL(
 		 "error",
@@ -222,19 +222,19 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
-	if( plist != NULL )
+	if( property_list != NULL )
 	{
-		libfplist_plist_free(
-		 &plist,
+		libfplist_property_list_free(
+		 &property_list,
 		 NULL );
 	}
 	return( 0 );
 }
 
-/* Tests the libfplist_plist_free function
+/* Tests the libfplist_property_list_free function
  * Returns 1 if successful or 0 if not
  */
-int fplist_test_plist_free(
+int fplist_test_property_list_free(
      void )
 {
 	libcerror_error_t *error = NULL;
@@ -242,7 +242,7 @@ int fplist_test_plist_free(
 
 	/* Test error cases
 	 */
-	result = libfplist_plist_free(
+	result = libfplist_property_list_free(
 	          NULL,
 	          &error );
 
@@ -269,20 +269,20 @@ on_error:
 	return( 0 );
 }
 
-/* Tests the libfplist_plist_copy_from_byte_stream function
+/* Tests the libfplist_property_list_copy_from_byte_stream function
  * Returns 1 if successful or 0 if not
  */
-int fplist_test_plist_copy_from_byte_stream(
+int fplist_test_property_list_copy_from_byte_stream(
      void )
 {
-	libcerror_error_t *error = NULL;
-	libfplist_plist_t *plist = NULL;
-	int result               = 0;
+	libcerror_error_t *error                 = NULL;
+	libfplist_property_list_t *property_list = NULL;
+	int result                               = 0;
 
 	/* Initialize test
 	 */
-	result = libfplist_plist_initialize(
-	          &plist,
+	result = libfplist_property_list_initialize(
+	          &property_list,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -291,8 +291,8 @@ int fplist_test_plist_copy_from_byte_stream(
 	 1 );
 
         FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "plist",
-         plist );
+         "property_list",
+         property_list );
 
         FPLIST_TEST_ASSERT_IS_NULL(
          "error",
@@ -300,9 +300,9 @@ int fplist_test_plist_copy_from_byte_stream(
 
 	/* Test copy from byte stream
 	 */
-	result = libfplist_plist_copy_from_byte_stream(
-	          plist,
-	          (uint8_t *) fplist_test_plist_byte_stream,
+	result = libfplist_property_list_copy_from_byte_stream(
+	          property_list,
+	          (uint8_t *) fplist_test_property_list_byte_stream,
 	          496,
 	          &error );
 
@@ -317,9 +317,9 @@ int fplist_test_plist_copy_from_byte_stream(
 
 	/* Test error cases
 	 */
-	result = libfplist_plist_copy_from_byte_stream(
+	result = libfplist_property_list_copy_from_byte_stream(
 	          NULL,
-	          (uint8_t *) fplist_test_plist_byte_stream,
+	          (uint8_t *) fplist_test_property_list_byte_stream,
 	          496,
 	          &error );
 
@@ -335,8 +335,8 @@ int fplist_test_plist_copy_from_byte_stream(
 	libcerror_error_free(
 	 &error );
 
-	result = libfplist_plist_copy_from_byte_stream(
-	          plist,
+	result = libfplist_property_list_copy_from_byte_stream(
+	          property_list,
 	          NULL,
 	          496,
 	          &error );
@@ -353,9 +353,9 @@ int fplist_test_plist_copy_from_byte_stream(
 	libcerror_error_free(
 	 &error );
 
-	result = libfplist_plist_copy_from_byte_stream(
-	          plist,
-	          (uint8_t *) fplist_test_plist_byte_stream,
+	result = libfplist_property_list_copy_from_byte_stream(
+	          property_list,
+	          (uint8_t *) fplist_test_property_list_byte_stream,
 	          (size_t) SSIZE_MAX + 1,
 	          &error );
 
@@ -373,8 +373,8 @@ int fplist_test_plist_copy_from_byte_stream(
 
 	/* Clean up
 	 */
-	result = libfplist_plist_free(
-	          &plist,
+	result = libfplist_property_list_free(
+	          &property_list,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -394,30 +394,30 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
-	if( plist != NULL )
+	if( property_list != NULL )
 	{
-		libfplist_plist_free(
-		 &plist,
+		libfplist_property_list_free(
+		 &property_list,
 		 NULL );
 	}
 	return( 0 );
 }
 
-/* Tests the libfplist_plist_get_root_key function
+/* Tests the libfplist_property_list_get_root_property function
  * Returns 1 if successful or 0 if not
  */
-int fplist_test_plist_get_root_key(
+int fplist_test_property_list_get_root_property(
      void )
 {
-	libcerror_error_t *error = NULL;
-	libfplist_key_t *key     = NULL;
-	libfplist_plist_t *plist = NULL;
-	int result               = 0;
+	libcerror_error_t *error                 = NULL;
+	libfplist_property_t *property           = NULL;
+	libfplist_property_list_t *property_list = NULL;
+	int result                               = 0;
 
 	/* Initialize test
 	 */
-	result = libfplist_plist_initialize(
-	          &plist,
+	result = libfplist_property_list_initialize(
+	          &property_list,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -426,16 +426,16 @@ int fplist_test_plist_get_root_key(
 	 1 );
 
         FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "plist",
-         plist );
+         "property_list",
+         property_list );
 
         FPLIST_TEST_ASSERT_IS_NULL(
          "error",
          error );
 
-	result = libfplist_plist_copy_from_byte_stream(
-	          plist,
-	          (uint8_t *) fplist_test_plist_byte_stream,
+	result = libfplist_property_list_copy_from_byte_stream(
+	          property_list,
+	          (uint8_t *) fplist_test_property_list_byte_stream,
 	          496,
 	          &error );
 
@@ -448,11 +448,11 @@ int fplist_test_plist_get_root_key(
          "error",
          error );
 
-	/* Test retrieve root key
+	/* Test retrieve root property
 	 */
-	result = libfplist_plist_get_root_key(
-	          plist,
-	          &key,
+	result = libfplist_property_list_get_root_property(
+	          property_list,
+	          &property,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -461,11 +461,11 @@ int fplist_test_plist_get_root_key(
 	 1 );
 
         FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "key",
-         key );
+         "property",
+         property );
 
-	libfplist_key_free(
-	 &key,
+	libfplist_property_free(
+	 &property,
 	 NULL );
 
         FPLIST_TEST_ASSERT_IS_NULL(
@@ -474,9 +474,9 @@ int fplist_test_plist_get_root_key(
 
 	/* Test error cases
 	 */
-	result = libfplist_plist_get_root_key(
+	result = libfplist_property_list_get_root_property(
 	          NULL,
-	          &key,
+	          &property,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -491,8 +491,8 @@ int fplist_test_plist_get_root_key(
 	libcerror_error_free(
 	 &error );
 
-	result = libfplist_plist_get_root_key(
-	          plist,
+	result = libfplist_property_list_get_root_property(
+	          property_list,
 	          NULL,
 	          &error );
 
@@ -508,11 +508,11 @@ int fplist_test_plist_get_root_key(
 	libcerror_error_free(
 	 &error );
 
-	key = (libfplist_key_t *) 0x12345678UL;
+	property = (libfplist_property_t *) 0x12345678UL;
 
-	result = libfplist_plist_get_root_key(
-	          plist,
-	          &key,
+	result = libfplist_property_list_get_root_property(
+	          property_list,
+	          &property,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -527,12 +527,12 @@ int fplist_test_plist_get_root_key(
 	libcerror_error_free(
 	 &error );
 
-	key = NULL;
+	property = NULL;
 
 	/* Clean up
 	 */
-	result = libfplist_plist_free(
-	          &plist,
+	result = libfplist_property_list_free(
+	          &property_list,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -552,10 +552,10 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
-	if( plist != NULL )
+	if( property_list != NULL )
 	{
-		libfplist_plist_free(
-		 &plist,
+		libfplist_property_list_free(
+		 &property_list,
 		 NULL );
 	}
 	return( 0 );
@@ -577,22 +577,22 @@ int main(
 	FPLIST_TEST_UNREFERENCED_PARAMETER( argv )
 
 	FPLIST_TEST_RUN(
-	 "libfplist_plist_initialize",
-	 fplist_test_plist_initialize );
+	 "libfplist_property_list_initialize",
+	 fplist_test_property_list_initialize );
 
 	FPLIST_TEST_RUN(
-	 "libfplist_plist_free",
-	 fplist_test_plist_free );
+	 "libfplist_property_list_free",
+	 fplist_test_property_list_free );
 
 	FPLIST_TEST_RUN(
-	 "libfplist_plist_copy_from_byte_stream",
-	 fplist_test_plist_copy_from_byte_stream );
+	 "libfplist_property_list_copy_from_byte_stream",
+	 fplist_test_property_list_copy_from_byte_stream );
 
-	/* TODO add tests for libfplist_plist_has_plist_root_element */
+	/* TODO add tests for libfplist_property_list_has_plist_root_element */
 
 	FPLIST_TEST_RUN(
-	 "libfplist_plist_get_root_key",
-	 fplist_test_plist_get_root_key );
+	 "libfplist_property_list_get_root_property",
+	 fplist_test_property_list_get_root_property );
 
 	return( EXIT_SUCCESS );
 

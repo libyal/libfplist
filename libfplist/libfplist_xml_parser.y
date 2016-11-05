@@ -29,7 +29,7 @@
 
 #include "libfplist_libcerror.h"
 #include "libfplist_libcnotify.h"
-#include "libfplist_plist.h"
+#include "libfplist_property_list.h"
 #include "libfplist_types.h"
 #include "libfplist_xml_tag.h"
 
@@ -84,9 +84,9 @@ typedef struct xml_parser_state xml_parser_state_t;
 
 struct xml_parser_state
 {
-	/* The plist
+	/* The property list
 	 */
-	libfplist_plist_t *plist;
+	libfplist_property_list_t *property_list;
 
 	/* The error
 	 */
@@ -142,7 +142,7 @@ extern size_t xml_scanner_buffer_offset;
 static char *xml_parser_function = "xml_parser";
 
 int xml_parser_parse_buffer(
-     libfplist_plist_t *plist,
+     libfplist_property_list_t *property_list,
      const uint8_t *buffer,
      size_t buffer_size,
      libcerror_error_t **error );
@@ -421,7 +421,7 @@ xml_attribute
 %%
 
 int xml_parser_parse_buffer(
-     libfplist_plist_t *plist,
+     libfplist_property_list_t *property_list,
      const uint8_t *buffer,
      size_t buffer_size,
      libcerror_error_t **error )
@@ -441,17 +441,17 @@ int xml_parser_parse_buffer(
 
 	if( buffer_state != NULL )
 	{
-		parser_state.plist       = plist;
-		parser_state.error       = error;
-		parser_state.root_tag    = NULL;
-		parser_state.current_tag = NULL;
-		parser_state.parent_tag  = NULL;
+		parser_state.property_list = property_list;
+		parser_state.error         = error;
+		parser_state.root_tag      = NULL;
+		parser_state.current_tag   = NULL;
+		parser_state.parent_tag    = NULL;
 
 		if( xml_scanner_parse(
 		     &parser_state ) == 0 )
 		{
-			if( libfplist_plist_set_root_tag(
-			     plist,
+			if( libfplist_property_list_set_root_tag(
+			     property_list,
 			     parser_state.root_tag,
 			     error ) != 1 )
 			{

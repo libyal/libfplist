@@ -23,6 +23,7 @@
 #include <memory.h>
 #include <types.h>
 
+#include "libfplist_definitions.h"
 #include "libfplist_libcdata.h"
 #include "libfplist_libcerror.h"
 #include "libfplist_xml_attribute.h"
@@ -271,6 +272,119 @@ int libfplist_xml_tag_free(
 		*tag = NULL;
 	}
 	return( result );
+}
+
+/* Retrieves the value type
+ * Returns 1 if successful or -1 on error
+ */
+int libfplist_xml_tag_get_value_type(
+     libfplist_xml_tag_t *tag,
+     int *value_type,
+     libcerror_error_t **error )
+{
+	static char *function = "libfplist_xml_tag_get_value_type";
+
+	if( tag == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid XML plist tag.",
+		 function );
+
+		return( -1 );
+	}
+	if( tag->name == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid tag - missing name.",
+		 function );
+
+		return( -1 );
+	}
+	if( value_type == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid value type.",
+		 function );
+
+		return( -1 );
+	}
+	*value_type = LIBFPLIST_VALUE_TYPE_UNKNOWN;
+
+	if( tag->name_size == 5 )
+	{
+		if( libcstring_narrow_string_compare(
+		     tag->name,
+		     "data",
+		     4 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_BINARY_DATA;
+		}
+		else if( libcstring_narrow_string_compare(
+		          tag->name,
+		          "date",
+		          4 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_DATE;
+		}
+		else if( libcstring_narrow_string_compare(
+		          tag->name,
+		          "dict",
+		          4 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_DICTIONARY;
+		}
+		else if( libcstring_narrow_string_compare(
+		          tag->name,
+		          "real",
+		          4 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_FLOATING_POINT;
+		}
+		else if( libcstring_narrow_string_compare(
+		          tag->name,
+		          "true",
+		          4 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_BOOLEAN;
+		}
+	}
+	else if( tag->name_size == 6 )
+	{
+		if( libcstring_narrow_string_compare(
+		     tag->name,
+		     "array",
+		     5 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_ARRAY;
+		}
+		else if( libcstring_narrow_string_compare(
+		          tag->name,
+		          "false",
+		          5 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_BOOLEAN;
+		}
+	}
+	else if( tag->name_size == 8 )
+	{
+		if( libcstring_narrow_string_compare(
+		     tag->name,
+		     "integer",
+		     7 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_INTEGER;
+		}
+	}
+	return( 1 );
 }
 
 /* Compares the name

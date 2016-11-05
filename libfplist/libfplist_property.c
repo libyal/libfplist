@@ -1,5 +1,5 @@
 /*
- * Plist key functions
+ * Property functions
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -23,47 +23,48 @@
 #include <memory.h>
 #include <types.h>
 
-#include "libfplist_key.h"
+#include "libfplist_definitions.h"
 #include "libfplist_libcerror.h"
 #include "libfplist_libcnotify.h"
 #include "libfplist_libfguid.h"
 #include "libfplist_libfvalue.h"
 #include "libfplist_libuna.h"
+#include "libfplist_property.h"
 #include "libfplist_types.h"
 #include "libfplist_xml_tag.h"
 
-/* Creates a key
- * Make sure the value key is referencing, is set to NULL
+/* Creates a property
+ * Make sure the value property is referencing, is set to NULL
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_initialize(
-     libfplist_key_t **key,
+int libfplist_property_initialize(
+     libfplist_property_t **property,
      libfplist_xml_tag_t *key_tag,
      libfplist_xml_tag_t *value_tag,
      libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	static char *function                  = "libfplist_key_initialize";
-	int result                             = 0;
+	libfplist_internal_property_t *internal_property = NULL;
+	static char *function                            = "libfplist_property_initialize";
+	int result                                       = 0;
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	if( *key != NULL )
+	if( *property != NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_ALREADY_SET,
-		 "%s: invalid key value already set.",
+		 "%s: invalid property value already set.",
 		 function );
 
 		return( -1 );
@@ -111,254 +112,199 @@ int libfplist_key_initialize(
 			return( -1 );
 		}
 	}
-	internal_key = memory_allocate_structure(
-	                libfplist_internal_key_t );
+	internal_property = memory_allocate_structure(
+	                     libfplist_internal_property_t );
 
-	if( internal_key == NULL )
+	if( internal_property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_MEMORY,
 		 LIBCERROR_MEMORY_ERROR_INSUFFICIENT,
-		 "%s: unable to create key.",
+		 "%s: unable to create property.",
 		 function );
 
 		goto on_error;
 	}
 	if( memory_set(
-	     internal_key,
+	     internal_property,
 	     0,
-	     sizeof( libfplist_internal_key_t ) ) == NULL )
+	     sizeof( libfplist_internal_property_t ) ) == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_MEMORY,
 		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
-		 "%s: unable to clear key.",
+		 "%s: unable to clear property.",
 		 function );
 	
 		memory_free(
-		 internal_key );
+		 internal_property );
 
 		return( -1 );
 	}
-	internal_key->key_tag   = key_tag;
-	internal_key->value_tag = value_tag;
+	internal_property->key_tag   = key_tag;
+	internal_property->value_tag = value_tag;
 
-	*key = (libfplist_key_t *) internal_key;
+	*property = (libfplist_property_t *) internal_property;
 
 	return( 1 );
 
 on_error:
-	if( internal_key != NULL )
+	if( internal_property != NULL )
 	{
 		memory_free(
-		 internal_key );
+		 internal_property );
 	}
 	return( -1 );
 }
 
-/* Frees a key
+/* Frees a property
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_free(
-    libfplist_key_t **key,
+int libfplist_property_free(
+    libfplist_property_t **property,
     libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	static char *function                  = "libfplist_key_free";
+	libfplist_internal_property_t *internal_property = NULL;
+	static char *function                            = "libfplist_property_free";
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	if( *key != NULL )
+	if( *property != NULL )
 	{
-		internal_key = (libfplist_internal_key_t *) *key;
-		*key         = NULL;
+		internal_property = (libfplist_internal_property_t *) *property;
+		*property         = NULL;
 
 		/* The key_tag and value_tag are referenced and freed elsewhere */
 
 		memory_free(
-		 internal_key );
+		 internal_property );
 	}
 	return( 1 );
 }
 
-/* Determines if the value is an array
- * Returns 1 if the value isan array, 0 if not or -1 on error
- */
-int libfplist_key_is_array(
-     libfplist_key_t *key,
-     libcerror_error_t **error )
-{
-	libfplist_internal_key_t *internal_key = NULL;
-	static char *function                  = "libfplist_key_is_array";
-	int result                             = 0;
-
-	if( key == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
-		 function );
-
-		return( -1 );
-	}
-	internal_key = (libfplist_internal_key_t *) key;
-
-	if( internal_key->value_tag == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
-		 function );
-
-		return( -1 );
-	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "array",
-	          5,
-	          error );
-
-	if( result == -1 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
-		 function );
-
-		return( -1 );
-	}
-	return( result );
-}
-
-/* Determines if the value is a dict
- * Returns 1 if the value is a dict, 0 if not or -1 on error
- */
-int libfplist_key_is_dict(
-     libfplist_key_t *key,
-     libcerror_error_t **error )
-{
-	libfplist_internal_key_t *internal_key = NULL;
-	static char *function                  = "libfplist_key_is_dict";
-	int result                             = 0;
-
-	if( key == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
-		 function );
-
-		return( -1 );
-	}
-	internal_key = (libfplist_internal_key_t *) key;
-
-	if( internal_key->value_tag == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
-		 function );
-
-		return( -1 );
-	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "dict",
-	          4,
-	          error );
-
-	if( result == -1 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
-		 function );
-
-		return( -1 );
-	}
-	return( result );
-}
-
-/* Retrieves a data value
+/* Retrieves the value type
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_get_value_data(
-     libfplist_key_t *key,
-     uint8_t **data,
+int libfplist_property_get_value_type(
+     libfplist_property_t *property,
+     int *value_type,
+     libcerror_error_t **error )
+{
+	libfplist_internal_property_t *internal_property = NULL;
+	static char *function                            = "libfplist_property_get_value_type";
+
+	if( property == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid property.",
+		 function );
+
+		return( -1 );
+	}
+	internal_property = (libfplist_internal_property_t *) property;
+
+	if( internal_property->value_tag == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid property - missing value XML tag.",
+		 function );
+
+		return( -1 );
+	}
+	if( value_type == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid value type.",
+		 function );
+
+		return( -1 );
+	}
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
+	{
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
+
+			return( -1 );
+		}
+	}
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
+		 function );
+
+		return( -1 );
+	}
+	*value_type = internal_property->value_type;
+
+	return( 1 );
+}
+
+/* Retrieves the value (binary) data size
+ * Returns 1 if successful or -1 on error
+ */
+int libfplist_property_get_value_data_size(
+     libfplist_property_t *property,
      size_t *data_size,
      libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	static char *function                  = "libfplist_key_get_value_data";
+	libfplist_internal_property_t *internal_property = NULL;
+	static char *function                            = "libfplist_property_get_value_data_size";
 	size_t value_index                     = 0;
 	size_t value_length                    = 0;
-	int result                             = 0;
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	internal_key = (libfplist_internal_key_t *) key;
+	internal_property = (libfplist_internal_property_t *) property;
 
-	if( internal_key->value_tag == NULL )
+	if( internal_property->value_tag == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
-		 function );
-
-		return( -1 );
-	}
-	if( data == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid data.",
-		 function );
-
-		return( -1 );
-	}
-	if( *data != NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_VALUE_ALREADY_SET,
-		 "%s: invalid data value already set.",
+		 "%s: invalid property - missing value XML tag.",
 		 function );
 
 		return( -1 );
@@ -374,40 +320,39 @@ int libfplist_key_get_value_data(
 
 		return( -1 );
 	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "data",
-	          4,
-	          error );
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
+	{
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
 
-	if( result == -1 )
+			return( -1 );
+		}
+	}
+	if( internal_property->value_type != LIBFPLIST_VALUE_TYPE_BINARY_DATA )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
 		 function );
 
 		return( -1 );
 	}
-	else if( result == 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: unsupported value tag: %s.",
-		 function,
-		 internal_key->value_tag->name );
-
-		return( -1 );
-	}
-	value_length = internal_key->value_tag->value_size - 1;
+	value_length = internal_property->value_tag->value_size - 1;
 
 	/* The base64 conversion function doesn't like an empty first line
 	 */
-	if( ( internal_key->value_tag->value )[ 0 ] == '\n' )
+	if( ( internal_property->value_tag->value )[ 0 ] == '\n' )
 	{
 		value_index  += 1;
 		value_length -= 1;
@@ -419,13 +364,13 @@ int libfplist_key_get_value_data(
 		 "%s: base64 encoded data:\n",
 		 function );
 		libcnotify_print_data(
-		 (uint8_t *) &( ( internal_key->value_tag->value )[ value_index ] ),
+		 (uint8_t *) &( ( internal_property->value_tag->value )[ value_index ] ),
 		 value_length,
 		 0 );
 	}
 #endif
 	if( libuna_base64_stream_size_to_byte_stream(
-	     &( ( internal_key->value_tag->value )[ value_index ] ),
+	     &( ( internal_property->value_tag->value )[ value_index ] ),
 	     value_length,
 	     data_size,
 	     LIBUNA_BASE64_VARIANT_ALPHABET_NORMAL | LIBUNA_BASE64_VARIANT_CHARACTER_LIMIT_NONE | LIBUNA_BASE64_VARIANT_PADDING_REQUIRED,
@@ -439,27 +384,125 @@ int libfplist_key_get_value_data(
 		 "%s: unable to determine size of base64 encoded data.",
 		 function );
 
-		goto on_error;
+		return( -1 );
 	}
-	*data = (uint8_t *) memory_allocate(
-	                     sizeof( uint8_t ) * *data_size );
+	return( 1 );
+}
 
-	if( *data == NULL )
+/* Copies the value (binary) data
+ * Returns 1 if successful or -1 on error
+ */
+int libfplist_property_get_value_data(
+     libfplist_property_t *property,
+     uint8_t *data,
+     size_t data_size,
+     libcerror_error_t **error )
+{
+	libfplist_internal_property_t *internal_property = NULL;
+	static char *function                            = "libfplist_property_get_value_data";
+	size_t value_index                               = 0;
+	size_t value_length                              = 0;
+
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
-		 LIBCERROR_ERROR_DOMAIN_MEMORY,
-		 LIBCERROR_MEMORY_ERROR_INSUFFICIENT,
-		 "%s: unable to create data.",
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid property.",
 		 function );
 
-		goto on_error;
+		return( -1 );
 	}
+	internal_property = (libfplist_internal_property_t *) property;
+
+	if( internal_property->value_tag == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid property - missing value XML tag.",
+		 function );
+
+		return( -1 );
+	}
+	if( data == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid data.",
+		 function );
+
+		return( -1 );
+	}
+	if( data_size > (size_t) SSIZE_MAX )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_EXCEEDS_MAXIMUM,
+		 "%s: invalid data size value exceeds maximum.",
+		 function );
+
+		return( -1 );
+	}
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
+	{
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
+
+			return( -1 );
+		}
+	}
+	if( internal_property->value_type != LIBFPLIST_VALUE_TYPE_BINARY_DATA )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
+		 function );
+
+		return( -1 );
+	}
+	value_length = internal_property->value_tag->value_size - 1;
+
+	/* The base64 conversion function doesn't like an empty first line
+	 */
+	if( ( internal_property->value_tag->value )[ 0 ] == '\n' )
+	{
+		value_index  += 1;
+		value_length -= 1;
+	}
+#if defined( HAVE_DEBUG_OUTPUT )
+	if( libcnotify_verbose != 0 )
+	{
+		libcnotify_printf(
+		 "%s: base64 encoded data:\n",
+		 function );
+		libcnotify_print_data(
+		 (uint8_t *) &( ( internal_property->value_tag->value )[ value_index ] ),
+		 value_length,
+		 0 );
+	}
+#endif
 	if( libuna_base64_stream_copy_to_byte_stream(
-	     &( ( internal_key->value_tag->value )[ value_index ] ),
+	     &( ( internal_property->value_tag->value )[ value_index ] ),
 	     value_length,
-	     *data,
-	     *data_size,
+	     data,
+	     data_size,
 	     LIBUNA_BASE64_VARIANT_ALPHABET_NORMAL | LIBUNA_BASE64_VARIANT_CHARACTER_LIMIT_NONE | LIBUNA_BASE64_VARIANT_PADDING_REQUIRED,
 	     LIBUNA_BASE64_FLAG_STRIP_WHITESPACE,
 	     error ) != 1 )
@@ -471,95 +514,81 @@ int libfplist_key_get_value_data(
 		 "%s: unable to copy base64 encoded data to byte stream.",
 		 function );
 
-		goto on_error;
+		return( -1 );
 	}
 	return( 1 );
-
-on_error:
-	if( *data != NULL )
-	{
-		memory_free(
-		 *data );
-
-		*data = NULL;
-	}
-	*data_size = 0;
-
-	return( -1 );
 }
 
 /* Retrieves an integer value
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_get_value_integer(
-     libfplist_key_t *key,
+int libfplist_property_get_value_integer(
+     libfplist_property_t *property,
      uint64_t *value_64bit,
      libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	static char *function                  = "libfplist_key_get_value_integer";
-	int result                             = 0;
+	libfplist_internal_property_t *internal_property = NULL;
+	static char *function                            = "libfplist_property_get_value_integer";
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	internal_key = (libfplist_internal_key_t *) key;
+	internal_property = (libfplist_internal_property_t *) property;
 
-	if( internal_key->value_tag == NULL )
+	if( internal_property->value_tag == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
+		 "%s: invalid property - missing value XML tag.",
 		 function );
 
 		return( -1 );
 	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "integer",
-	          7,
-	          error );
-
-	if( result == -1 )
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
 	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
-		 function );
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
 
-		return( -1 );
+			return( -1 );
+		}
 	}
-	else if( result == 0 )
+	if( internal_property->value_type != LIBFPLIST_VALUE_TYPE_INTEGER )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: unsupported value tag: %s.",
-		 function,
-		 internal_key->value_tag->name );
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
+		 function );
 
 		return( -1 );
 	}
 /* TODO add size support ? */
 	if( libfvalue_utf8_string_copy_to_integer(
-	     internal_key->value_tag->value,
-	     internal_key->value_tag->value_size - 1,
+	     internal_property->value_tag->value,
+	     internal_property->value_tag->value_size - 1,
 	     (uint64_t *) value_64bit,
 	     64,
-	     LIBFVALUE_INTEGER_FORMAT_TYPE_HEXADECIMAL | LIBFVALUE_INTEGER_FORMAT_FLAG_UNSIGNED,
+	     LIBFVALUE_INTEGER_FORMAT_TYPE_DECIMAL | LIBFVALUE_INTEGER_FORMAT_FLAG_UNSIGNED,
 	     error ) != 1 )
 	{
 		libcerror_error_set(
@@ -577,36 +606,35 @@ int libfplist_key_get_value_integer(
 /* Retrieves a string value
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_get_value_string(
-     libfplist_key_t *key,
+int libfplist_property_get_value_string(
+     libfplist_property_t *property,
      uint8_t **string,
      size_t *string_size,
      libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	static char *function                  = "libfplist_key_get_value_string";
-	int result                             = 0;
+	libfplist_internal_property_t *internal_property = NULL;
+	static char *function                            = "libfplist_property_get_value_string";
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	internal_key = (libfplist_internal_key_t *) key;
+	internal_property = (libfplist_internal_property_t *) property;
 
-	if( internal_key->value_tag == NULL )
+	if( internal_property->value_tag == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
+		 "%s: invalid property - missing value XML tag.",
 		 function );
 
 		return( -1 );
@@ -644,39 +672,38 @@ int libfplist_key_get_value_string(
 
 		return( -1 );
 	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "string",
-	          6,
-	          error );
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
+	{
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
 
-	if( result == -1 )
+			return( -1 );
+		}
+	}
+	if( internal_property->value_type != LIBFPLIST_VALUE_TYPE_STRING )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
 		 function );
 
 		return( -1 );
 	}
-	else if( result == 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: unsupported value tag: %s.",
-		 function,
-		 internal_key->value_tag->name );
-
-		return( -1 );
-	}
-	*string_size = internal_key->value_tag->value_size;
+	*string_size = internal_property->value_tag->value_size;
 
 	*string = memory_allocate(
-	           sizeof( uint8_t ) * internal_key->value_tag->value_size );
+	           sizeof( uint8_t ) * internal_property->value_tag->value_size );
 
 	if( *string == NULL )
 	{
@@ -691,8 +718,8 @@ int libfplist_key_get_value_string(
 	}
 	if( memory_copy(
 	     *string,
-	     internal_key->value_tag->value,
-	     internal_key->value_tag->value_size ) == NULL )
+	     internal_property->value_tag->value,
+	     internal_property->value_tag->value_size ) == NULL )
 	{
 		libcerror_error_set(
 		 error,
@@ -721,20 +748,20 @@ on_error:
 /* Copies an UUID string value to a byte stream
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_value_uuid_string_copy_to_byte_stream(
-     libfplist_key_t *key,
+int libfplist_property_value_uuid_string_copy_to_byte_stream(
+     libfplist_property_t *property,
      uint8_t *byte_stream,
      size_t byte_stream_size,
      libcerror_error_t **error )
 {
 	libfguid_identifier_t *guid = NULL;
 	uint8_t *string             = NULL;
-	static char *function       = "libfplist_key_value_uuid_string_copy_to_byte_stream";
+	static char *function       = "libfplist_property_value_uuid_string_copy_to_byte_stream";
 	size_t string_size          = 0;
 	int result                  = 0;
 
-	if( libfplist_key_get_value_string(
-	     key,
+	if( libfplist_property_get_value_string(
+	     property,
 	     &string,
 	     &string_size,
 	     error ) != 1 )
@@ -846,39 +873,39 @@ on_error:
 /* Retrieves the number of array entries
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_get_array_number_of_entries(
-     libfplist_key_t *key,
+int libfplist_property_get_array_number_of_entries(
+     libfplist_property_t *property,
      int *number_of_entries,
      libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	libfplist_xml_tag_t *element_tag       = NULL;
-	static char *function                  = "libfplist_key_get_array_number_of_entries";
-	int element_index                      = 0;
-	int number_of_elements                 = 0;
-	int number_of_nodes                    = 0;
-	int result                             = 0;
+	libfplist_internal_property_t *internal_property = NULL;
+	libfplist_xml_tag_t *element_tag                 = NULL;
+	static char *function                            = "libfplist_property_get_array_number_of_entries";
+	int element_index                                = 0;
+	int number_of_elements                           = 0;
+	int number_of_nodes                              = 0;
+	int result                                       = 0;
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	internal_key = (libfplist_internal_key_t *) key;
+	internal_property = (libfplist_internal_property_t *) property;
 
-	if( internal_key->value_tag == NULL )
+	if( internal_property->value_tag == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
+		 "%s: invalid property - missing value XML tag.",
 		 function );
 
 		return( -1 );
@@ -894,37 +921,36 @@ int libfplist_key_get_array_number_of_entries(
 
 		return( -1 );
 	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "array",
-	          5,
-	          error );
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
+	{
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
 
-	if( result == -1 )
+			return( -1 );
+		}
+	}
+	if( internal_property->value_type != LIBFPLIST_VALUE_TYPE_ARRAY )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
 		 function );
 
 		return( -1 );
 	}
-	else if( result == 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: unsupported value tag: %s.",
-		 function,
-		 internal_key->value_tag->name );
-
-		return( -1 );
-	}
 	if( libfplist_xml_tag_get_number_of_elements(
-	     internal_key->value_tag,
+	     internal_property->value_tag,
 	     &number_of_elements,
 	     error ) != 1 )
 	{
@@ -942,7 +968,7 @@ int libfplist_key_get_array_number_of_entries(
 	     element_index++ )
 	{
 		if( libfplist_xml_tag_get_element(
-		     internal_key->value_tag,
+		     internal_property->value_tag,
 		     element_index,
 		     &element_tag,
 		     error ) != 1 )
@@ -989,40 +1015,40 @@ int libfplist_key_get_array_number_of_entries(
 /* Retrieves a specific array entry
  * Returns 1 if successful or -1 on error
  */
-int libfplist_key_get_array_entry_by_index(
-     libfplist_key_t *key,
+int libfplist_property_get_array_entry_by_index(
+     libfplist_property_t *property,
      int array_entry_index,
-     libfplist_key_t **array_entry,
+     libfplist_property_t **array_entry,
      libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	libfplist_xml_tag_t *value_tag         = NULL;
-	static char *function                  = "libfplist_key_get_array_entry_by_index";
-	int entry_index                        = 0;
-	int element_index                      = 0;
-	int number_of_elements                 = 0;
-	int result                             = 0;
+	libfplist_internal_property_t *internal_property = NULL;
+	libfplist_xml_tag_t *value_tag                   = NULL;
+	static char *function                            = "libfplist_property_get_array_entry_by_index";
+	int entry_index                                  = 0;
+	int element_index                                = 0;
+	int number_of_elements                           = 0;
+	int result                                       = 0;
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	internal_key = (libfplist_internal_key_t *) key;
+	internal_property = (libfplist_internal_property_t *) property;
 
-	if( internal_key->value_tag == NULL )
+	if( internal_property->value_tag == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
+		 "%s: invalid property - missing value XML tag.",
 		 function );
 
 		return( -1 );
@@ -1060,37 +1086,36 @@ int libfplist_key_get_array_entry_by_index(
 
 		return( -1 );
 	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "array",
-	          5,
-	          error );
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
+	{
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
 
-	if( result == -1 )
+			return( -1 );
+		}
+	}
+	if( internal_property->value_type != LIBFPLIST_VALUE_TYPE_ARRAY )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
 		 function );
 
 		return( -1 );
 	}
-	else if( result == 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: unsupported value tag: %s.",
-		 function,
-		 internal_key->value_tag->name );
-
-		return( -1 );
-	}
 	if( libfplist_xml_tag_get_number_of_elements(
-	     internal_key->value_tag,
+	     internal_property->value_tag,
 	     &number_of_elements,
 	     error ) != 1 )
 	{
@@ -1110,7 +1135,7 @@ int libfplist_key_get_array_entry_by_index(
 	while( element_index < number_of_elements )
 	{
 		if( libfplist_xml_tag_get_element(
-		     internal_key->value_tag,
+		     internal_property->value_tag,
 		     element_index,
 		     &value_tag,
 		     error ) != 1 )
@@ -1139,7 +1164,7 @@ int libfplist_key_get_array_entry_by_index(
 			 error,
 			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-			 "%s: unable to compare name of key tag.",
+			 "%s: unable to compare name of value tag.",
 			 function );
 
 			return( -1 );
@@ -1158,7 +1183,7 @@ int libfplist_key_get_array_entry_by_index(
 	{
 		return( 0 );
 	}
-	if( libfplist_key_initialize(
+	if( libfplist_property_initialize(
 	     array_entry,
 	     NULL,
 	     value_tag,
@@ -1177,44 +1202,44 @@ int libfplist_key_get_array_entry_by_index(
 	return( 1 );
 }
 
-/* Retrieves the sub key for the specific UTF-8 encoded name
- * Returns 1 if successful, 0 if no such sub key or -1 on error
+/* Retrieves the sub property for the specific UTF-8 encoded name
+ * Returns 1 if successful, 0 if no such sub property or -1 on error
  */
-int libfplist_key_get_sub_key_by_utf8_name(
-     libfplist_key_t *key,
+int libfplist_property_get_sub_property_by_utf8_name(
+     libfplist_property_t *property,
      const uint8_t *utf8_string,
      size_t utf8_string_length,
-     libfplist_key_t **sub_key,
+     libfplist_property_t **sub_property,
      libcerror_error_t **error )
 {
-	libfplist_internal_key_t *internal_key = NULL;
-	libfplist_xml_tag_t *key_tag           = NULL;
-	libfplist_xml_tag_t *value_tag         = NULL;
-	static char *function                  = "libfplist_key_get_sub_key_by_utf8_name";
-	int element_index                      = 0;
-	int number_of_elements                 = 0;
-	int result                             = 0;
+	libfplist_internal_property_t *internal_property = NULL;
+	libfplist_xml_tag_t *key_tag                     = NULL;
+	libfplist_xml_tag_t *value_tag                   = NULL;
+	static char *function                            = "libfplist_property_get_sub_property_by_utf8_name";
+	int element_index                                = 0;
+	int number_of_elements                           = 0;
+	int result                                       = 0;
 
-	if( key == NULL )
+	if( property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid key.",
+		 "%s: invalid property.",
 		 function );
 
 		return( -1 );
 	}
-	internal_key = (libfplist_internal_key_t *) key;
+	internal_property = (libfplist_internal_property_t *) property;
 
-	if( internal_key->value_tag == NULL )
+	if( internal_property->value_tag == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
-		 "%s: invalid key - missing value value XML tag.",
+		 "%s: invalid property - missing value XML tag.",
 		 function );
 
 		return( -1 );
@@ -1241,59 +1266,58 @@ int libfplist_key_get_sub_key_by_utf8_name(
 
 		return( -1 );
 	}
-	if( sub_key == NULL )
+	if( sub_property == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid sub key.",
+		 "%s: invalid sub property.",
 		 function );
 
 		return( -1 );
 	}
-	if( *sub_key != NULL )
+	if( *sub_property != NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_ALREADY_SET,
-		 "%s: invalid sub key value already set.",
+		 "%s: invalid sub property value already set.",
 		 function );
 
 		return( -1 );
 	}
-	result = libfplist_xml_tag_compare_name(
-	          internal_key->value_tag,
-	          (uint8_t *) "dict",
-	          4,
-	          error );
-
-	if( result == -1 )
+	if( internal_property->value_type == LIBFPLIST_VALUE_TYPE_UNKNOWN )
 	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to compare name of value tag.",
-		 function );
+		if( libfplist_xml_tag_get_value_type(
+		     internal_property->value_tag,
+		     &( internal_property->value_type ),
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to retrieve value type.",
+			 function );
 
-		return( -1 );
+			return( -1 );
+		}
 	}
-	else if( result == 0 )
+	if( internal_property->value_type != LIBFPLIST_VALUE_TYPE_DICTIONARY )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: unsupported value tag: %s.",
-		 function,
-		 internal_key->value_tag->name );
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported value type.",
+		 function );
 
 		return( -1 );
 	}
 	if( libfplist_xml_tag_get_number_of_elements(
-	     internal_key->value_tag,
+	     internal_property->value_tag,
 	     &number_of_elements,
 	     error ) != 1 )
 	{
@@ -1311,7 +1335,7 @@ int libfplist_key_get_sub_key_by_utf8_name(
 	while( element_index < number_of_elements )
 	{
 		if( libfplist_xml_tag_get_element(
-		     internal_key->value_tag,
+		     internal_property->value_tag,
 		     element_index,
 		     &key_tag,
 		     error ) != 1 )
@@ -1365,7 +1389,7 @@ int libfplist_key_get_sub_key_by_utf8_name(
 	while( element_index < number_of_elements )
 	{
 		if( libfplist_xml_tag_get_element(
-		     internal_key->value_tag,
+		     internal_property->value_tag,
 		     element_index,
 		     &value_tag,
 		     error ) != 1 )
@@ -1409,8 +1433,8 @@ int libfplist_key_get_sub_key_by_utf8_name(
 	{
 		return( 0 );
 	}
-	if( libfplist_key_initialize(
-	     sub_key,
+	if( libfplist_property_initialize(
+	     sub_property,
 	     key_tag,
 	     value_tag,
 	     error ) != 1 )
@@ -1419,7 +1443,7 @@ int libfplist_key_get_sub_key_by_utf8_name(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_INITIALIZE_FAILED,
-		 "%s: unable to create sub key.",
+		 "%s: unable to create sub property.",
 		 function );
 
 		return( -1 );
