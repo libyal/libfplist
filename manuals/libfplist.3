@@ -25,21 +25,29 @@ Error functions
 .Ft int
 .Fn libfplist_error_backtrace_sprint "libfplist_error_t *error, char *string, size_t size"
 .Pp
-Plist functions
+Property list functions
 .Ft int
-.Fn libfplist_plist_initialize "libfplist_plist_t **plist, libfplist_error_t **error"
+.Fn libfplist_property_list_initialize "libfplist_property_list_t **property_list, libfplist_error_t **error"
 .Ft int
-.Fn libfplist_plist_free "libfplist_plist_t **plist, libfplist_error_t **error"
+.Fn libfplist_property_list_free "libfplist_property_list_t **property_list, libfplist_error_t **error"
 .Ft int
-.Fn libfplist_plist_copy_from_byte_stream "libfplist_plist_t *plist, const uint8_t *byte_stream, size_t byte_stream_size, libfplist_error_t **error"
+.Fn libfplist_property_list_copy_from_byte_stream "libfplist_property_list_t *property_list, const uint8_t *byte_stream, size_t byte_stream_size, libfplist_error_t **error"
 .Ft int
-.Fn libfplist_plist_has_plist_root_element "libfplist_plist_t *plist, libfplist_error_t **error"
+.Fn libfplist_property_list_has_plist_root_element "libfplist_property_list_t *property_list, libfplist_error_t **error"
 .Ft int
-.Fn libfplist_plist_get_root_key "libfplist_plist_t *plist, libfplist_key_t **key, libfplist_error_t **error"
+.Fn libfplist_property_list_get_root_property "libfplist_property_list_t *property_list, libfplist_property_t **property, libfplist_error_t **error"
 .Pp
-Key functions
+Property functions
 .Ft int
-.Fn libfplist_key_free "libfplist_key_t **key, libfplist_error_t **error"
+.Fn libfplist_property_free "libfplist_property_t **property, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_property_get_value_type "libfplist_property_t *property, int *value_type, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_property_get_value_data_size "libfplist_property_t *property, size_t *data_size, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_property_get_value_data "libfplist_property_t *property, uint8_t *data, size_t data_size, libfplist_error_t **error"
+.Ft int
+.Fn libfplist_property_get_value_integer "libfplist_property_t *property, uint64_t *value_64bit, libfplist_error_t **error"
 .Sh DESCRIPTION
 The
 .Fn libfplist_get_version
