@@ -315,6 +315,40 @@ int fplist_test_property_list_copy_from_byte_stream(
          "error",
          error );
 
+	/* Clean up
+	 */
+	result = libfplist_property_list_free(
+	          &property_list,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	/* Initialize test
+	 */
+	result = libfplist_property_list_initialize(
+	          &property_list,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "property_list",
+         property_list );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
 	/* Test error cases
 	 */
 	result = libfplist_property_list_copy_from_byte_stream(
@@ -357,6 +391,115 @@ int fplist_test_property_list_copy_from_byte_stream(
 	          property_list,
 	          (uint8_t *) fplist_test_property_list_byte_stream,
 	          (size_t) SSIZE_MAX + 1,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "error",
+         error );
+
+	libcerror_error_free(
+	 &error );
+
+	/* Clean up
+	 */
+	result = libfplist_property_list_free(
+	          &property_list,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	if( property_list != NULL )
+	{
+		libfplist_property_list_free(
+		 &property_list,
+		 NULL );
+	}
+	return( 0 );
+}
+
+/* Tests the libfplist_property_list_has_plist_root_element function
+ * Returns 1 if successful or 0 if not
+ */
+int fplist_test_property_list_has_plist_root_element(
+     void )
+{
+	libcerror_error_t *error                 = NULL;
+	libfplist_property_list_t *property_list = NULL;
+	int result                               = 0;
+
+	/* Initialize test
+	 */
+	result = libfplist_property_list_initialize(
+	          &property_list,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NOT_NULL(
+         "property_list",
+         property_list );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	result = libfplist_property_list_copy_from_byte_stream(
+	          property_list,
+	          (uint8_t *) fplist_test_property_list_byte_stream,
+	          496,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	/* Test determine if property list has plist root element
+	 */
+	result = libfplist_property_list_has_plist_root_element(
+	          property_list,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+        FPLIST_TEST_ASSERT_IS_NULL(
+         "error",
+         error );
+
+	/* Test error cases
+	 */
+	result = libfplist_property_list_has_plist_root_element(
+	          NULL,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -588,7 +731,9 @@ int main(
 	 "libfplist_property_list_copy_from_byte_stream",
 	 fplist_test_property_list_copy_from_byte_stream );
 
-	/* TODO add tests for libfplist_property_list_has_plist_root_element */
+	FPLIST_TEST_RUN(
+	 "ibfplist_property_list_has_plist_root_element",
+	 fplist_test_property_list_has_plist_root_element );
 
 	FPLIST_TEST_RUN(
 	 "libfplist_property_list_get_root_property",

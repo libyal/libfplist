@@ -172,9 +172,12 @@ int libfplist_property_list_copy_from_byte_stream(
      libcerror_error_t **error )
 {
 	libfplist_internal_property_list_t *internal_property_list = NULL;
+	libfplist_xml_tag_t *element_tag                           = NULL;
 	uint8_t *buffer                                            = NULL;
 	static char *function                                      = "libfplist_property_list_copy_from_byte_stream";
 	size_t buffer_size                                         = 0;
+	int element_index                                          = 0;
+	int number_of_elements                                     = 0;
 	int result                                                 = 0;
 
 	if( property_list == NULL )
@@ -190,6 +193,17 @@ int libfplist_property_list_copy_from_byte_stream(
 	}
 	internal_property_list = (libfplist_internal_property_list_t *) property_list;
 
+	if( internal_property_list->dict_tag != NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_ALREADY_SET,
+		 "%s: invalid property list - dict XML tag already set.",
+		 function );
+
+		return( -1 );
+	}
 	if( internal_property_list->root_tag != NULL )
 	{
 		libcerror_error_set(
@@ -212,7 +226,9 @@ int libfplist_property_list_copy_from_byte_stream(
 
 		return( -1 );
 	}
-	if( byte_stream_size > (size_t) INT_MAX )
+	if( ( byte_stream_size < 2 )
+	 || ( byte_stream_size > (size_t) INT_MAX )
+	 || ( byte_stream_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
@@ -225,41 +241,53 @@ int libfplist_property_list_copy_from_byte_stream(
 	}
 	/* Lex wants 2 zero bytes at the end of the buffer
 	 */
-	buffer_size = byte_stream_size + 1;
-
-	buffer = (uint8_t *) memory_allocate(
-	                      sizeof( uint8_t ) * buffer_size );
-
-	if( buffer == NULL )
+	if( ( byte_stream[ byte_stream_size - 2 ] == 0 )
+	 && ( byte_stream[ byte_stream_size - 1 ] == 0 ) )
 	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_MEMORY,
-		 LIBCERROR_MEMORY_ERROR_INSUFFICIENT,
-		 "%s: unable to create buffer.",
-		 function );
-
-		goto on_error;
+		buffer      = (uint8_t *) byte_stream;
+		buffer_size = byte_stream_size;
 	}
-	if( memory_copy(
-	     buffer,
-	     byte_stream,
-	     byte_stream_size - 1 ) == NULL )
+	else
 	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_MEMORY,
-		 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
-		 "%s: unable to copy byte stream.",
-		 function );
+		if( byte_stream[ byte_stream_size - 1 ] == 0 )
+		{
+			buffer_size = byte_stream_size + 1;
+		}
+		else
+		{
+			buffer_size = byte_stream_size + 2;
+		}
+		buffer = (uint8_t *) memory_allocate(
+		                      sizeof( uint8_t ) * buffer_size );
+
+		if( buffer == NULL )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_MEMORY,
+			 LIBCERROR_MEMORY_ERROR_INSUFFICIENT,
+			 "%s: unable to create buffer.",
+			 function );
+
+			goto on_error;
+		}
+		if( memory_copy(
+		     buffer,
+		     byte_stream,
+		     byte_stream_size ) == NULL )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_MEMORY,
+			 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+			 "%s: unable to copy byte stream.",
+			 function );
 	
-		goto on_error;
+			goto on_error;
+		}
+		buffer[ buffer_size - 2 ] = 0;
+		buffer[ buffer_size - 1 ] = 0;
 	}
-	/* Lex wants 2 zero bytes at the end of the buffer
-	 */
-	buffer[ buffer_size - 2 ] = 0;
-	buffer[ buffer_size - 1 ] = 0;
-
 	result = xml_parser_parse_buffer(
 	          property_list,
 	          buffer,
@@ -277,15 +305,163 @@ int libfplist_property_list_copy_from_byte_stream(
 
 		goto on_error;
 	}
-	memory_free(
-	 buffer );
+	if( buffer != byte_stream )
+	{
+		memory_free(
+		 buffer );
 
-	buffer = NULL;
+		buffer = NULL;
+	}
+	if( internal_property_list->root_tag == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid property list - missing root XML tag.",
+		 function );
 
+		goto on_error;
+	}
+	result = libfplist_xml_tag_compare_name(
+	          internal_property_list->root_tag,
+	          (uint8_t *) "dict",
+	          4,
+	          error );
+
+	if( result == -1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+		 "%s: unable to compare name of root tag.",
+		 function );
+
+		goto on_error;
+	}
+	else if( result == 1 )
+	{
+		internal_property_list->dict_tag = internal_property_list->root_tag;
+	}
+	else
+	{
+		/* Ignore the plist XML node
+		 * <plist version="1.0">
+		 */
+		result = libfplist_xml_tag_compare_name(
+		          internal_property_list->root_tag,
+		          (uint8_t *) "plist",
+		          5,
+		          error );
+
+		if( result == -1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+			 "%s: unable to compare name of root tag.",
+			 function );
+
+			goto on_error;
+		}
+		else if( result == 1 )
+		{
+			internal_property_list->plist_tag = internal_property_list->root_tag;
+
+			if( libfplist_xml_tag_get_number_of_elements(
+			     internal_property_list->root_tag,
+			     &number_of_elements,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+				 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+				 "%s: unable to retrieve number of elements.",
+				 function );
+
+				goto on_error;
+			}
+			for( element_index = 0;
+			     element_index < number_of_elements;
+			     element_index++ )
+			{
+				if( libfplist_xml_tag_get_element(
+				     internal_property_list->root_tag,
+				     element_index,
+				     &element_tag,
+				     error ) != 1 )
+				{
+					libcerror_error_set(
+					 error,
+					 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+					 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+					 "%s: unable to retrieve element: %d.",
+					 function,
+					 element_index );
+
+					goto on_error;
+				}
+				result = libfplist_xml_tag_compare_name(
+				          element_tag,
+				          (uint8_t *) "text",
+				          4,
+				          error );
+
+				if( result == -1 )
+				{
+					libcerror_error_set(
+					 error,
+					 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+					 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+					 "%s: unable to compare name of element tag: %d.",
+					 function,
+					 element_index );
+
+					goto on_error;
+				}
+				else if( result != 0 )
+				{
+					/* Ignore text nodes
+					 */
+					continue;
+				}
+				result = libfplist_xml_tag_compare_name(
+				          element_tag,
+				          (uint8_t *) "dict",
+				          4,
+				          error );
+
+				if( result == -1 )
+				{
+					libcerror_error_set(
+					 error,
+					 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+					 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+					 "%s: unable to compare name of element tag: %d.",
+					 function,
+					 element_index );
+
+					goto on_error;
+				}
+				else if( result != 0 )
+				{
+					internal_property_list->dict_tag = element_tag;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
 	return( 1 );
 
 on_error:
-	if( buffer != NULL )
+	if( ( buffer != NULL )
+	 && ( buffer != byte_stream ) )
 	{
 		memory_free(
 		 buffer );
@@ -332,11 +508,7 @@ int libfplist_property_list_get_root_property(
      libcerror_error_t **error )
 {
 	libfplist_internal_property_list_t *internal_property_list = NULL;
-	libfplist_xml_tag_t *element_tag                           = NULL;
 	static char *function                                      = "libfplist_property_list_get_root_property";
-	int element_index                                          = 0;
-	int number_of_elements                                     = 0;
-	int result                                                 = 0;
 
 	if( property_list == NULL )
 	{
@@ -372,147 +544,6 @@ int libfplist_property_list_get_root_property(
 		 function );
 
 		return( -1 );
-	}
-	if( internal_property_list->root_tag == NULL )
-	{
-		return( 0 );
-	}
-	if( internal_property_list->dict_tag == NULL )
-	{
-		result = libfplist_xml_tag_compare_name(
-		          internal_property_list->root_tag,
-		          (uint8_t *) "dict",
-		          4,
-		          error );
-
-		if( result == -1 )
-		{
-			libcerror_error_set(
-			 error,
-			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-			 "%s: unable to compare name of root tag.",
-			 function );
-
-			return( -1 );
-		}
-		else if( result != 0 )
-		{
-			internal_property_list->dict_tag = internal_property_list->root_tag;
-		}
-	}
-	if( internal_property_list->dict_tag == NULL )
-	{
-		/* Ignore the plist XML node
-		 * <plist version="1.0">
-		 */
-		result = libfplist_xml_tag_compare_name(
-		          internal_property_list->root_tag,
-		          (uint8_t *) "plist",
-		          5,
-		          error );
-
-		if( result == -1 )
-		{
-			libcerror_error_set(
-			 error,
-			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-			 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-			 "%s: unable to compare name of root tag.",
-			 function );
-
-			return( -1 );
-		}
-		else if( result != 0 )
-		{
-			internal_property_list->plist_tag = internal_property_list->root_tag;
-
-			if( libfplist_xml_tag_get_number_of_elements(
-			     internal_property_list->root_tag,
-			     &number_of_elements,
-			     error ) != 1 )
-			{
-				libcerror_error_set(
-				 error,
-				 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-				 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-				 "%s: unable to retrieve number of elements.",
-				 function );
-
-				return( -1 );
-			}
-			for( element_index = 0;
-			     element_index < number_of_elements;
-			     element_index++ )
-			{
-				if( libfplist_xml_tag_get_element(
-				     internal_property_list->root_tag,
-				     element_index,
-				     &element_tag,
-				     error ) != 1 )
-				{
-					libcerror_error_set(
-					 error,
-					 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-					 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-					 "%s: unable to retrieve element: %d.",
-					 function,
-					 element_index );
-
-					return( -1 );
-				}
-				result = libfplist_xml_tag_compare_name(
-				          element_tag,
-				          (uint8_t *) "text",
-				          4,
-				          error );
-
-				if( result == -1 )
-				{
-					libcerror_error_set(
-					 error,
-					 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-					 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-					 "%s: unable to compare name of element tag: %d.",
-					 function,
-					 element_index );
-
-					return( -1 );
-				}
-				else if( result != 0 )
-				{
-					/* Ignore text nodes
-					 */
-					continue;
-				}
-				result = libfplist_xml_tag_compare_name(
-				          element_tag,
-				          (uint8_t *) "dict",
-				          4,
-				          error );
-
-				if( result == -1 )
-				{
-					libcerror_error_set(
-					 error,
-					 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-					 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-					 "%s: unable to compare name of element tag: %d.",
-					 function,
-					 element_index );
-
-					return( -1 );
-				}
-				else if( result != 0 )
-				{
-					internal_property_list->dict_tag = element_tag;
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
 	}
 	if( internal_property_list->dict_tag == NULL )
 	{
