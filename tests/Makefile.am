@@ -1,7 +1,6 @@
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/include \
 	-I$(top_srcdir)/common \
-	@LIBCSTRING_CPPFLAGS@ \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBFPLIST_DLL_IMPORT@
 
@@ -25,18 +24,15 @@ check_PROGRAMS = \
 
 fplist_test_error_SOURCES = \
 	fplist_test_error.c \
-	fplist_test_libcstring.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_unused.h
 
 fplist_test_error_LDADD = \
-	../libfplist/libfplist.la \
-	@LIBCSTRING_LIBADD@
+	../libfplist/libfplist.la
 
 fplist_test_property_SOURCES = \
 	fplist_test_property.c \
-	fplist_test_libcstring.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_memory.c fplist_test_memory.h \
@@ -44,11 +40,9 @@ fplist_test_property_SOURCES = \
 
 fplist_test_property_LDADD = \
 	../libfplist/libfplist.la \
-	@LIBCERROR_LIBADD@ \
-	@LIBCSTRING_LIBADD@
+	@LIBCERROR_LIBADD@
 
 fplist_test_property_list_SOURCES = \
-	fplist_test_libcstring.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_memory.c fplist_test_memory.h \
@@ -57,19 +51,16 @@ fplist_test_property_list_SOURCES = \
 
 fplist_test_property_list_LDADD = \
 	../libfplist/libfplist.la \
-	@LIBCERROR_LIBADD@ \
-	@LIBCSTRING_LIBADD@
+	@LIBCERROR_LIBADD@
 
 fplist_test_support_SOURCES = \
-	fplist_test_libcstring.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_support.c \
 	fplist_test_unused.h
 
 fplist_test_support_LDADD = \
-	../libfplist/libfplist.la \
-	@LIBCSTRING_LIBADD@
+	../libfplist/libfplist.la
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

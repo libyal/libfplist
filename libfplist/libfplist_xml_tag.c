@@ -21,6 +21,7 @@
 
 #include <common.h>
 #include <memory.h>
+#include <narrow_string.h>
 #include <types.h>
 
 #include "libfplist_definitions.h"
@@ -321,35 +322,35 @@ int libfplist_xml_tag_get_value_type(
 
 	if( tag->name_size == 5 )
 	{
-		if( libcstring_narrow_string_compare(
+		if( narrow_string_compare(
 		     tag->name,
 		     "data",
 		     4 ) == 0 )
 		{
 			*value_type = LIBFPLIST_VALUE_TYPE_BINARY_DATA;
 		}
-		else if( libcstring_narrow_string_compare(
+		else if( narrow_string_compare(
 		          tag->name,
 		          "date",
 		          4 ) == 0 )
 		{
 			*value_type = LIBFPLIST_VALUE_TYPE_DATE;
 		}
-		else if( libcstring_narrow_string_compare(
+		else if( narrow_string_compare(
 		          tag->name,
 		          "dict",
 		          4 ) == 0 )
 		{
 			*value_type = LIBFPLIST_VALUE_TYPE_DICTIONARY;
 		}
-		else if( libcstring_narrow_string_compare(
+		else if( narrow_string_compare(
 		          tag->name,
 		          "real",
 		          4 ) == 0 )
 		{
 			*value_type = LIBFPLIST_VALUE_TYPE_FLOATING_POINT;
 		}
-		else if( libcstring_narrow_string_compare(
+		else if( narrow_string_compare(
 		          tag->name,
 		          "true",
 		          4 ) == 0 )
@@ -359,14 +360,14 @@ int libfplist_xml_tag_get_value_type(
 	}
 	else if( tag->name_size == 6 )
 	{
-		if( libcstring_narrow_string_compare(
+		if( narrow_string_compare(
 		     tag->name,
 		     "array",
 		     5 ) == 0 )
 		{
 			*value_type = LIBFPLIST_VALUE_TYPE_ARRAY;
 		}
-		else if( libcstring_narrow_string_compare(
+		else if( narrow_string_compare(
 		          tag->name,
 		          "false",
 		          5 ) == 0 )
@@ -376,7 +377,7 @@ int libfplist_xml_tag_get_value_type(
 	}
 	else if( tag->name_size == 8 )
 	{
-		if( libcstring_narrow_string_compare(
+		if( narrow_string_compare(
 		     tag->name,
 		     "integer",
 		     7 ) == 0 )
@@ -432,7 +433,7 @@ int libfplist_xml_tag_compare_name(
 		return( -1 );
 	}
 	if( ( tag->name_size != ( name_length + 1 ) )
-	 || ( libcstring_narrow_string_compare(
+	 || ( narrow_string_compare(
 	       tag->name,
 	       name,
 	       name_length ) != 0 ) )

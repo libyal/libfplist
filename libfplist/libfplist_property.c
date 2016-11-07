@@ -21,6 +21,7 @@
 
 #include <common.h>
 #include <memory.h>
+#include <narrow_string.h>
 #include <types.h>
 
 #include "libfplist_definitions.h"
@@ -1370,7 +1371,7 @@ int libfplist_property_get_sub_property_by_utf8_name(
 		else if( result != 0 )
 		{
 			if( ( key_tag->value_size == ( utf8_string_length + 1 ) )
-			 && libcstring_narrow_string_compare(
+			 && narrow_string_compare(
 			     key_tag->value,
 			     utf8_string,
 			     utf8_string_length ) == 0 )

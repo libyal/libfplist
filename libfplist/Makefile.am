@@ -4,7 +4,6 @@ AM_YFLAGS = -d -v -l -p xml_scanner_
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/include \
 	-I$(top_srcdir)/common \
-	@LIBCSTRING_CPPFLAGS@ \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBCDATA_CPPFLAGS@ \
 	@LIBCNOTIFY_CPPFLAGS@ \
@@ -24,7 +23,6 @@ libfplist_la_SOURCES = \
 	libfplist_libcdata.h \
 	libfplist_libcerror.h \
 	libfplist_libcnotify.h \
-	libfplist_libcstring.h \
 	libfplist_libfguid.h \
 	libfplist_libfvalue.h \
 	libfplist_libuna.h \
@@ -39,7 +37,6 @@ libfplist_la_SOURCES = \
 	libfplist_xml_tag.c libfplist_xml_tag.h
 
 libfplist_la_LIBADD = \
-	@LIBCSTRING_LIBADD@ \
 	@LIBCERROR_LIBADD@ \
 	@LIBCDATA_LIBADD@ \
 	@LIBCNOTIFY_LIBADD@ \

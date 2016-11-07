@@ -21,6 +21,8 @@
  */
 
 #include <common.h>
+#include <memory.h>
+#include <narrow_string.h>
 #include <types.h>
 
 #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
@@ -311,7 +313,7 @@ xml_tag_close
 			YYABORT;
 		}
 		if( ( ( (xml_parser_state_t *) parser_state )->current_tag->name_size != ( $1.length + 1 ) )
-		 || ( libcstring_narrow_string_compare(
+		 || ( narrow_string_compare(
 		       ( (xml_parser_state_t *) parser_state )->current_tag->name,
 		       $1.data,
 		       $1.length ) != 0 ) )

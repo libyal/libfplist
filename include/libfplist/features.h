@@ -24,10 +24,6 @@
 
 /* The libfplist type support features
  */
-#if defined( WINAPI ) || 0
-#define LIBFPLIST_HAVE_WIDE_CHARACTER_TYPE	1
-#endif
-
 #if !defined( LIBFPLIST_DEPRECATED )
 #if defined( __GNUC__ ) && __GNUC__ >= 3
 #define LIBFPLIST_DEPRECATED	__attribute__ ((__deprecated__))

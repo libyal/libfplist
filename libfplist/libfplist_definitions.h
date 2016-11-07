@@ -36,11 +36,11 @@
 #else
 #include <byte_stream.h>
 
-#define LIBFPLIST_VERSION			20161105
+#define LIBFPLIST_VERSION			20161107
 
 /* The version string
  */
-#define LIBFPLIST_VERSION_STRING		"20161105"
+#define LIBFPLIST_VERSION_STRING		"20161107"
 
 enum LIBFPLIST_VALUE_TYPES
 {
