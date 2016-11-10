@@ -32,10 +32,11 @@ fplist_test_error_LDADD = \
 	../libfplist/libfplist.la
 
 fplist_test_property_SOURCES = \
-	fplist_test_property.c \
+	fplist_test_libcerror.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_memory.c fplist_test_memory.h \
+	fplist_test_property.c \
 	fplist_test_unused.h
 
 fplist_test_property_LDADD = \
@@ -43,6 +44,7 @@ fplist_test_property_LDADD = \
 	@LIBCERROR_LIBADD@
 
 fplist_test_property_list_SOURCES = \
+	fplist_test_libcerror.h \
 	fplist_test_libfplist.h \
 	fplist_test_macros.h \
 	fplist_test_memory.c fplist_test_memory.h \

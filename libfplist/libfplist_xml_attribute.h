@@ -68,5 +68,5 @@ int libfplist_xml_attribute_free(
 }
 #endif
 
-#endif /* !defined( _LIBFPLIST_XML_PLIST_ATTRIBUTE_H ) */
+#endif /* !defined( _LIBFPLIST_XML_ATTRIBUTE_H ) */
 

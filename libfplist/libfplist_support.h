@@ -43,5 +43,5 @@ const char *libfplist_get_version(
 }
 #endif
 
-#endif
+#endif /* !defined( _LIBFPLIST_SUPPORT_H ) */
 
