@@ -38,9 +38,9 @@
 #include <libfplist/extern.h>
 
 #else
-#define LIBFPLIST_EXTERN	extern
+#define LIBFPLIST_EXTERN	/* extern */
 
-#endif
+#endif /* !defined( HAVE_LOCAL_LIBFPLIST ) */
 
 #endif /* !defined( _LIBFPLIST_INTERNAL_EXTERN_H ) */
 

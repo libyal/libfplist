@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="fplist_test_property"
-	ProjectGUID="{79B1E1E7-5DD9-47C0-AA5F-0C6EDBDA0433}"
-	RootNamespace="fplist_test_property"
+	Name="fplist_test_xml_attribute"
+	ProjectGUID="{DBEFEE74-7E4A-4585-BA52-00E69A70AFB3}"
+	RootNamespace="fplist_test_xml_attribute"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -180,7 +180,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\tests\fplist_test_property.c"
+				RelativePath="..\..\tests\fplist_test_xml_attribute.c"
 				>
 			</File>
 		</Filter>

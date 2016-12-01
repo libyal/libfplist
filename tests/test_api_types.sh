@@ -11,7 +11,7 @@ TEST_PREFIX=`dirname ${PWD}`;
 TEST_PREFIX=`basename ${TEST_PREFIX} | sed 's/^lib\([^-]*\).*$/\1/'`;
 
 TEST_PROFILE="lib${TEST_PREFIX}";
-TEST_TYPES="property_list property";
+TEST_TYPES="property property_list xml_attribute xml_tag";
 TEST_TYPES_WITH_INPUT="";
 OPTION_SETS="";
 

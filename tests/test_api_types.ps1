@@ -10,7 +10,7 @@ $TestPrefix = Split-Path -path ${Pwd}.Path -parent
 $TestPrefix = Split-Path -path ${TestPrefix} -leaf
 $TestPrefix = ${TestPrefix}.Substring(3)
 
-$TestTypes = "property_list property"
+$TestTypes = "property property_list xml_attribute xml_tag"
 $TestTypesWithInput = ""
 
 $TestToolDirectory = "..\msvscpp\Release"

@@ -10,7 +10,7 @@ $TestPrefix = Split-Path -path ${Pwd}.Path -parent
 $TestPrefix = Split-Path -path ${TestPrefix} -leaf
 $TestPrefix = ${TestPrefix}.Substring(3)
 
-$TestFunctions = "support error"
+$TestFunctions = "error support"
 $TestFunctionsWithInput = ""
 
 $TestToolDirectory = "..\msvscpp\Release"
