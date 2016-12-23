@@ -24,11 +24,11 @@
 
 #include <libfplist/types.h>
 
-#define LIBFPLIST_VERSION			20161201
+#define LIBFPLIST_VERSION			20161223
 
 /* The version string
  */
-#define LIBFPLIST_VERSION_STRING		"20161201"
+#define LIBFPLIST_VERSION_STRING		"20161223"
 
 enum LIBFPLIST_VALUE_TYPES
 {

@@ -1,5 +1,5 @@
 /*
- * Library xml_tag type testing program
+ * Library xml_tag type test program
  *
  * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
  *

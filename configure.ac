@@ -2,7 +2,7 @@ AC_PREREQ( 2.59 )
 
 AC_INIT(
  [libfplist],
- [20161201],
+ [20161223],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
