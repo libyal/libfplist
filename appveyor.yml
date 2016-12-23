@@ -11,6 +11,9 @@ configuration:
 
 install:
 - cmd: git clone https://github.com/libyal/libyal.git && move libyal ..\
+- ps: .\syncwinflexbison.ps1
+- ps: Invoke-WebRequest http://www.cygwin.com/setup-x86.exe -OutFile ..\setup-x86.exe
+- cmd: ..\setup-x86.exe -qnNdO -R C:\cygwin -s http://cygwin.mirror.constant.com -l C:\cygwin\var\cache\setup -P bison -P flex
 
 before_build:
 - cmd: xcopy /q /s C:\projects\libfplist C:\cygwin\home\appveyor\
@@ -18,9 +21,6 @@ before_build:
 
 build_script:
 - ps: .\synclibs.ps1
-- ps: .\syncwinflexbison.ps1
-- cmd: ..\win_flex_bison\win_flex.exe -Cf libfplist\libfplist_xml_scanner.l && move lex.yy.c libfplist\libfplist_xml_scanner.c
-- cmd: ..\win_flex_bison\win_bison.exe -d -v -l -p xml_scanner_ libfplist\libfplist_xml_parser.y && move libfplist_xml_parser.tab.c libfplist\libfplist_xml_parser.c && move libfplist_xml_parser.tab.h libfplist\libfplist_xml_parser.h
 - ps: .\autogen.ps1
 - cmd: >-
     rem Prepare Visual Studio 2010 build
