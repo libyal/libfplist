@@ -1,7 +1,7 @@
 /*
  * Definitions for libfplist
  *
- * Copyright (C) 2016, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2016-2017, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
@@ -24,11 +24,11 @@
 
 #include <libfplist/types.h>
 
-#define LIBFPLIST_VERSION			20161223
+#define LIBFPLIST_VERSION			20170112
 
 /* The version string
  */
-#define LIBFPLIST_VERSION_STRING		"20161223"
+#define LIBFPLIST_VERSION_STRING		"20170112"
 
 enum LIBFPLIST_VALUE_TYPES
 {
