@@ -2,7 +2,7 @@ AC_PREREQ( 2.59 )
 
 AC_INIT(
  [libfplist],
- [20170225],
+ [20170504],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
@@ -164,7 +164,6 @@ AC_CONFIG_FILES([libfplist/libfplist_definitions.h])
 dnl Have configure make distribution specific files
 AC_CONFIG_FILES([common/types.h])
 AC_CONFIG_FILES([dpkg/changelog])
-AC_CONFIG_FILES([dpkg/copyright])
 AC_CONFIG_FILES([libfplist/libfplist.rc])
 AC_CONFIG_FILES([libfplist.pc])
 AC_CONFIG_FILES([libfplist.spec])

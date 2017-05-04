@@ -22,10 +22,9 @@ DPKG_FILES = \
 	dpkg/compat \
 	dpkg/control \
 	dpkg/copyright \
-	dpkg/copyright.in \
 	dpkg/rules \
-	dpkg/libfplist-dev.docs \
-	dpkg/libfplist.docs \
+	dpkg/libfplist-dev.install \
+	dpkg/libfplist.install \
 	dpkg/source/format
 
 GETTEXT_FILES = \
