@@ -375,6 +375,16 @@ int libfplist_xml_tag_get_value_type(
 			*value_type = LIBFPLIST_VALUE_TYPE_BOOLEAN;
 		}
 	}
+	else if( tag->name_size == 7 )
+	{
+		if( narrow_string_compare(
+		     tag->name,
+		     "string",
+		     6 ) == 0 )
+		{
+			*value_type = LIBFPLIST_VALUE_TYPE_STRING;
+		}
+	}
 	else if( tag->name_size == 8 )
 	{
 		if( narrow_string_compare(
