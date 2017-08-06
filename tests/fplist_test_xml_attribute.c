@@ -35,7 +35,7 @@
 
 #include "../libfplist/libfplist_xml_attribute.h"
 
-#if defined( __GNUC__ ) && !defined( _FPLIST_DLL_IMPORT )
+#if defined( __GNUC__ ) && !defined( LIBFPLIST_DLL_IMPORT )
 
 /* Tests the libfplist_xml_attribute_free function
  * Returns 1 if successful or 0 if not
@@ -75,7 +75,7 @@ on_error:
 	return( 0 );
 }
 
-#endif /* defined( __GNUC__ ) && !defined( _FPLIST_DLL_IMPORT ) */
+#endif /* defined( __GNUC__ ) && !defined( LIBFPLIST_DLL_IMPORT ) */
 
 /* The main program
  */
@@ -92,7 +92,7 @@ int main(
 	FPLIST_TEST_UNREFERENCED_PARAMETER( argc )
 	FPLIST_TEST_UNREFERENCED_PARAMETER( argv )
 
-#if defined( __GNUC__ ) && !defined( _FPLIST_DLL_IMPORT )
+#if defined( __GNUC__ ) && !defined( LIBFPLIST_DLL_IMPORT )
 
 	/* TODO: add tests for libfplist_xml_attribute_initialize */
 
@@ -100,7 +100,7 @@ int main(
 	 "libfplist_xml_attribute_free",
 	 fplist_test_xml_attribute_free );
 
-#endif /* defined( __GNUC__ ) && !defined( _FPLIST_DLL_IMPORT ) */
+#endif /* defined( __GNUC__ ) && !defined( LIBFPLIST_DLL_IMPORT ) */
 
 	return( EXIT_SUCCESS );
 
