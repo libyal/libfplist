@@ -54,24 +54,20 @@ build_script:
 - cmd: if [%TARGET%]==[cygwin] (
     xcopy /q /s C:\projects\libfplist C:\cygwin\home\appveyor\ &&
     C:\cygwin\bin\bash -e -l -c "cd libfplist" &&
-    C:\cygwin\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" &&
-    C:\cygwin\bin\bash -e -l -c "./runtests.sh" )
+    C:\cygwin\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" )
 - cmd: if [%TARGET%]==[cygwin64] (
     xcopy /q /s C:\projects\libfplist C:\cygwin64\home\appveyor\ &&
     C:\cygwin64\bin\bash -e -l -c "cd libfplist" &&
-    C:\cygwin64\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" &&
-    C:\cygwin64\bin\bash -e -l -c "./runtests.sh" )
+    C:\cygwin64\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" )
 - cmd: if [%TARGET%]==[mingw] (
     xcopy /q /s C:\projects\libfplist C:\MinGW\msys\1.0\home\appveyor\ &&
     C:\MinGW\msys\1.0\bin\bash -e -l -c "cd libfplist" &&
     C:\MinGW\msys\1.0\bin\bash -e -l -c "sed 's/@VERSION@/0.29/g' m4/pkg.m4.in > m4/pkg.m4" &&
-    C:\MinGW\msys\1.0\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" &&
-    C:\MinGW\msys\1.0\bin\bash -e -l -c "./runtests.sh" )
+    C:\MinGW\msys\1.0\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" )
 - cmd: if [%TARGET%]==[mingw-w64] (
     xcopy /q /s C:\projects\libfplist C:\msys64\home\appveyor\ &&
     C:\msys64\usr\bin\bash -e -l -c "cd libfplist" &&
-    C:\msys64\usr\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" &&
-    C:\msys64\usr\bin\bash -e -l -c "./runtests.sh" )
+    C:\msys64\usr\bin\bash -e -l -c "./synclibs.sh && ./autogen.sh" )
 
 test_script:
 - cmd: rem Run tests
@@ -85,4 +81,12 @@ test_script:
     .\runtests.ps1 }
 - ps: if ($env:TARGET -eq "vs2015") {
     .\runtests.ps1 }
+- cmd: if [%TARGET%]==[cygwin] (
+    C:\cygwin\bin\bash -e -l -c "./runtests.sh" )
+- cmd: if [%TARGET%]==[cygwin64] (
+    C:\cygwin64\bin\bash -e -l -c "./runtests.sh" )
+- cmd: if [%TARGET%]==[mingw] (
+    C:\MinGW\msys\1.0\bin\bash -e -l -c "./runtests.sh" )
+- cmd: if [%TARGET%]==[mingw-w64] (
+    C:\msys64\usr\bin\bash -e -l -c "./runtests.sh" )
 
