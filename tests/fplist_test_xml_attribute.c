@@ -57,9 +57,9 @@ int fplist_test_xml_attribute_free(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );

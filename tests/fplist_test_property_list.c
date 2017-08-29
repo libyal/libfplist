@@ -72,13 +72,13 @@ int fplist_test_property_list_initialize(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "property_list",
-         property_list );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "property_list",
+	 property_list );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	result = libfplist_property_list_free(
 	          &property_list,
@@ -89,13 +89,13 @@ int fplist_test_property_list_initialize(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "property_list",
-         property_list );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "property_list",
+	 property_list );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test error cases
 	 */
@@ -108,9 +108,9 @@ int fplist_test_property_list_initialize(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -126,9 +126,9 @@ int fplist_test_property_list_initialize(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -250,9 +250,9 @@ int fplist_test_property_list_free(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -289,13 +289,13 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "property_list",
-         property_list );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "property_list",
+	 property_list );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test copy from byte stream
 	 */
@@ -310,9 +310,9 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Clean up
 	 */
@@ -325,9 +325,9 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Initialize test
 	 */
@@ -340,13 +340,13 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "property_list",
-         property_list );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "property_list",
+	 property_list );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test error cases
 	 */
@@ -361,9 +361,9 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -379,9 +379,9 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -397,9 +397,9 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -415,9 +415,9 @@ int fplist_test_property_list_copy_from_byte_stream(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	return( 1 );
 
@@ -457,13 +457,13 @@ int fplist_test_property_list_has_plist_root_element(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "property_list",
-         property_list );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "property_list",
+	 property_list );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	result = libfplist_property_list_copy_from_byte_stream(
 	          property_list,
@@ -476,9 +476,9 @@ int fplist_test_property_list_has_plist_root_element(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test determine if property list has plist root element
 	 */
@@ -491,9 +491,9 @@ int fplist_test_property_list_has_plist_root_element(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test error cases
 	 */
@@ -506,9 +506,9 @@ int fplist_test_property_list_has_plist_root_element(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -524,9 +524,9 @@ int fplist_test_property_list_has_plist_root_element(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	return( 1 );
 
@@ -567,13 +567,13 @@ int fplist_test_property_list_get_root_property(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "property_list",
-         property_list );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "property_list",
+	 property_list );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	result = libfplist_property_list_copy_from_byte_stream(
 	          property_list,
@@ -586,9 +586,9 @@ int fplist_test_property_list_get_root_property(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test retrieve root property
 	 */
@@ -602,17 +602,17 @@ int fplist_test_property_list_get_root_property(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "property",
-         property );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "property",
+	 property );
 
 	libfplist_property_free(
 	 &property,
 	 NULL );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test error cases
 	 */
@@ -626,9 +626,9 @@ int fplist_test_property_list_get_root_property(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -643,9 +643,9 @@ int fplist_test_property_list_get_root_property(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -662,9 +662,9 @@ int fplist_test_property_list_get_root_property(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -682,9 +682,9 @@ int fplist_test_property_list_get_root_property(
 	 result,
 	 1 );
 
-        FPLIST_TEST_ASSERT_IS_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	return( 1 );
 

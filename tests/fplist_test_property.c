@@ -53,9 +53,9 @@ int fplist_test_property_free(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -94,9 +94,9 @@ int fplist_test_property_get_value_type(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -111,9 +111,9 @@ int fplist_test_property_get_value_type(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -158,9 +158,9 @@ int fplist_test_property_get_value_data_size(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -175,9 +175,9 @@ int fplist_test_property_get_value_data_size(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -222,9 +222,9 @@ int fplist_test_property_get_value_integer(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
@@ -239,9 +239,9 @@ int fplist_test_property_get_value_integer(
 	 result,
 	 -1 );
 
-        FPLIST_TEST_ASSERT_IS_NOT_NULL(
-         "error",
-         error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
 	libcerror_error_free(
 	 &error );
