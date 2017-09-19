@@ -2,7 +2,7 @@ AC_PREREQ( 2.59 )
 
 AC_INIT(
  [libfplist],
- [20170907],
+ [20170919],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
@@ -74,6 +74,12 @@ AX_LIBFVALUE_CHECK_ENABLE
 
 dnl Check if libfplist required headers and functions are available
 AX_LIBFPLIST_CHECK_LOCAL
+
+dnl Check if libfplist should be build with verbose output
+AX_COMMON_CHECK_ENABLE_VERBOSE_OUTPUT
+
+dnl Check if libfplist should be build with debug output
+AX_COMMON_CHECK_ENABLE_DEBUG_OUTPUT
 
 dnl Check if tests required headers and functions are available
 AX_TESTS_CHECK_LOCAL
@@ -170,5 +176,7 @@ Building:
 
 Features:
    Multi-threading support: $ac_cv_libcthreads_multi_threading
+   Verbose output:          $ac_cv_enable_verbose_output
+   Debug output:            $ac_cv_enable_debug_output
 ]);
 
