@@ -187,6 +187,56 @@ int libfplist_property_get_value_integer(
      uint64_t *value_64bit,
      libfplist_error_t **error );
 
+/* Retrieves a string value
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_value_string(
+     libfplist_property_t *property,
+     uint8_t **string,
+     size_t *string_size,
+     libfplist_error_t **error );
+
+/* Copies an UUID string value to a byte stream
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_value_uuid_string_copy_to_byte_stream(
+     libfplist_property_t *property,
+     uint8_t *byte_stream,
+     size_t byte_stream_size,
+     libfplist_error_t **error );
+
+/* Retrieves the number of array entries
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_array_number_of_entries(
+     libfplist_property_t *property,
+     int *number_of_entries,
+     libfplist_error_t **error );
+
+/* Retrieves a specific array entry
+ * Returns 1 if successful or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_array_entry_by_index(
+     libfplist_property_t *property,
+     int array_entry_index,
+     libfplist_property_t **array_entry,
+     libfplist_error_t **error );
+
+/* Retrieves the sub property for the specific UTF-8 encoded name
+ * Returns 1 if successful, 0 if no such sub property or -1 on error
+ */
+LIBFPLIST_EXTERN \
+int libfplist_property_get_sub_property_by_utf8_name(
+     libfplist_property_t *property,
+     const uint8_t *utf8_string,
+     size_t utf8_string_length,
+     libfplist_property_t **sub_property,
+     libfplist_error_t **error );
+
 #if defined( __cplusplus )
 }
 #endif

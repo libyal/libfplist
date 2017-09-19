@@ -87,29 +87,34 @@ int libfplist_property_get_value_integer(
      uint64_t *value_64bit,
      libcerror_error_t **error );
 
+LIBFPLIST_EXTERN \
 int libfplist_property_get_value_string(
      libfplist_property_t *property,
      uint8_t **string,
      size_t *string_size,
      libcerror_error_t **error );
 
+LIBFPLIST_EXTERN \
 int libfplist_property_value_uuid_string_copy_to_byte_stream(
      libfplist_property_t *property,
      uint8_t *byte_stream,
      size_t byte_stream_size,
      libcerror_error_t **error );
 
+LIBFPLIST_EXTERN \
 int libfplist_property_get_array_number_of_entries(
      libfplist_property_t *property,
      int *number_of_entries,
      libcerror_error_t **error );
 
+LIBFPLIST_EXTERN \
 int libfplist_property_get_array_entry_by_index(
      libfplist_property_t *property,
      int array_entry_index,
      libfplist_property_t **array_entry,
      libcerror_error_t **error );
 
+LIBFPLIST_EXTERN \
 int libfplist_property_get_sub_property_by_utf8_name(
      libfplist_property_t *property,
      const uint8_t *utf8_string,
