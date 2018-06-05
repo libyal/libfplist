@@ -1,5 +1,5 @@
 /*
- * The internal libfplist header
+ * The libfplist header wrapper
  *
  * Copyright (C) 2016-2018, Joachim Metz <joachim.metz@gmail.com>
  *
