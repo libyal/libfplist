@@ -37,8 +37,11 @@
 
 #include <libfplist/extern.h>
 
+#define LIBFPLIST_EXTERN_VARIABLE	LIBFPLIST_EXTERN
+
 #else
-#define LIBFPLIST_EXTERN	/* extern */
+#define LIBFPLIST_EXTERN		/* extern */
+#define LIBFPLIST_EXTERN_VARIABLE	extern
 
 #endif /* !defined( HAVE_LOCAL_LIBFPLIST ) */
 
