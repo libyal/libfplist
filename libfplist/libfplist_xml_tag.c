@@ -86,6 +86,17 @@ int libfplist_xml_tag_initialize(
 
 		return( -1 );
 	}
+	if( name_length == 0 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_ZERO_OR_LESS,
+		 "%s: invalid name length value zero or less.",
+		 function );
+
+		return( -1 );
+	}
 	*tag = memory_allocate_structure(
 	        libfplist_xml_tag_t );
 

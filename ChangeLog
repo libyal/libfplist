@@ -1,17 +1,10 @@
 TODO
 * API
   - add function to retrieve format version
+  - do not expose libfplist_property_get_value_string via API (do not allocate inside library what needs freed outside)
 * Add binary plist support
 
-20161105
-* Worked on API
-* Worked on library
-* Worked on tests
-
-20161104
-* Added documenation from libyal assorted project
-* Worked on stand-alone version of library
-
 20161103
+* see `git log' for more recent change log
 * Initial version based of libfvde
 

@@ -282,9 +282,9 @@ int libfplist_property_get_value_data_size(
      libcerror_error_t **error )
 {
 	libfplist_internal_property_t *internal_property = NULL;
+	uint8_t *value_data                              = NULL;
 	static char *function                            = "libfplist_property_get_value_data_size";
-	size_t value_index                     = 0;
-	size_t value_length                    = 0;
+	size_t value_length                              = 0;
 
 	if( property == NULL )
 	{
@@ -349,13 +349,15 @@ int libfplist_property_get_value_data_size(
 
 		return( -1 );
 	}
+	value_data   = internal_property->value_tag->value;
 	value_length = internal_property->value_tag->value_size - 1;
 
-	/* The base64 conversion function doesn't like an empty first line
+	/* The base64 conversion function does not like an empty first line
 	 */
-	if( ( internal_property->value_tag->value )[ 0 ] == '\n' )
+	if( ( value_data != NULL )
+	 && ( value_data[ 0 ] == '\n' ) )
 	{
-		value_index  += 1;
+		value_data   += 1;
 		value_length -= 1;
 	}
 #if defined( HAVE_DEBUG_OUTPUT )
@@ -365,13 +367,13 @@ int libfplist_property_get_value_data_size(
 		 "%s: base64 encoded data:\n",
 		 function );
 		libcnotify_print_data(
-		 (uint8_t *) &( ( internal_property->value_tag->value )[ value_index ] ),
+		 value_data,
 		 value_length,
 		 0 );
 	}
 #endif
 	if( libuna_base64_stream_size_to_byte_stream(
-	     &( ( internal_property->value_tag->value )[ value_index ] ),
+	     value_data,
 	     value_length,
 	     data_size,
 	     LIBUNA_BASE64_VARIANT_ALPHABET_NORMAL | LIBUNA_BASE64_VARIANT_CHARACTER_LIMIT_NONE | LIBUNA_BASE64_VARIANT_PADDING_REQUIRED,
@@ -400,8 +402,8 @@ int libfplist_property_get_value_data(
      libcerror_error_t **error )
 {
 	libfplist_internal_property_t *internal_property = NULL;
+	uint8_t *value_data                              = NULL;
 	static char *function                            = "libfplist_property_get_value_data";
-	size_t value_index                               = 0;
 	size_t value_length                              = 0;
 
 	if( property == NULL )
@@ -478,13 +480,15 @@ int libfplist_property_get_value_data(
 
 		return( -1 );
 	}
+	value_data   = internal_property->value_tag->value;
 	value_length = internal_property->value_tag->value_size - 1;
 
-	/* The base64 conversion function doesn't like an empty first line
+	/* The base64 conversion function does not like an empty first line
 	 */
-	if( ( internal_property->value_tag->value )[ 0 ] == '\n' )
+	if( ( value_data != NULL )
+	 && ( value_data[ 0 ] == '\n' ) )
 	{
-		value_index  += 1;
+		value_data   += 1;
 		value_length -= 1;
 	}
 #if defined( HAVE_DEBUG_OUTPUT )
@@ -494,13 +498,13 @@ int libfplist_property_get_value_data(
 		 "%s: base64 encoded data:\n",
 		 function );
 		libcnotify_print_data(
-		 (uint8_t *) &( ( internal_property->value_tag->value )[ value_index ] ),
+		 value_data,
 		 value_length,
 		 0 );
 	}
 #endif
 	if( libuna_base64_stream_copy_to_byte_stream(
-	     &( ( internal_property->value_tag->value )[ value_index ] ),
+	     value_data,
 	     value_length,
 	     data,
 	     data_size,
@@ -640,6 +644,17 @@ int libfplist_property_get_value_string(
 
 		return( -1 );
 	}
+	if( internal_property->value_tag->value == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid property - invalid value XML tag - missing value.",
+		 function );
+
+		return( -1 );
+	}
 	if( string == NULL )
 	{
 		libcerror_error_set(
@@ -759,7 +774,6 @@ int libfplist_property_value_uuid_string_copy_to_byte_stream(
 	uint8_t *string             = NULL;
 	static char *function       = "libfplist_property_value_uuid_string_copy_to_byte_stream";
 	size_t string_size          = 0;
-	int result                  = 0;
 
 	if( libfplist_property_get_value_string(
 	     property,
@@ -785,7 +799,7 @@ int libfplist_property_value_uuid_string_copy_to_byte_stream(
 		 "%s: invalid string size value out of bounds.",
 		 function );
 
-		return( -1 );
+		goto on_error;
 	}
 	if( libfguid_identifier_initialize(
 	     &guid,
@@ -800,14 +814,12 @@ int libfplist_property_value_uuid_string_copy_to_byte_stream(
 
 		goto on_error;
 	}
-	result = libfguid_identifier_copy_from_utf8_string(
-		  guid,
-		  (uint8_t *) string,
-		  string_size - 1,
-		  LIBFGUID_STRING_FORMAT_FLAG_USE_MIXED_CASE,
-		  error );
-
-	if( result != 1 )
+	if( libfguid_identifier_copy_from_utf8_string(
+	     guid,
+	     string,
+	     string_size - 1,
+	     LIBFGUID_STRING_FORMAT_FLAG_USE_MIXED_CASE,
+	     error ) != 1 )
 	{
 		libcerror_error_set(
 		 error,
@@ -855,13 +867,11 @@ int libfplist_property_value_uuid_string_copy_to_byte_stream(
 	return( 1 );
 
 on_error:
-#if defined( HAVE_DEBUG_OUTPUT )
 	if( string != NULL )
 	{
 		memory_free(
 		 string );
 	}
-#endif
 	if( guid != NULL )
 	{
 		libfguid_identifier_free(
@@ -1256,7 +1266,7 @@ int libfplist_property_get_sub_property_by_utf8_name(
 
 		return( -1 );
 	}
-	if( utf8_string_length > (size_t) SSIZE_MAX )
+	if( utf8_string_length > (size_t) ( SSIZE_MAX - 1 ) )
 	{
 		libcerror_error_set(
 		 error,

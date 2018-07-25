@@ -84,6 +84,17 @@ int libfplist_xml_attribute_initialize(
 
 		return( -1 );
 	}
+	if( name_length == 0 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_ZERO_OR_LESS,
+		 "%s: invalid name length value zero or less.",
+		 function );
+
+		return( -1 );
+	}
 	if( value == NULL )
 	{
 		libcerror_error_set(
@@ -102,6 +113,17 @@ int libfplist_xml_attribute_initialize(
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
 		 "%s: invalid value length value exceeds maximum.",
+		 function );
+
+		return( -1 );
+	}
+	if( value_length == 0 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_ZERO_OR_LESS,
+		 "%s: invalid value length value zero or less.",
 		 function );
 
 		return( -1 );
