@@ -28,13 +28,6 @@
  */
 #if !defined( HAVE_LOCAL_LIBFPLIST )
 
-/* If libtool DLL support is enabled set LIBFPLIST_DLL_EXPORT
- * before including libfplist/extern.h
- */
-#if defined( _WIN32 ) && defined( DLL_EXPORT )
-#define LIBFPLIST_DLL_EXPORT
-#endif
-
 #include <libfplist/extern.h>
 
 #define LIBFPLIST_EXTERN_VARIABLE	LIBFPLIST_EXTERN

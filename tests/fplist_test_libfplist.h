@@ -24,13 +24,6 @@
 
 #include <common.h>
 
-/* If Cygwin libtool DLL support is enabled and do not want to create static
- * executables set LIBFPLIST_DLL_IMPORT before including libfplist.h
- */
-#if defined( _WIN32 ) && defined( DLL_EXPORT ) && !defined( HAVE_STATIC_EXECUTABLES )
-#define LIBFPLIST_DLL_IMPORT
-#endif
-
 #include <libfplist.h>
 
 #endif /* !defined( _FPLIST_TEST_LIBFPLIST_H ) */
