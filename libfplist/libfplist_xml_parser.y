@@ -322,8 +322,10 @@ xml_tag_close
 			 ( (xml_parser_state_t *) parser_state )->error,
 			 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 			 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-			 "%s: mismatch in tag name.",
-			 xml_parser_function );
+			 "%s: mismatch in tag name (%s != %s).",
+			 xml_parser_function,
+			 ( (xml_parser_state_t *) parser_state )->current_tag->name,
+			 $1.data );
 
 			YYABORT;
 		}

@@ -21,6 +21,7 @@
 
 #include <common.h>
 #include <file_stream.h>
+#include <narrow_string.h>
 #include <types.h>
 
 #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
@@ -33,7 +34,7 @@
 #include "fplist_test_memory.h"
 #include "fplist_test_unused.h"
 
-char *fplist_test_property_list_byte_stream = \
+char *fplist_test_property_list_data1 = \
 	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 	"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
 	"<plist version=\"1.0\">\n"
@@ -48,6 +49,43 @@ char *fplist_test_property_list_byte_stream = \
 	"	<string>com.apple.diskimage.sparsebundle</string>\n"
 	"	<key>size</key>\n"
 	"	<integer>102400000</integer>\n"
+	"</dict>\n"
+	"</plist>\n";
+
+
+char *fplist_test_property_list_data2 = \
+	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+	"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+	"<plist version=\"1.0\">\n"
+	"<dict>\n"
+	"\t<key>resource-fork</key>\n"
+	"\t<dict>\n"
+	"\t\t<key>blkx</key>\n"
+	"\t\t<array>\n"
+	"\t\t\t<dict>\n"
+	"\t\t\t\t<key>Attributes</key>\n"
+	"\t\t\t\t<string>0x0050</string>\n"
+	"\t\t\t\t<key>CFName</key>\n"
+	"\t\t\t\t<string>Protective Master Boot Record (MBR : 0)</string>\n"
+	"\t\t\t\t<key>Data</key>\n"
+	"\t\t\t\t<data>\n"
+	"\t\t\t\tbWlzaAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA\n"
+	"\t\t\t\tAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n"
+	"\t\t\t\tAAIAAAAgQfL6MwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n"
+	"\t\t\t\tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n"
+	"\t\t\t\tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n"
+	"\t\t\t\tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n"
+	"\t\t\t\tAAAAAAACgAAABQAAAAMAAAAAAAAAAAAAAAAAAAABAAAA\n"
+	"\t\t\t\tAAAAIA0AAAAAAAAAH/////8AAAAAAAAAAAAAAAEAAAAA\n"
+	"\t\t\t\tAAAAAAAAAAAAAAAAAAAAAAAAAAA=\n"
+	"\t\t\t\t</data>\n"
+	"\t\t\t\t<key>ID</key>\n"
+	"\t\t\t\t<string>-1</string>\n"
+	"\t\t\t\t<key>Name</key>\n"
+	"\t\t\t\t<string>Protective Master Boot Record (MBR : 0)</string>\n"
+	"\t\t\t</dict>\n"
+	"\t\t</array>\n"
+	"\t</dict>\n"
 	"</dict>\n"
 	"</plist>\n";
 
@@ -276,6 +314,7 @@ int fplist_test_property_list_copy_from_byte_stream(
 {
 	libcerror_error_t *error                 = NULL;
 	libfplist_property_list_t *property_list = NULL;
+	size_t property_list_data_size           = 0;
 	int result                               = 0;
 
 	/* Initialize test
@@ -299,10 +338,67 @@ int fplist_test_property_list_copy_from_byte_stream(
 
 	/* Test copy from byte stream
 	 */
+	property_list_data_size = narrow_string_length(
+	                           fplist_test_property_list_data1 );
+
 	result = libfplist_property_list_copy_from_byte_stream(
 	          property_list,
-	          (uint8_t *) fplist_test_property_list_byte_stream,
-	          496,
+	          (uint8_t *) fplist_test_property_list_data1,
+	          property_list_data_size,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Clean up
+	 */
+	result = libfplist_property_list_free(
+	          &property_list,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Initialize test
+	 */
+	result = libfplist_property_list_initialize(
+	          &property_list,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "property_list",
+	 property_list );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test copy from byte stream
+	 */
+	property_list_data_size = narrow_string_length(
+	                           fplist_test_property_list_data2 );
+
+	result = libfplist_property_list_copy_from_byte_stream(
+	          property_list,
+	          (uint8_t *) fplist_test_property_list_data2,
+	          property_list_data_size,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -350,10 +446,13 @@ int fplist_test_property_list_copy_from_byte_stream(
 
 	/* Test error cases
 	 */
+	property_list_data_size = narrow_string_length(
+	                           fplist_test_property_list_data1 );
+
 	result = libfplist_property_list_copy_from_byte_stream(
 	          NULL,
-	          (uint8_t *) fplist_test_property_list_byte_stream,
-	          496,
+	          (uint8_t *) fplist_test_property_list_data1,
+	          property_list_data_size,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -371,7 +470,7 @@ int fplist_test_property_list_copy_from_byte_stream(
 	result = libfplist_property_list_copy_from_byte_stream(
 	          property_list,
 	          NULL,
-	          496,
+	          property_list_data_size,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -388,7 +487,7 @@ int fplist_test_property_list_copy_from_byte_stream(
 
 	result = libfplist_property_list_copy_from_byte_stream(
 	          property_list,
-	          (uint8_t *) fplist_test_property_list_byte_stream,
+	          (uint8_t *) fplist_test_property_list_data1,
 	          (size_t) SSIZE_MAX + 1,
 	          &error );
 
@@ -444,6 +543,7 @@ int fplist_test_property_list_has_plist_root_element(
 {
 	libcerror_error_t *error                 = NULL;
 	libfplist_property_list_t *property_list = NULL;
+	size_t property_list_data_size           = 0;
 	int result                               = 0;
 
 	/* Initialize test
@@ -465,10 +565,13 @@ int fplist_test_property_list_has_plist_root_element(
 	 "error",
 	 error );
 
+	property_list_data_size = narrow_string_length(
+	                           fplist_test_property_list_data1 );
+
 	result = libfplist_property_list_copy_from_byte_stream(
 	          property_list,
-	          (uint8_t *) fplist_test_property_list_byte_stream,
-	          496,
+	          (uint8_t *) fplist_test_property_list_data1,
+	          property_list_data_size,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
@@ -554,6 +657,7 @@ int fplist_test_property_list_get_root_property(
 	libcerror_error_t *error                 = NULL;
 	libfplist_property_t *property           = NULL;
 	libfplist_property_list_t *property_list = NULL;
+	size_t property_list_data_size           = 0;
 	int result                               = 0;
 
 	/* Initialize test
@@ -575,10 +679,13 @@ int fplist_test_property_list_get_root_property(
 	 "error",
 	 error );
 
+	property_list_data_size = narrow_string_length(
+	                           fplist_test_property_list_data1 );
+
 	result = libfplist_property_list_copy_from_byte_stream(
 	          property_list,
-	          (uint8_t *) fplist_test_property_list_byte_stream,
-	          496,
+	          (uint8_t *) fplist_test_property_list_data1,
+	          property_list_data_size,
 	          &error );
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(

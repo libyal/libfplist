@@ -30,6 +30,7 @@
 #include <types.h>
 
 #include "libfplist_libcnotify.h"
+#include "libfplist_unused.h"
 #include "libfplist_xml_parser.h"
 
 #define YYLEX_PARAM	NULL
@@ -72,7 +73,7 @@ white_space             [\a\b\c\e\f\t\v ]+
 
 	xml_scanner_index = 0;
 
-	while( xml_scanner_index < xml_scanner_leng )
+	while( xml_scanner_index < (size_t) xml_scanner_leng )
 	{
 		if( xml_scanner_text[ xml_scanner_index++ ] == '<' )
 		{
@@ -142,21 +143,30 @@ white_space             [\a\b\c\e\f\t\v ]+
         return( XML_TAG_CONTENT );
 }
 
-"</"{name}">"{end_of_line}? {
+{white_space}*"</"{name}">"{end_of_line}? {
         xml_scanner_token_print(
          "XML_TAG_CLOSE" );
 
-	xml_scanner_index = xml_scanner_leng--;
+	BEGIN( INITIAL );
 
-	while( xml_scanner_index > 2 )
+	xml_scanner_index = 0;
+
+	while( xml_scanner_index < (size_t) xml_scanner_leng )
 	{
-		if( xml_scanner_text[ --xml_scanner_index ] == '>' )
+		if( xml_scanner_text[ xml_scanner_index++ ] == '/' )
 		{
 			break;
 		}
 	}
-        xml_scanner_lval.string_value.data   = &( xml_scanner_text[ 2 ] );
-        xml_scanner_lval.string_value.length = (size_t) xml_scanner_index - 2;
+	while( xml_scanner_leng > xml_scanner_index )
+	{
+		if( xml_scanner_text[ --xml_scanner_leng ] == '>' )
+		{
+			break;
+		}
+	}
+        xml_scanner_lval.string_value.data   = &( xml_scanner_text[ xml_scanner_index ] );
+        xml_scanner_lval.string_value.length = (size_t) xml_scanner_leng - xml_scanner_index;
 
 	return( XML_TAG_CLOSE );
 }
@@ -218,9 +228,11 @@ int xml_scanner_wrap(
 }
 
 void xml_scanner_error(
-      void *parser_state,
+      void *parser_state LIBFPLIST_ATTRIBUTE_UNUSED,
       const char *error_string )
 {
+	LIBFPLIST_UNREFERENCED_PARAMETER( parser_state )
+
 	if( xml_scanner_suppress_error == 0 )
 	{
 	        fprintf(
