@@ -9,6 +9,8 @@ Homepage: https://github.com/libyal/libfplist
 Package: libfplist
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libfplist1
+Replaces: libfplist1
 Suggests: libfplist-dbg
 Description: Library to support the plist formats
  libfplist is a library to support the plist formats.

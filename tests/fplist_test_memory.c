@@ -1,7 +1,7 @@
 /*
  * Memory allocation functions for testing
  *
- * Copyright (C) 2016-2018, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2016-2019, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *

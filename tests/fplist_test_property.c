@@ -1,7 +1,7 @@
 /*
  * Library property type test program
  *
- * Copyright (C) 2016-2018, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2016-2019, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
@@ -311,6 +311,42 @@ int fplist_test_property_initialize(
 	}
 #endif /* defined( HAVE_FPLIST_TEST_MEMORY ) */
 
+	/* Clean up
+	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	return( 1 );
 
 on_error:
@@ -388,12 +424,13 @@ on_error:
 int fplist_test_property_get_value_type(
      void )
 {
-	libcerror_error_t *error       = NULL;
-	libfplist_property_t *property = NULL;
-	libfplist_xml_tag_t *key_tag   = NULL;
-	libfplist_xml_tag_t *value_tag = NULL;
-	int result                     = 0;
-	int value_type                 = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	int result                          = 0;
+	int value_type                      = 0;
 
 	/* Initialize test
 	 */
@@ -454,9 +491,6 @@ int fplist_test_property_get_value_type(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	result = libfplist_property_get_value_type(
@@ -497,7 +531,7 @@ int fplist_test_property_get_value_type(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -506,9 +540,7 @@ int fplist_test_property_get_value_type(
 	          &value_type,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -541,6 +573,40 @@ int fplist_test_property_get_value_type(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -617,9 +683,6 @@ int fplist_test_property_get_value_type(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_value_type(
@@ -641,6 +704,40 @@ int fplist_test_property_get_value_type(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -693,12 +790,13 @@ on_error:
 int fplist_test_property_get_value_data_size(
      void )
 {
-	libcerror_error_t *error       = NULL;
-	libfplist_property_t *property = NULL;
-	libfplist_xml_tag_t *key_tag   = NULL;
-	libfplist_xml_tag_t *value_tag = NULL;
-	size_t data_size               = 0;
-	int result                     = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	size_t data_size                    = 0;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -774,9 +872,6 @@ int fplist_test_property_get_value_data_size(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	result = libfplist_property_get_value_data_size(
@@ -817,7 +912,7 @@ int fplist_test_property_get_value_data_size(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -826,9 +921,7 @@ int fplist_test_property_get_value_data_size(
 	          &data_size,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -861,6 +954,40 @@ int fplist_test_property_get_value_data_size(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -937,9 +1064,6 @@ int fplist_test_property_get_value_data_size(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_value_data_size(
@@ -961,6 +1085,40 @@ int fplist_test_property_get_value_data_size(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1037,9 +1195,6 @@ int fplist_test_property_get_value_data_size(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with missing value data
 	 */
 	result = libfplist_property_get_value_data_size(
@@ -1061,6 +1216,40 @@ int fplist_test_property_get_value_data_size(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1115,11 +1304,12 @@ int fplist_test_property_get_value_data(
 {
 	uint8_t data[ 32 ];
 
-	libcerror_error_t *error       = NULL;
-	libfplist_property_t *property = NULL;
-	libfplist_xml_tag_t *key_tag   = NULL;
-	libfplist_xml_tag_t *value_tag = NULL;
-	int result                     = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -1195,9 +1385,6 @@ int fplist_test_property_get_value_data(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	result = libfplist_property_get_value_data(
@@ -1245,7 +1432,7 @@ int fplist_test_property_get_value_data(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -1255,9 +1442,7 @@ int fplist_test_property_get_value_data(
 	          32,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -1309,6 +1494,40 @@ int fplist_test_property_get_value_data(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1385,9 +1604,6 @@ int fplist_test_property_get_value_data(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_value_data(
@@ -1410,6 +1626,40 @@ int fplist_test_property_get_value_data(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1486,9 +1736,6 @@ int fplist_test_property_get_value_data(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with missing value data
 	 */
 	result = libfplist_property_get_value_data(
@@ -1511,6 +1758,40 @@ int fplist_test_property_get_value_data(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1563,12 +1844,13 @@ on_error:
 int fplist_test_property_get_value_integer(
      void )
 {
-	libcerror_error_t *error       = NULL;
-	libfplist_property_t *property = NULL;
-	libfplist_xml_tag_t *key_tag   = NULL;
-	libfplist_xml_tag_t *value_tag = NULL;
-	uint64_t value_64bit           = 0;
-	int result                     = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	uint64_t value_64bit                = 0;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -1644,9 +1926,6 @@ int fplist_test_property_get_value_integer(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	result = libfplist_property_get_value_integer(
@@ -1687,7 +1966,7 @@ int fplist_test_property_get_value_integer(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -1696,9 +1975,7 @@ int fplist_test_property_get_value_integer(
 	          &value_64bit,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -1731,6 +2008,40 @@ int fplist_test_property_get_value_integer(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1807,9 +2118,6 @@ int fplist_test_property_get_value_integer(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_value_integer(
@@ -1831,6 +2139,40 @@ int fplist_test_property_get_value_integer(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1907,9 +2249,6 @@ int fplist_test_property_get_value_integer(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with missing value data
 	 */
 	result = libfplist_property_get_value_integer(
@@ -1931,6 +2270,40 @@ int fplist_test_property_get_value_integer(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -1983,13 +2356,14 @@ on_error:
 int fplist_test_property_get_value_string(
      void )
 {
-	libcerror_error_t *error       = NULL;
-	libfplist_property_t *property = NULL;
-	libfplist_xml_tag_t *key_tag   = NULL;
-	libfplist_xml_tag_t *value_tag = NULL;
-	uint8_t *value_string          = NULL;
-	size_t value_string_size       = 0;
-	int result                     = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	uint8_t *value_string               = NULL;
+	size_t value_string_size            = 0;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -2065,9 +2439,6 @@ int fplist_test_property_get_value_string(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	result = libfplist_property_get_value_string(
@@ -2130,7 +2501,7 @@ int fplist_test_property_get_value_string(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -2140,9 +2511,7 @@ int fplist_test_property_get_value_string(
 	          &value_string_size,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -2194,6 +2563,40 @@ int fplist_test_property_get_value_string(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -2270,9 +2673,6 @@ int fplist_test_property_get_value_string(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_value_string(
@@ -2295,6 +2695,40 @@ int fplist_test_property_get_value_string(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -2371,9 +2805,6 @@ int fplist_test_property_get_value_string(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with missing value data
 	 */
 	result = libfplist_property_get_value_string(
@@ -2396,6 +2827,40 @@ int fplist_test_property_get_value_string(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -2453,11 +2918,12 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 
 	uint8_t uuid_data[ 16 ];
 
-	libcerror_error_t *error       = NULL;
-	libfplist_property_t *property = NULL;
-	libfplist_xml_tag_t *key_tag   = NULL;
-	libfplist_xml_tag_t *value_tag = NULL;
-	int result                     = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -2533,9 +2999,6 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	result = libfplist_property_value_uuid_string_copy_to_byte_stream(
@@ -2583,7 +3046,7 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -2593,9 +3056,7 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 	          16,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -2710,6 +3171,40 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -2786,9 +3281,6 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_value_uuid_string_copy_to_byte_stream(
@@ -2811,6 +3303,40 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -2902,9 +3428,6 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with invalid value data
 	 */
 	result = libfplist_property_value_uuid_string_copy_to_byte_stream(
@@ -2927,6 +3450,40 @@ int fplist_test_property_value_uuid_string_copy_to_byte_stream(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -2979,13 +3536,14 @@ on_error:
 int fplist_test_property_get_array_number_of_entries(
      void )
 {
-	libcerror_error_t *error         = NULL;
-	libfplist_property_t *property   = NULL;
-	libfplist_xml_tag_t *element_tag = NULL;
-	libfplist_xml_tag_t *key_tag     = NULL;
-	libfplist_xml_tag_t *value_tag   = NULL;
-	int number_of_entries            = 0;
-	int result                       = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *element_tag    = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	int number_of_entries               = 0;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -3081,9 +3639,6 @@ int fplist_test_property_get_array_number_of_entries(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	result = libfplist_property_get_array_number_of_entries(
@@ -3124,7 +3679,7 @@ int fplist_test_property_get_array_number_of_entries(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -3133,9 +3688,7 @@ int fplist_test_property_get_array_number_of_entries(
 	          &number_of_entries,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -3168,6 +3721,40 @@ int fplist_test_property_get_array_number_of_entries(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -3244,9 +3831,6 @@ int fplist_test_property_get_array_number_of_entries(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_array_number_of_entries(
@@ -3268,6 +3852,40 @@ int fplist_test_property_get_array_number_of_entries(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -3326,13 +3944,14 @@ on_error:
 int fplist_test_property_get_array_entry_by_index(
      void )
 {
-	libcerror_error_t *error          = NULL;
-	libfplist_property_t *array_entry = NULL;
-	libfplist_property_t *property    = NULL;
-	libfplist_xml_tag_t *element_tag  = NULL;
-	libfplist_xml_tag_t *key_tag      = NULL;
-	libfplist_xml_tag_t *value_tag    = NULL;
-	int result                        = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *array_entry   = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_xml_tag_t *element_tag    = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -3428,9 +4047,6 @@ int fplist_test_property_get_array_entry_by_index(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	array_entry = NULL;
@@ -3447,6 +4063,25 @@ int fplist_test_property_get_array_entry_by_index(
 	 1 );
 
 	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "array_entry",
+	 array_entry );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Clean up
+	 */
+	result = libfplist_property_free(
+	          &array_entry,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
 	 "array_entry",
 	 array_entry );
 
@@ -3476,7 +4111,7 @@ int fplist_test_property_get_array_entry_by_index(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -3486,9 +4121,7 @@ int fplist_test_property_get_array_entry_by_index(
 	          &array_entry,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -3562,6 +4195,40 @@ int fplist_test_property_get_array_entry_by_index(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -3638,9 +4305,6 @@ int fplist_test_property_get_array_entry_by_index(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_array_entry_by_index(
@@ -3663,6 +4327,40 @@ int fplist_test_property_get_array_entry_by_index(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -3721,14 +4419,15 @@ on_error:
 int fplist_test_property_get_sub_property_by_utf8_name(
      void )
 {
-	libcerror_error_t *error           = NULL;
-	libfplist_property_t *property     = NULL;
-	libfplist_property_t *sub_property = NULL;
-	libfplist_xml_tag_t *element_tag1  = NULL;
-	libfplist_xml_tag_t *element_tag2  = NULL;
-	libfplist_xml_tag_t *key_tag       = NULL;
-	libfplist_xml_tag_t *value_tag     = NULL;
-	int result                         = 0;
+	libcerror_error_t *error            = NULL;
+	libfplist_property_t *property      = NULL;
+	libfplist_property_t *sub_property  = NULL;
+	libfplist_xml_tag_t *element_tag1   = NULL;
+	libfplist_xml_tag_t *element_tag2   = NULL;
+	libfplist_xml_tag_t *key_tag        = NULL;
+	libfplist_xml_tag_t *test_value_tag = NULL;
+	libfplist_xml_tag_t *value_tag      = NULL;
+	int result                          = 0;
 
 	/* Initialize test
 	 */
@@ -3874,9 +4573,6 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test regular cases
 	 */
 	sub_property = NULL;
@@ -3901,6 +4597,27 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 	 "error",
 	 error );
 
+	/* Clean up
+	 */
+	result = libfplist_property_free(
+	          &sub_property,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "sub_property",
+	 sub_property );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test regular cases
+	 */
 	sub_property = NULL;
 
 	result = libfplist_property_get_sub_property_by_utf8_name(
@@ -3914,6 +4631,25 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 	 "result",
 	 result,
 	 0 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "sub_property",
+	 sub_property );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Clean up
+	 */
+	result = libfplist_property_free(
+	          &sub_property,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	FPLIST_TEST_ASSERT_IS_NULL(
 	 "sub_property",
@@ -3946,7 +4682,7 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 	libcerror_error_free(
 	 &error );
 
-	value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
+	test_value_tag = ( (libfplist_internal_property_t *) property )->value_tag;
 
 	( (libfplist_internal_property_t *) property )->value_tag = NULL;
 
@@ -3957,9 +4693,7 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 	          &sub_property,
 	          &error );
 
-	( (libfplist_internal_property_t *) property )->value_tag = value_tag;
-
-	value_tag = NULL;
+	( (libfplist_internal_property_t *) property )->value_tag = test_value_tag;
 
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
@@ -4055,6 +4789,40 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );
@@ -4131,9 +4899,6 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 	 "error",
 	 error );
 
-	key_tag   = NULL;
-	value_tag = NULL;
-
 	/* Test with unsupported value type
 	 */
 	result = libfplist_property_get_sub_property_by_utf8_name(
@@ -4157,6 +4922,40 @@ int fplist_test_property_get_sub_property_by_utf8_name(
 
 	/* Clean up
 	 */
+	result = libfplist_xml_tag_free(
+	          &value_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "value_tag",
+	 value_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_free(
+	          &key_tag,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "key_tag",
+	 key_tag );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_free(
 	          &property,
 	          &error );

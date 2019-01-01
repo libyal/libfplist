@@ -1,7 +1,7 @@
 /*
  * Property list functions
  *
- * Copyright (C) 2016-2018, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2016-2019, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
@@ -288,6 +288,34 @@ int libfplist_property_list_copy_from_byte_stream(
 		buffer[ buffer_size - 2 ] = 0;
 		buffer[ buffer_size - 1 ] = 0;
 	}
+#if defined( HAVE_DEBUG_OUTPUT )
+	if( libcnotify_verbose != 0 )
+	{                
+		if( ( buffer_size >= 6 )
+		 && ( buffer[ 0 ] == '<' )
+		 && ( buffer[ 1 ] == '?' )
+		 && ( buffer[ 2 ] == 'x' )
+		 && ( buffer[ 3 ] == 'm' )
+		 && ( buffer[ 4 ] == 'l' )
+		 && ( buffer[ buffer_size - 1 ] == 0 ) )
+		{
+			libcnotify_printf(
+			 "%s: XML plist:\n%s\n",
+			 function,
+			 buffer );
+		}        
+		else     
+		{       
+			libcnotify_printf(
+			 "%s: XML plist data:\n",
+			 function );
+			libcnotify_print_data(
+			 buffer,
+			 buffer_size,
+			 0 );
+		}
+	}                
+#endif                  
 	result = xml_parser_parse_buffer(
 	          property_list,
 	          buffer,

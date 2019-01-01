@@ -24,7 +24,7 @@ BEGIN
       VALUE "FileDescription",		"Library to support the plist formats\0"
       VALUE "FileVersion",		"@VERSION@" "\0"
       VALUE "InternalName",		"libfplist.dll\0"
-      VALUE "LegalCopyright",		"(C) 2016-2018, Joachim Metz <joachim.metz@gmail.com>\0"
+      VALUE "LegalCopyright",		"(C) 2016-2019, Joachim Metz <joachim.metz@gmail.com>\0"
       VALUE "OriginalFilename",		"libfplist.dll\0"
       VALUE "ProductName",		"libfplist\0"
       VALUE "ProductVersion",		"@VERSION@" "\0"
