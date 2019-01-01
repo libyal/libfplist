@@ -158,7 +158,7 @@ white_space             [\a\b\c\e\f\t\v ]+
 			break;
 		}
 	}
-	while( xml_scanner_leng > xml_scanner_index )
+	while( (size_t) xml_scanner_leng > xml_scanner_index )
 	{
 		if( xml_scanner_text[ --xml_scanner_leng ] == '>' )
 		{
