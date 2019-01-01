@@ -1892,21 +1892,6 @@ int fplist_test_property_get_value_integer(
 	 "error",
 	 error );
 
-	result = libfplist_xml_tag_set_value(
-	          value_tag,
-	          (uint8_t *) "1234567890",
-	          10,
-	          &error );
-
-	FPLIST_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 1 );
-
-	FPLIST_TEST_ASSERT_IS_NULL(
-	 "error",
-	 error );
-
 	result = libfplist_property_initialize(
 	          &property,
 	          key_tag,
@@ -1928,6 +1913,21 @@ int fplist_test_property_get_value_integer(
 
 	/* Test regular cases
 	 */
+	result = libfplist_xml_tag_set_value(
+	          value_tag,
+	          (uint8_t *) "1234567890",
+	          10,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	result = libfplist_property_get_value_integer(
 	          property,
 	          &value_64bit,
@@ -1942,6 +1942,40 @@ int fplist_test_property_get_value_integer(
 	 "value_64bit",
 	 value_64bit,
 	 (uint64_t) 1234567890 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_xml_tag_set_value(
+	          value_tag,
+	          (uint8_t *) "0xabcdef",
+	          8,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfplist_property_get_value_integer(
+	          property,
+	          &value_64bit,
+	          &error );
+
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FPLIST_TEST_ASSERT_EQUAL_UINT64(
+	 "value_64bit",
+	 value_64bit,
+	 (uint64_t) 0xabcdef );
 
 	FPLIST_TEST_ASSERT_IS_NULL(
 	 "error",

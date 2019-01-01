@@ -534,6 +534,7 @@ int libfplist_property_get_value_integer(
 {
 	libfplist_internal_property_t *internal_property = NULL;
 	static char *function                            = "libfplist_property_get_value_integer";
+	uint32_t string_format_flags                     = 0;
 
 	if( property == NULL )
 	{
@@ -555,6 +556,17 @@ int libfplist_property_get_value_integer(
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
 		 "%s: invalid property - missing value XML tag.",
+		 function );
+
+		return( -1 );
+	}
+	if( internal_property->value_tag->value == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid property - invalid value XML tag - missing value.",
 		 function );
 
 		return( -1 );
@@ -587,13 +599,24 @@ int libfplist_property_get_value_integer(
 
 		return( -1 );
 	}
-/* TODO add size support ? */
+	if( ( internal_property->value_tag->value_size > 4 )
+	 && ( internal_property->value_tag->value[ 0 ] == '0' )
+	 && ( ( internal_property->value_tag->value[ 1 ] == 'x' )
+	  ||  ( internal_property->value_tag->value[ 1 ] == 'X' ) ) )
+	{
+		string_format_flags = LIBFVALUE_INTEGER_FORMAT_TYPE_HEXADECIMAL;
+	}
+	else
+	{
+		string_format_flags = LIBFVALUE_INTEGER_FORMAT_TYPE_DECIMAL | LIBFVALUE_INTEGER_FORMAT_FLAG_UNSIGNED;
+	}
+/* TODO ass support for size attribute e.g. size="64" */
 	if( libfvalue_utf8_string_copy_to_integer(
 	     internal_property->value_tag->value,
 	     internal_property->value_tag->value_size - 1,
 	     (uint64_t *) value_64bit,
 	     64,
-	     LIBFVALUE_INTEGER_FORMAT_TYPE_DECIMAL | LIBFVALUE_INTEGER_FORMAT_FLAG_UNSIGNED,
+	     string_format_flags,
 	     error ) != 1 )
 	{
 		libcerror_error_set(
