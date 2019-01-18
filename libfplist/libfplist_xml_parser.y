@@ -110,36 +110,46 @@ struct xml_parser_state
 typedef size_t yy_size_t;
 typedef struct yy_buffer_state* YY_BUFFER_STATE;
 
-extern int xml_scanner_suppress_error;
+extern \
+int xml_scanner_suppress_error;
 
-extern int xml_scanner_lex_destroy(
-            void );
+extern \
+int xml_scanner_lex_destroy(
+     void );
 
-extern void *xml_scanner_alloc(
-              yy_size_t size );
+extern \
+void *xml_scanner_alloc(
+       yy_size_t size );
 
-extern void *xml_scanner_realloc(
-              void *buffer,
-              yy_size_t size );
+extern \
+void *xml_scanner_realloc(
+       void *buffer,
+       yy_size_t size );
 
-extern void *xml_scanner_free(
-              void *buffer );
+extern \
+void *xml_scanner_free(
+       void *buffer );
 
-extern int xml_scanner_lex(
-            void *user_data );
+extern \
+int xml_scanner_lex(
+     void *user_data );
 
-extern void xml_scanner_error(
-             void *parser_state,
-             const char *error_string );
+extern \
+void xml_scanner_error(
+      void *parser_state,
+      const char *error_string );
 
-extern YY_BUFFER_STATE xml_scanner__scan_buffer(
-                        char *buffer,
-                        yy_size_t buffer_size );
+extern \
+YY_BUFFER_STATE xml_scanner__scan_buffer(
+                 char *buffer,
+                 yy_size_t buffer_size );
 
-extern void xml_scanner__delete_buffer(
-             YY_BUFFER_STATE buffer_state );
+extern \
+void xml_scanner__delete_buffer(
+      YY_BUFFER_STATE buffer_state );
 
-extern size_t xml_scanner_buffer_offset;
+extern \
+size_t xml_scanner_buffer_offset;
 
 static char *xml_parser_function = "xml_parser";
 
