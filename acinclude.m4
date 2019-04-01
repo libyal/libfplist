@@ -1,6 +1,6 @@
 dnl Functions for libfplist
 dnl
-dnl Version: 20190919
+dnl Version: 20190308
 
 dnl Function to detect if libfplist dependencies are available
 AC_DEFUN([AX_LIBFPLIST_CHECK_LOCAL],
