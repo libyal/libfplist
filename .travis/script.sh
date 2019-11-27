@@ -25,7 +25,7 @@ then
 
 		make install DESTDIR=${PWD}/osx-pkg;
 		mkdir -p ${PWD}/osx-pkg/usr/share/doc/libfplist;
-		cp AUTHORS COPYING NEWS README ${PWD}/osx-pkg/usr/share/doc/libfplist;
+		cp AUTHORS COPYING COPYING.LESSER NEWS README ${PWD}/osx-pkg/usr/share/doc/libfplist;
 
 		pkgbuild --root osx-pkg --identifier com.github.libyal.libfplist --version ${VERSION} --ownership recommended ../libfplist-${VERSION}.pkg;
 	fi
