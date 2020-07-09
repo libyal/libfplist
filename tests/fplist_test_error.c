@@ -27,7 +27,6 @@
 #include <stdlib.h>
 #endif
 
-#include "fplist_test_libcerror.h"
 #include "fplist_test_libfplist.h"
 #include "fplist_test_macros.h"
 #include "fplist_test_unused.h"
