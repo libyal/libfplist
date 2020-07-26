@@ -75,24 +75,14 @@ int libfplist_xml_tag_initialize(
 
 		return( -1 );
 	}
-	if( name_length > (size_t) ( SSIZE_MAX - 1 ) )
+	if( ( name_length == 0 )
+	 || ( name_length > (size_t) ( MEMORY_MAXIMUM_ALLOCATION_SIZE - 1 ) ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid name length value exceeds maximum.",
-		 function );
-
-		return( -1 );
-	}
-	if( name_length == 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_ZERO_OR_LESS,
-		 "%s: invalid name length value zero or less.",
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid name length value out of bounds.",
 		 function );
 
 		return( -1 );
@@ -497,13 +487,13 @@ int libfplist_xml_tag_set_value(
 
 		return( -1 );
 	}
-	if( value_length > (size_t) ( SSIZE_MAX - 1 ) )
+	if( value_length > (size_t) ( MEMORY_MAXIMUM_ALLOCATION_SIZE - 1 ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid value length value exceeds maximum.",
+		 "%s: invalid value length value exceeds maximum allocation size.",
 		 function );
 
 		return( -1 );

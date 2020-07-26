@@ -739,8 +739,18 @@ int libfplist_property_get_value_string(
 
 		return( -1 );
 	}
-	*string_size = internal_property->value_tag->value_size;
+	if( ( internal_property->value_tag->value_size == 0 )
+	 || ( internal_property->value_tag->value_size > (size_t) MEMORY_MAXIMUM_ALLOCATION_SIZE ) )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid property - invalid value tag - value size value out of bounds.",
+		 function );
 
+		return( -1 );
+	}
 	*string = memory_allocate(
 	           sizeof( uint8_t ) * internal_property->value_tag->value_size );
 
@@ -755,6 +765,8 @@ int libfplist_property_get_value_string(
 
 		goto on_error;
 	}
+	*string_size = internal_property->value_tag->value_size;
+
 	if( memory_copy(
 	     *string,
 	     internal_property->value_tag->value,

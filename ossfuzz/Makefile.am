@@ -1,0 +1,27 @@
+if HAVE_LIB_FUZZING_ENGINE
+AM_CPPFLAGS = \
+	-I$(top_srcdir)/include \
+	-I$(top_srcdir)/common
+
+bin_PROGRAMS = \
+	property_list_fuzzer
+
+property_list_fuzzer_SOURCES = \
+	ossfuzz_libfplist.h \
+	property_list_fuzzer.cc
+
+property_list_fuzzer_LDADD = \
+	@LIB_FUZZING_ENGINE@ \
+	../libfplist/libfplist.la
+endif
+
+MAINTAINERCLEANFILES = \
+	Makefile.in
+
+distclean: clean
+	/bin/rm -f Makefile
+
+splint:
+	@echo "Running splint on property_list_fuzzer ..."
+	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(property_list_fuzzer_SOURCES)
+

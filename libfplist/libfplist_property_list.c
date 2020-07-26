@@ -227,13 +227,12 @@ int libfplist_property_list_copy_from_byte_stream(
 		return( -1 );
 	}
 	if( ( byte_stream_size < 2 )
-	 || ( byte_stream_size > (size_t) INT_MAX )
-	 || ( byte_stream_size > (size_t) SSIZE_MAX ) )
+	 || ( byte_stream_size > (size_t) ( MEMORY_MAXIMUM_ALLOCATION_SIZE - 2 ) ) )
 	{
 		libcerror_error_set(
 		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_VALUE_OUT_OF_BOUNDS,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
 		 "%s: invalid byte stream size value out of bounds.",
 		 function );
 
@@ -241,53 +240,49 @@ int libfplist_property_list_copy_from_byte_stream(
 	}
 	/* Lex wants 2 zero bytes at the end of the buffer
 	 */
-	if( ( byte_stream[ byte_stream_size - 2 ] == 0 )
-	 && ( byte_stream[ byte_stream_size - 1 ] == 0 ) )
-	{
-		buffer      = (uint8_t *) byte_stream;
-		buffer_size = byte_stream_size;
-	}
-	else
-	{
-		if( byte_stream[ byte_stream_size - 1 ] == 0 )
-		{
-			buffer_size = byte_stream_size + 1;
-		}
-		else
-		{
-			buffer_size = byte_stream_size + 2;
-		}
-		buffer = (uint8_t *) memory_allocate(
-		                      sizeof( uint8_t ) * buffer_size );
+	buffer_size = byte_stream_size;
 
-		if( buffer == NULL )
-		{
-			libcerror_error_set(
-			 error,
-			 LIBCERROR_ERROR_DOMAIN_MEMORY,
-			 LIBCERROR_MEMORY_ERROR_INSUFFICIENT,
-			 "%s: unable to create buffer.",
-			 function );
-
-			goto on_error;
-		}
-		if( memory_copy(
-		     buffer,
-		     byte_stream,
-		     byte_stream_size ) == NULL )
-		{
-			libcerror_error_set(
-			 error,
-			 LIBCERROR_ERROR_DOMAIN_MEMORY,
-			 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
-			 "%s: unable to copy byte stream.",
-			 function );
-	
-			goto on_error;
-		}
-		buffer[ buffer_size - 2 ] = 0;
-		buffer[ buffer_size - 1 ] = 0;
+	if( byte_stream[ byte_stream_size - 1 ] != 0 )
+	{
+		buffer_size += 2;
 	}
+	else if( byte_stream[ byte_stream_size - 2 ] != 0 )
+	{
+		buffer_size += 1;
+	}
+	/* Lex wants a buffer it can write to
+	 */
+	buffer = (uint8_t *) memory_allocate(
+	                      sizeof( uint8_t ) * buffer_size );
+
+	if( buffer == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_INSUFFICIENT,
+		 "%s: unable to create buffer.",
+		 function );
+
+		goto on_error;
+	}
+	if( memory_copy(
+	     buffer,
+	     byte_stream,
+	     byte_stream_size ) == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+		 "%s: unable to copy byte stream.",
+		 function );
+
+		goto on_error;
+	}
+	buffer[ buffer_size - 2 ] = 0;
+	buffer[ buffer_size - 1 ] = 0;
+
 #if defined( HAVE_DEBUG_OUTPUT )
 	if( libcnotify_verbose != 0 )
 	{                
@@ -315,14 +310,15 @@ int libfplist_property_list_copy_from_byte_stream(
 			 0 );
 		}
 	}                
-#endif                  
+#endif /* defined( HAVE_DEBUG_OUTPUT ) */
+
 	result = xml_parser_parse_buffer(
 	          property_list,
 	          buffer,
 	          buffer_size,
 	          error );
 
-	if( result == -1 )
+	if( result != 1 )
 	{
 		libcerror_error_set(
 		 error,
@@ -333,13 +329,11 @@ int libfplist_property_list_copy_from_byte_stream(
 
 		goto on_error;
 	}
-	if( buffer != byte_stream )
-	{
-		memory_free(
-		 buffer );
+	memory_free(
+	 buffer );
 
-		buffer = NULL;
-	}
+	buffer = NULL;
+
 	if( internal_property_list->root_tag == NULL )
 	{
 		libcerror_error_set(
@@ -488,11 +482,16 @@ int libfplist_property_list_copy_from_byte_stream(
 	return( 1 );
 
 on_error:
-	if( ( buffer != NULL )
-	 && ( buffer != byte_stream ) )
+	if( buffer != NULL )
 	{
 		memory_free(
 		 buffer );
+	}
+	if( internal_property_list->root_tag != NULL )
+	{
+		libfplist_xml_tag_free(
+		 &( internal_property_list->root_tag ),
+		 NULL );
 	}
 	return( -1 );
 }

@@ -155,7 +155,7 @@ static char *xml_parser_function = "xml_parser";
 
 int xml_parser_parse_buffer(
      libfplist_property_list_t *property_list,
-     const uint8_t *buffer,
+     uint8_t *buffer,
      size_t buffer_size,
      libcerror_error_t **error );
 
@@ -436,7 +436,7 @@ xml_attribute
 
 int xml_parser_parse_buffer(
      libfplist_property_list_t *property_list,
-     const uint8_t *buffer,
+     uint8_t *buffer,
      size_t buffer_size,
      libcerror_error_t **error )
 {
@@ -444,14 +444,13 @@ int xml_parser_parse_buffer(
 	
 	YY_BUFFER_STATE buffer_state = NULL;
 	static char *function        = "xml_parser_parse_buffer";
-	size_t buffer_offset         = 0;
 	int result                   = -1;
 
 	buffer_state = xml_scanner__scan_buffer(
-	                (char *) &( buffer[ buffer_offset ] ),
-	                buffer_size - buffer_offset );
+	                (char *) buffer,
+	                buffer_size );
 
-	xml_scanner_buffer_offset = (size_t) buffer_offset;
+	xml_scanner_buffer_offset = 0;
 
 	if( buffer_state != NULL )
 	{
@@ -475,9 +474,13 @@ int xml_parser_parse_buffer(
 				 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
 				 "%s: unable to set root tag.",
 				 function );
+
+				result = -1;
 			}
 			else
 			{
+				parser_state.root_tag = NULL;
+
 				result = 1;
 			}
 		}
@@ -486,6 +489,12 @@ int xml_parser_parse_buffer(
 	}
 	xml_scanner_lex_destroy();
 
+	if( parser_state.root_tag != NULL )
+	{
+		libfplist_xml_tag_free(
+		 &( parser_state.root_tag ),
+		 NULL );
+	}
 	return( result );
 }
 
