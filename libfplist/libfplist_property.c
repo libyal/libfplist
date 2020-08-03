@@ -610,7 +610,7 @@ int libfplist_property_get_value_integer(
 	{
 		string_format_flags = LIBFVALUE_INTEGER_FORMAT_TYPE_DECIMAL | LIBFVALUE_INTEGER_FORMAT_FLAG_UNSIGNED;
 	}
-/* TODO ass support for size attribute e.g. size="64" */
+/* TODO add support for size attribute e.g. size="64" */
 	if( libfvalue_utf8_string_copy_to_integer(
 	     internal_property->value_tag->value,
 	     internal_property->value_tag->value_size - 1,
