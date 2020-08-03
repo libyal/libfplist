@@ -196,6 +196,13 @@ white_space             [\a\b\c\e\f\t\v ]+
 
 {white_space} ;
 
+. {
+        xml_scanner_token_print(
+         "XML_UNDEFINED" );
+
+	return( XML_UNDEFINED );
+}
+
 %%
 
 void *xml_scanner_alloc(

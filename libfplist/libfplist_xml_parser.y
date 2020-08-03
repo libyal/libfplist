@@ -172,6 +172,7 @@ int xml_parser_parse_buffer(
 %token XML_PROLOGUE
 %token XML_TAG_END
 %token XML_TAG_END_SINGLE
+%token XML_UNDEFINED
 
 %token <string_value> XML_ATTRIBUTE_NAME
 %token <string_value> XML_ATTRIBUTE_VALUE

@@ -307,7 +307,7 @@ int libfplist_property_list_copy_from_byte_stream(
 			libcnotify_print_data(
 			 buffer,
 			 buffer_size,
-			 0 );
+			 LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA );
 		}
 	}                
 #endif /* defined( HAVE_DEBUG_OUTPUT ) */
