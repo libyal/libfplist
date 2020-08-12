@@ -52,11 +52,11 @@ size_t xml_scanner_index         = 0;
 
 end_of_line             [\r\n|\n|\r]
 
-name			[A-Za-z\x80-\xff_][A-Za-z\x80-\xff_0-9.-]*
+name			[A-Za-z\x80-\xff_][A-Za-z\x80-\xff_0-9.-]{0,256}
 escaped_value		&#([0-9]+|x[0-9a-fA-F]+);
 
 xml_tag_content		[^<]+
-xml_attribute_value	\"([^"&]|{escaped_value})*\"|\'([^'&]|{escaped_value})*\'
+xml_attribute_value	\"([^"&]|{escaped_value}){0,256}\"|\'([^'&]|{escaped_value}){0,256}\'
 
 white_space             [\a\b\c\e\f\t\v ]+
 

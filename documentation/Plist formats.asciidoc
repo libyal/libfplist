@@ -118,8 +118,9 @@ of:
 In the binary plist the objects are stored in the object table.
 
 Objects are variable of size and consist of:
-an object maker byte
-(optional) object data
+
+* an object maker byte
+* (optional) object data
 
 ==== Object marker byte
 
@@ -127,17 +128,21 @@ an object maker byte
 |===
 | Value | Identifier | Description
 | 0x00 | kCFBinaryPlistMarkerNull | Empty value (NULL)
+3+|
 | 0x08 | kCFBinaryPlistMarkerFalse | Boolean False
 | 0x09 | kCFBinaryPlistMarkerTrue | Boolean True
+3+|
 | 0x0f | kCFBinaryPlistMarkerFill | [yellow-background]*Fill byte* +
 [yellow-background]*TODO what is this used for?*
 | 0x1# | kCFBinaryPlistMarkerInt | Integer +
 Where `2^#` is the number of bytes
 | 0x2# | kCFBinaryPlistMarkerInt | Floating point +
 Where `2^#` is the number of bytes
+3+|
 | 0x33 | kCFBinaryPlistMarkerDate | Date and time value +
 Stored as a 64-bits floating point +
 Contains the number of seconds since Jan 1, 2001 00:00:00 UTC
+3+|
 | 0x4# | kCFBinaryPlistMarkerData | Binary data +
 Where # is the number of bytes. If # is 15 then the object marker byte is followed by a 32-bit integer that contains the size of the data.
 | 0x5# | kCFBinaryPlistMarkerASCIIString | ASCII string +
