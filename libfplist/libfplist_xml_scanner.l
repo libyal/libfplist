@@ -171,21 +171,21 @@ white_space             [\a\b\c\e\f\t\v ]+
 	return( XML_TAG_CLOSE );
 }
 
-<INITIAL>"<?xml"[^>]*">"{end_of_line}? {
+<INITIAL>"<?xml"[^>]{0,256}">"{end_of_line}? {
         xml_scanner_token_print(
          "XML_PROLOGUE" );
 
 	return( XML_PROLOGUE );
 }
 
-<INITIAL>"<!--"([^-]|"-"[^-])*"-->"{end_of_line}? {
+<INITIAL>"<!--"([^-]|"-"[^-]){0,256}"-->"{end_of_line}? {
         xml_scanner_token_print(
          "XML_COMMENT" );
 
 	return( XML_COMMENT );
 }
 
-<INITIAL>"<!DOCTYPE"[^>]*">"{end_of_line}? {
+<INITIAL>"<!DOCTYPE"[^>]{0,256}">"{end_of_line}? {
         xml_scanner_token_print(
          "XML_DOCTYPE" );
 
