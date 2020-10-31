@@ -5,6 +5,15 @@ Project information:
 * Status: experimental
 * Licence: LGPLv3+
 
+Read-only supported formats:
+
+* XML plist format
+
+Unsupported supported formats:
+
+* ASCII plist format
+* Binary plist format
+
 For more information see:
 
 * Project documentation: https://github.com/libyal/libfplist/wiki/Home

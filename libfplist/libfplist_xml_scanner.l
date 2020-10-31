@@ -55,10 +55,10 @@ end_of_line             [\r\n|\n|\r]
 name			[A-Za-z\x80-\xff_][A-Za-z\x80-\xff_0-9.-]{0,256}
 escaped_value		&#([0-9]+|x[0-9a-fA-F]+);
 
-xml_tag_content		[^<]+
-xml_attribute_value	\"([^"&]|{escaped_value}){0,256}\"|\'([^'&]|{escaped_value}){0,256}\'
+xml_tag_content		([^<&\x00-\x08\x0a-\x1f\x7f]|{end_of_line}[^<&\x00-\x08\x0b\x0c\x0e-\x1f\x7f]|{end_of_line}{escaped_value}|{escaped_value})+
+xml_attribute_value	\"([^"&\x00-\x1f\x7f]|{escaped_value}){0,256}\"|\'([^'&\x00-\x1f\x7f]|{escaped_value}){0,256}\'
 
-white_space             [\a\b\c\e\f\t\v ]+
+white_space             [\t ]+
 
 %s XML_CONTENT
 %s XML_TAG
@@ -171,21 +171,21 @@ white_space             [\a\b\c\e\f\t\v ]+
 	return( XML_TAG_CLOSE );
 }
 
-<INITIAL>"<?xml"[^>]{0,256}">"{end_of_line}? {
+<INITIAL>"<?xml"[^>\x00-\x1f\x7f]{0,256}">"{end_of_line}? {
         xml_scanner_token_print(
          "XML_PROLOGUE" );
 
 	return( XML_PROLOGUE );
 }
 
-<INITIAL>"<!--"([^-]|"-"[^-]){0,256}"-->"{end_of_line}? {
+<INITIAL>"<!--"([^-\x00-\x1f\x7f]|"-"[^-\x00-\x1f\x7f]){0,256}"-->"{end_of_line}? {
         xml_scanner_token_print(
          "XML_COMMENT" );
 
 	return( XML_COMMENT );
 }
 
-<INITIAL>"<!DOCTYPE"[^>]{0,256}">"{end_of_line}? {
+<INITIAL>"<!DOCTYPE"[^>\x00-\x1f\x7f]{0,256}">"{end_of_line}? {
         xml_scanner_token_print(
          "XML_DOCTYPE" );
 

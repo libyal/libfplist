@@ -30,7 +30,11 @@
 
 #include <libfplist/extern.h>
 
+#if defined( __CYGWIN__ )
+#define LIBFPLIST_EXTERN_VARIABLE	extern
+#else
 #define LIBFPLIST_EXTERN_VARIABLE	LIBFPLIST_EXTERN
+#endif
 
 #else
 #define LIBFPLIST_EXTERN		/* extern */
