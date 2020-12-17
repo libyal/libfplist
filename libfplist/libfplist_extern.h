@@ -30,7 +30,7 @@
 
 #include <libfplist/extern.h>
 
-#if defined( __CYGWIN__ )
+#if defined( __CYGWIN__ ) || defined( __MINGW32__ )
 #define LIBFPLIST_EXTERN_VARIABLE	extern
 #else
 #define LIBFPLIST_EXTERN_VARIABLE	LIBFPLIST_EXTERN
