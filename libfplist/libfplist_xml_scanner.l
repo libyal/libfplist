@@ -7,7 +7,7 @@
 /*
  * XML scanner functions
  *
- * Copyright (C) 2016-2020, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2016-2021, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
