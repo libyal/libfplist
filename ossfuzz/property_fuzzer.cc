@@ -1,5 +1,5 @@
 /*
- * OSS-Fuzz target for libfplist property_list type
+ * OSS-Fuzz target for libfplist property type
  *
  * Copyright (C) 2016-2020, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -32,7 +32,9 @@ int LLVMFuzzerTestOneInput(
      const uint8_t *data,
      size_t size )
 {
+	libfplist_property_t *root_property      = NULL;
 	libfplist_property_list_t *property_list = NULL;
+	int value_type                           = 0;
 
 	if( libfplist_property_list_initialize(
 	     &property_list,
@@ -40,12 +42,29 @@ int LLVMFuzzerTestOneInput(
 	{
 		return( 0 );
 	}
-	libfplist_property_list_copy_from_byte_stream(
-	 property_list,
-	 data,
-	 size,
-	 NULL );
+	if( libfplist_property_list_copy_from_byte_stream(
+	     property_list,
+	     data,
+	     size,
+	     NULL ) != 1 )
+	{
+		goto on_error_libfplist_property_list;
+	}
+	if( libfplist_property_list_get_root_property(
+	     property_list,
+	     &root_property,
+	     NULL ) == 1 )
+	{
+		libfplist_property_get_value_type(
+		 root_property,
+		 &value_type,
+		 NULL );
 
+		libfplist_property_free(
+		 &root_property,
+		 NULL );
+	}
+on_error_libfplist_property_list:
 	libfplist_property_list_free(
 	 &property_list,
 	 NULL );
