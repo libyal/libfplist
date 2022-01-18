@@ -697,7 +697,6 @@ int fplist_test_property_list_get_root_property(
 	libcerror_error_t *error            = NULL;
 	libfplist_property_t *root_property = NULL;
 	int result                          = 0;
-	int root_property_is_set            = 0;
 
 	/* Test regular cases
 	 */
@@ -706,36 +705,36 @@ int fplist_test_property_list_get_root_property(
 	          &root_property,
 	          &error );
 
-	FPLIST_TEST_ASSERT_NOT_EQUAL_INT(
+	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
-	 -1 );
+	 1 );
+
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "root_property",
+	 root_property );
 
 	FPLIST_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
 
-	root_property_is_set = result;
+	result = libfplist_property_free(
+	          &root_property,
+	          &error );
 
-	if( root_property_is_set != 0 )
-	{
-		FPLIST_TEST_ASSERT_IS_NOT_NULL(
-		 "root_property",
-		 root_property );
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
-		result = libfplist_property_free(
-		          &root_property,
-		          &error );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "root_property",
+	 root_property );
 
-		FPLIST_TEST_ASSERT_EQUAL_INT(
-		 "result",
-		 result,
-		 1 );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
-		FPLIST_TEST_ASSERT_IS_NULL(
-		 "error",
-		 error );
-	}
 	/* Test error cases
 	 */
 	result = libfplist_property_list_get_root_property(
@@ -759,29 +758,27 @@ int fplist_test_property_list_get_root_property(
 	libcerror_error_free(
 	 &error );
 
-	if( root_property_is_set != 0 )
-	{
-		result = libfplist_property_list_get_root_property(
-		          property_list,
-		          NULL,
-		          &error );
+	result = libfplist_property_list_get_root_property(
+	          property_list,
+	          NULL,
+	          &error );
 
-		FPLIST_TEST_ASSERT_EQUAL_INT(
-		 "result",
-		 result,
-		 -1 );
+	FPLIST_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
 
-		FPLIST_TEST_ASSERT_IS_NULL(
-		 "root_property",
-		 root_property );
+	FPLIST_TEST_ASSERT_IS_NULL(
+	 "root_property",
+	 root_property );
 
-		FPLIST_TEST_ASSERT_IS_NOT_NULL(
-		 "error",
-		 error );
+	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
 
-		libcerror_error_free(
-		 &error );
-	}
+	libcerror_error_free(
+	 &error );
+
 	return( 1 );
 
 on_error:
