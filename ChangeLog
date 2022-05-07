@@ -1,8 +1,12 @@
 TODO
+* optimize XML plist parser to directly generate keys
+
+* format support:
+  - add binary plist support
+
 * API
   - add function to retrieve format version
   - do not expose libfplist_property_get_value_string via API (do not allocate inside library what needs freed outside)
-* Add binary plist support
 
 20161103
 * see `git log' for more recent change log
