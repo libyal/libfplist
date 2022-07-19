@@ -31,7 +31,7 @@
 #include "libfplist_xml_parser.h"
 
 extern \
-int xml_parser_parse_buffer(
+int libfplist_xml_parser_parse_buffer(
      libfplist_property_list_t *property_list,
      const uint8_t *buffer,
      size_t buffer_size,
@@ -312,7 +312,7 @@ int libfplist_property_list_copy_from_byte_stream(
 	}                
 #endif /* defined( HAVE_DEBUG_OUTPUT ) */
 
-	result = xml_parser_parse_buffer(
+	result = libfplist_xml_parser_parse_buffer(
 	          property_list,
 	          buffer,
 	          buffer_size,

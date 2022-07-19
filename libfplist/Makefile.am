@@ -1,5 +1,5 @@
 AM_LFLAGS = -Cf
-AM_YFLAGS = -d -v -l -p xml_scanner_
+AM_YFLAGS = -d -v -l -p libfplist_xml_scanner_
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/include \
