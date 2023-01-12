@@ -3,7 +3,7 @@ Upstream-Name: libfplist
 Source: https://github.com/libyal/libfplist
 
 Files: *
-Copyright: 2016-2022, Joachim Metz <joachim.metz@gmail.com>
+Copyright: 2016-2023, Joachim Metz <joachim.metz@gmail.com>
 License: LGPL-3.0+
 
 License: LGPL-3.0+
