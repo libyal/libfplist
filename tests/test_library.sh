@@ -1,13 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Tests library functions and types.
 #
-# Version: 20200705
+# Version: 20230410
 
 EXIT_SUCCESS=0;
 EXIT_FAILURE=1;
 EXIT_IGNORE=77;
 
-LIBRARY_TESTS="error property property_list support xml_attribute xml_tag";
+LIBRARY_TESTS="error property property_list support xml_attribute xml_parser xml_tag";
 LIBRARY_TESTS_WITH_INPUT="";
 OPTION_SETS="";
 

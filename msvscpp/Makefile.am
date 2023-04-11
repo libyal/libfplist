@@ -4,6 +4,7 @@ MSVSCPP_FILES = \
 	fplist_test_property_list/fplist_test_property_list.vcproj \
 	fplist_test_support/fplist_test_support.vcproj \
 	fplist_test_xml_attribute/fplist_test_xml_attribute.vcproj \
+	fplist_test_xml_parser/fplist_test_xml_parser.vcproj \
 	fplist_test_xml_tag/fplist_test_xml_tag.vcproj \
 	libcdata/libcdata.vcproj \
 	libcerror/libcerror.vcproj \

@@ -447,6 +447,17 @@ int libfplist_xml_parser_parse_buffer(
 	static char *function        = "libfplist_xml_parser_parse_buffer";
 	int result                   = -1;
 
+	if( buffer == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid buffer.",
+		 function );
+
+		return( -1 );
+	}
 	buffer_state = libfplist_xml_scanner__scan_buffer(
 	                (char *) buffer,
 	                buffer_size );

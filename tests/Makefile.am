@@ -26,6 +26,7 @@ check_PROGRAMS = \
 	fplist_test_property_list \
 	fplist_test_support \
 	fplist_test_xml_attribute \
+	fplist_test_xml_parser \
 	fplist_test_xml_tag
 
 fplist_test_error_SOURCES = \
@@ -79,6 +80,17 @@ fplist_test_xml_attribute_SOURCES = \
 	fplist_test_xml_attribute.c
 
 fplist_test_xml_attribute_LDADD = \
+	../libfplist/libfplist.la \
+	@LIBCERROR_LIBADD@
+
+fplist_test_xml_parser_SOURCES = \
+	fplist_test_libcerror.h \
+	fplist_test_libfplist.h \
+	fplist_test_macros.h \
+	fplist_test_unused.h \
+	fplist_test_xml_parser.c
+
+fplist_test_xml_parser_LDADD = \
 	../libfplist/libfplist.la \
 	@LIBCERROR_LIBADD@
 
