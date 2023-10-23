@@ -12,7 +12,10 @@ AM_CPPFLAGS = \
 	@LIBFVALUE_CPPFLAGS@ \
 	@LIBFPLIST_DLL_EXPORT@
 
-BUILT_SOURCES = libfplist_xml_parser.h
+BUILT_SOURCES = \
+	libfplist_xml_scanner.c \
+	libfplist_xml_parser.c \
+	libfplist_xml_parser.h
 
 lib_LTLIBRARIES = libfplist.la
 
@@ -58,15 +61,17 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libfplist_definitions.h
-	/bin/rm -f libfplist.rc
-	/bin/rm -f libfplist_xml_parser.c
-	/bin/rm -f libfplist_xml_parser.h
-	/bin/rm -f libfplist_xml_parser.output
-	/bin/rm -f libfplist_xml_scanner.c
-	/bin/rm -f Makefile
+	-rm -f libfplist_definitions.h
+	-rm -f libfplist.rc
+	-rm -f libfplist_xml_parser.c
+	-rm -f libfplist_xml_parser.h
+	-rm -f libfplist_xml_parser.output
+	-rm -f libfplist_xml_scanner.c
+	-rm -f Makefile
 
-splint:
+sources-local: $(BUILT_SOURCES)
+
+splint-local:
 	@echo "Running splint on libfplist ..."
 	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(libfplist_la_SOURCES)
 

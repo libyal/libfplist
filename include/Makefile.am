@@ -18,9 +18,9 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libfplist.h
-	/bin/rm -f libfplist/definitions.h
-	/bin/rm -f libfplist/features.h
-	/bin/rm -f libfplist/types.h
-	/bin/rm -f Makefile
+	-rm -f libfplist.h
+	-rm -f libfplist/definitions.h
+	-rm -f libfplist/features.h
+	-rm -f libfplist/types.h
+	-rm -f Makefile
 
