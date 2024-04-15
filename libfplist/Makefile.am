@@ -2,8 +2,8 @@ AM_LFLAGS = -Cf
 AM_YFLAGS = -d -v -l -p libfplist_xml_scanner_
 
 AM_CPPFLAGS = \
-	-I$(top_srcdir)/include \
-	-I$(top_srcdir)/common \
+	-I../include -I$(top_srcdir)/include \
+	-I../common -I$(top_srcdir)/common \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBCDATA_CPPFLAGS@ \
 	@LIBCNOTIFY_CPPFLAGS@ \
@@ -57,17 +57,15 @@ EXTRA_DIST = \
 	libfplist.rc \
 	libfplist.rc.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libfplist_definitions.h \
+	libfplist.rc \
+	libfplist_xml_parser.c \
+	libfplist_xml_parser.h \
+	libfplist_xml_parser.output \
+	libfplist_xml_scanner.c \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libfplist_definitions.h
-	-rm -f libfplist.rc
-	-rm -f libfplist_xml_parser.c
-	-rm -f libfplist_xml_parser.h
-	-rm -f libfplist_xml_parser.output
-	-rm -f libfplist_xml_scanner.c
-	-rm -f Makefile
 
 sources-local: $(BUILT_SOURCES)
 

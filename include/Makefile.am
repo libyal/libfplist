@@ -14,13 +14,11 @@ EXTRA_DIST = \
 	libfplist/features.h.in \
 	libfplist/types.h.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libfplist.h \
+	libfplist/definitions.h \
+	libfplist/features.h \
+	libfplist/types.h \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libfplist.h
-	-rm -f libfplist/definitions.h
-	-rm -f libfplist/features.h
-	-rm -f libfplist/types.h
-	-rm -f Makefile
 
