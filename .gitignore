@@ -139,6 +139,7 @@ stamp-h[1-9]
 /tests/fplist_test_xml_attribute
 /tests/fplist_test_xml_parser
 /tests/fplist_test_xml_tag
+/tests/notify_stream.log
 /tests/tmp*
 
 # Local library dependencies specific files
