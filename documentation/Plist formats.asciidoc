@@ -65,7 +65,7 @@ formats, namely:
 
 === Plist value types
 
-[cols="1,1,5",options="header"]
+[cols="1,5",options="header"]
 |===
 | Type | Description
 | array | Collection of plist values without key
@@ -233,7 +233,7 @@ The offset is relative to the start of the file
 
 == XML plist format
 
-A binary plist file consists of:
+A XML plist file consists of:
 
 * XML declaration
 * Document Type Definition (DTD)
@@ -263,30 +263,29 @@ are not always present.
 | Title: | CFBinaryPList.c
 | Author(s): | Apple Inc.
 | Date: | 2009
-| URL: | http://www.opensource.apple.com/source/CF/CF-476.10/CFBinaryPList.c +
-http://opensource.apple.com/source/CF/CF-550/CFBinaryPList.c +
-http://www.opensource.apple.com/source/CF/CF-550/ForFoundationOnly.h
+| URL: | https://github.com/opensource-apple/CF/blob/master/CFBinaryPList.c +
+https://github.com/opensource-apple/CF/blob/master/ForFoundationOnly.h
 |===
 
 [cols="1,5",options="header"]
 |===
 | Title: | About Property Lists
 | Author(s): | Apple Inc.
-| URL: | https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html
+| URL: | https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html
 |===
 
 [cols="1,5",options="header"]
 |===
 | Title: | Old-Style ASCII Property Lists
 | Author(s): | Apple Inc.
-| URL: | https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/PropertyLists/OldStylePlists/OldStylePLists.html
+| URL: | https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/PropertyLists/OldStylePlists/OldStylePLists.html
 |===
 
 [cols="1,5",options="header"]
 |===
 | Title: | Understanding XML Property Lists
 | Author(s): | Apple Inc.
-| URL: | https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/PropertyLists/UnderstandXMLPlist/UnderstandXMLPlist.html
+| URL: | https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/PropertyLists/UnderstandXMLPlist/UnderstandXMLPlist.html
 |===
 
 [appendix]

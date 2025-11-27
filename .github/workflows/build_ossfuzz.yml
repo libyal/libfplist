@@ -30,6 +30,6 @@ jobs:
         head -n 20 projects/libyal/Dockerfile > projects/libfplist/Dockerfile
         echo "RUN git clone --depth 1 https://github.com/libyal/libfplist.git libfplist" >> projects/libfplist/Dockerfile
         tail -n 3 projects/libyal/Dockerfile >> projects/libfplist/Dockerfile
-        python3 infra/helper.py build_image --pull libfplist 
+        python3 infra/helper.py build_image --pull libfplist
         python3 infra/helper.py build_fuzzers --sanitizer address libfplist
         python3 infra/helper.py check_build libfplist
