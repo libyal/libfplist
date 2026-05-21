@@ -31,14 +31,17 @@
  */
 #if defined( LIBFPLIST_DLL_EXPORT )
 #define LIBFPLIST_EXTERN __declspec(dllexport)
+#define LIBFPLIST_EXTERN_VARIABLE extern __declspec(dllexport)
 
 #elif defined( LIBFPLIST_DLL_IMPORT )
-#define LIBFPLIST_EXTERN extern __declspec(dllimport)
+#define LIBFPLIST_EXTERN __declspec(dllimport)
+#define LIBFPLIST_EXTERN_VARIABLE extern __declspec(dllimport)
 
 #else
 #define LIBFPLIST_EXTERN extern
+#define LIBFPLIST_EXTERN_VARIABLE extern
 
-#endif
+#endif /* defined( LIBFPLIST_DLL_EXPORT ) */
 
 #endif /* !defined( _LIBFPLIST_EXTERN_H ) */
 
