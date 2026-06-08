@@ -95,7 +95,7 @@ int libfplist_property_list_initialize(
 		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
 		 "%s: unable to clear property list.",
 		 function );
-	
+
 		memory_free(
 		 internal_property_list );
 
@@ -285,7 +285,7 @@ int libfplist_property_list_copy_from_byte_stream(
 
 #if defined( HAVE_DEBUG_OUTPUT )
 	if( libcnotify_verbose != 0 )
-	{                
+	{
 		if( ( buffer_size >= 6 )
 		 && ( buffer[ 0 ] == '<' )
 		 && ( buffer[ 1 ] == '?' )
@@ -298,9 +298,9 @@ int libfplist_property_list_copy_from_byte_stream(
 			 "%s: XML plist:\n%s\n",
 			 function,
 			 buffer );
-		}        
-		else     
-		{       
+		}
+		else
+		{
 			libcnotify_printf(
 			 "%s: XML plist data:\n",
 			 function );
@@ -309,7 +309,7 @@ int libfplist_property_list_copy_from_byte_stream(
 			 buffer_size,
 			 LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA );
 		}
-	}                
+	}
 #endif /* defined( HAVE_DEBUG_OUTPUT ) */
 
 	result = libfplist_xml_parser_parse_buffer(

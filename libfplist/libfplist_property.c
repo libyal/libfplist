@@ -138,7 +138,7 @@ int libfplist_property_initialize(
 		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
 		 "%s: unable to clear property.",
 		 function );
-	
+
 		memory_free(
 		 internal_property );
 
