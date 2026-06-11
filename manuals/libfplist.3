@@ -1,6 +1,6 @@
-.Dd April  1, 2019
-.Dt libfplist 3
-.Os libfplist
+.Dd June 11, 2026
+.Dt LIBFPLIST 3
+.Os
 .Sh NAME
 .Nm libfplist.h
 .Nd Library to support the plist formats
@@ -8,73 +8,200 @@
 .In libfplist.h
 .Pp
 Support functions
+.nf
 .Ft const char *
-.Fn libfplist_get_version "void"
+.Fo libfplist_get_version
+.Fa "void"
+.Fc
+.fi
 .Pp
 Error functions
+.nf
 .Ft void
-.Fn libfplist_error_free "libfplist_error_t **error"
+.Fo libfplist_error_free
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_error_fprint "libfplist_error_t *error" "FILE *stream"
+.Fo libfplist_error_fprint
+.Fa "libfplist_error_t *error"
+.Fa "FILE *stream"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_error_sprint "libfplist_error_t *error" "char *string" "size_t size"
+.Fo libfplist_error_sprint
+.Fa "libfplist_error_t *error"
+.Fa "char *string"
+.Fa "size_t size"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_error_backtrace_fprint "libfplist_error_t *error" "FILE *stream"
+.Fo libfplist_error_backtrace_fprint
+.Fa "libfplist_error_t *error"
+.Fa "FILE *stream"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_error_backtrace_sprint "libfplist_error_t *error" "char *string" "size_t size"
+.Fo libfplist_error_backtrace_sprint
+.Fa "libfplist_error_t *error"
+.Fa "char *string"
+.Fa "size_t size"
+.Fc
+.fi
 .Pp
 Property list functions
+.nf
 .Ft int
-.Fn libfplist_property_list_initialize "libfplist_property_list_t **property_list" "libfplist_error_t **error"
+.Fo libfplist_property_list_initialize
+.Fa "libfplist_property_list_t **property_list"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_list_free "libfplist_property_list_t **property_list" "libfplist_error_t **error"
+.Fo libfplist_property_list_free
+.Fa "libfplist_property_list_t **property_list"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_list_copy_from_byte_stream "libfplist_property_list_t *property_list" "const uint8_t *byte_stream" "size_t byte_stream_size" "libfplist_error_t **error"
+.Fo libfplist_property_list_copy_from_byte_stream
+.Fa "libfplist_property_list_t *property_list"
+.Fa "const uint8_t *byte_stream"
+.Fa "size_t byte_stream_size"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_list_has_plist_root_element "libfplist_property_list_t *property_list" "libfplist_error_t **error"
+.Fo libfplist_property_list_has_plist_root_element
+.Fa "libfplist_property_list_t *property_list"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_list_get_root_property "libfplist_property_list_t *property_list" "libfplist_property_t **property" "libfplist_error_t **error"
+.Fo libfplist_property_list_get_root_property
+.Fa "libfplist_property_list_t *property_list"
+.Fa "libfplist_property_t **property"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
 .Pp
 Property functions
+.nf
 .Ft int
-.Fn libfplist_property_free "libfplist_property_t **property" "libfplist_error_t **error"
+.Fo libfplist_property_free
+.Fa "libfplist_property_t **property"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_value_type "libfplist_property_t *property" "int *value_type" "libfplist_error_t **error"
+.Fo libfplist_property_get_value_type
+.Fa "libfplist_property_t *property"
+.Fa "int *value_type"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_value_data_size "libfplist_property_t *property" "size_t *data_size" "libfplist_error_t **error"
+.Fo libfplist_property_get_value_data_size
+.Fa "libfplist_property_t *property"
+.Fa "size_t *data_size"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_value_data "libfplist_property_t *property" "uint8_t *data" "size_t data_size" "libfplist_error_t **error"
+.Fo libfplist_property_get_value_data
+.Fa "libfplist_property_t *property"
+.Fa "uint8_t *data"
+.Fa "size_t data_size"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_value_integer "libfplist_property_t *property" "uint64_t *value_64bit" "libfplist_error_t **error"
+.Fo libfplist_property_get_value_integer
+.Fa "libfplist_property_t *property"
+.Fa "uint64_t *value_64bit"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_value_string "libfplist_property_t *property" "uint8_t **string" "size_t *string_size" "libfplist_error_t **error"
+.Fo libfplist_property_get_value_string
+.Fa "libfplist_property_t *property"
+.Fa "uint8_t **string"
+.Fa "size_t *string_size"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_value_uuid_string_copy_to_byte_stream "libfplist_property_t *property" "uint8_t *byte_stream" "size_t byte_stream_size" "libfplist_error_t **error"
+.Fo libfplist_property_value_uuid_string_copy_to_byte_stream
+.Fa "libfplist_property_t *property"
+.Fa "uint8_t *byte_stream"
+.Fa "size_t byte_stream_size"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_array_number_of_entries "libfplist_property_t *property" "int *number_of_entries" "libfplist_error_t **error"
+.Fo libfplist_property_get_array_number_of_entries
+.Fa "libfplist_property_t *property"
+.Fa "int *number_of_entries"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_array_entry_by_index "libfplist_property_t *property" "int array_entry_index" "libfplist_property_t **array_entry" "libfplist_error_t **error"
+.Fo libfplist_property_get_array_entry_by_index
+.Fa "libfplist_property_t *property"
+.Fa "int array_entry_index"
+.Fa "libfplist_property_t **array_entry"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfplist_property_get_sub_property_by_utf8_name "libfplist_property_t *property" "const uint8_t *utf8_string" "size_t utf8_string_length" "libfplist_property_t **sub_property" "libfplist_error_t **error"
+.Fo libfplist_property_get_sub_property_by_utf8_name
+.Fa "libfplist_property_t *property"
+.Fa "const uint8_t *utf8_string"
+.Fa "size_t utf8_string_length"
+.Fa "libfplist_property_t **sub_property"
+.Fa "libfplist_error_t **error"
+.Fc
+.fi
 .Sh DESCRIPTION
 The
 .Fn libfplist_get_version
 function is used to retrieve the library version.
 .Sh RETURN VALUES
-Most of the functions return NULL or \-1 on error, dependent on the return type.
-For the actual return values see "libfplist.h".
+Most of the functions return NULL or \-1 on error, dependent on the return \
+type.
+For the actual return values see
+.In libfplist.h .
 .Sh ENVIRONMENT
 None
 .Sh FILES
 None
+.Sh SEE ALSO
+.In libfplist.h
+.Sh AUTHORS
+.An Joachim Metz <joachim.metz@gmail.com>
 .Sh BUGS
-Please report bugs of any kind on the project issue tracker: https://github.com/libyal/libfplist/issues
-.Sh AUTHOR
-These man pages are generated from "libfplist.h".
+Please report bugs of any kind on the project issue tracker: \
+https://github.com/libyal/libfplist/issues
 .Sh COPYRIGHT
 Copyright (C) 2016-2026, Joachim Metz <joachim.metz@gmail.com>.
 .sp
 This is free software; see the source for copying conditions.
-There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-.Sh SEE ALSO
-the libfplist.h include file
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A \
+PARTICULAR PURPOSE.

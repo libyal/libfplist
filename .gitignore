@@ -1,6 +1,6 @@
 # Files to ignore by git
 #
-# Version: 20251129
+# Version: 20260604
 
 # Generic auto-generated build files
 *~
@@ -131,7 +131,12 @@ stamp-h[1-9]
 /libfplist/libfplist_xml_parser.h
 /libfplist/libfplist_xml_parser.output
 /libfplist/libfplist_xml_scanner.c
+/tests/*.dir
 /tests/*.exe
+/tests/*.log
+/tests/*.tmp
+/tests/atconfig
+/tests/atlocal
 /tests/fplist_test_error
 /tests/fplist_test_property
 /tests/fplist_test_property_list
@@ -140,6 +145,9 @@ stamp-h[1-9]
 /tests/fplist_test_xml_parser
 /tests/fplist_test_xml_tag
 /tests/notify_stream.log
+/tests/package.m4
+/tests/test_library
+/tests/test_manpages
 /tests/tmp*
 
 # Local library dependencies specific files

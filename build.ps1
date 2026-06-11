@@ -134,6 +134,10 @@ ElseIf (-Not (Test-Path ${MSBuild}))
 	Exit ${ExitFailure}
 }
 
+If (-Not (Test-Path "common\types.h"))
+{
+	.\autogen.ps1
+}
 If (${VisualStudioVersion} -eq "2008")
 {
 	$VSSolutionPath = "msvscpp"
