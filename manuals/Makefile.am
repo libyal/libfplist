@@ -2,7 +2,7 @@ man_MANS = \
 	libfplist.3
 
 EXTRA_DIST = \
-	libfplist.3
+	$(man_MANS)
 
 DISTCLEANFILES = \
 	Makefile \
