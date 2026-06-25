@@ -349,6 +349,17 @@ int libfplist_property_get_value_data_size(
 
 		return( -1 );
 	}
+	if( internal_property->value_tag->value == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid property - invalid value XML tag - missing value.",
+		 function );
+
+		return( -1 );
+	}
 	value_data   = internal_property->value_tag->value;
 	value_length = internal_property->value_tag->value_size - 1;
 
@@ -476,6 +487,17 @@ int libfplist_property_get_value_data(
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
 		 "%s: unsupported value type.",
+		 function );
+
+		return( -1 );
+	}
+	if( internal_property->value_tag->value == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid property - invalid value XML tag - missing value.",
 		 function );
 
 		return( -1 );
