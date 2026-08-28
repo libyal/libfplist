@@ -349,45 +349,53 @@ int libfplist_property_get_value_data_size(
 
 		return( -1 );
 	}
-	value_data   = internal_property->value_tag->value;
-	value_length = internal_property->value_tag->value_size - 1;
-
-	/* The base64 conversion function does not like an empty first line
-	 */
-	if( ( value_data != NULL )
-	 && ( value_data[ 0 ] == '\n' ) )
+	if( ( internal_property->value_tag->value == NULL )
+	 || ( internal_property->value_tag->value_size == 0 ) )
 	{
-		value_data   += 1;
-		value_length -= 1;
+		*data_size = 0;
 	}
+	else
+	{
+		value_data   = internal_property->value_tag->value;
+		value_length = internal_property->value_tag->value_size - 1;
+
+		/* The base64 conversion function does not like an empty first line
+		 */
+		if( ( value_data != NULL )
+		 && ( value_data[ 0 ] == '\n' ) )
+		{
+			value_data   += 1;
+			value_length -= 1;
+		}
 #if defined( HAVE_DEBUG_OUTPUT )
-	if( libcnotify_verbose != 0 )
-	{
-		libcnotify_printf(
-		 "%s: base64 encoded data:\n",
-		 function );
-		libcnotify_print_data(
-		 value_data,
-		 value_length,
-		 0 );
-	}
+		if( libcnotify_verbose != 0 )
+		{
+			libcnotify_printf(
+			 "%s: base64 encoded data:\n",
+			 function );
+			libcnotify_print_data(
+			 value_data,
+			 value_length,
+			 0 );
+		}
 #endif
-	if( libuna_base64_stream_size_to_byte_stream(
-	     value_data,
-	     value_length,
-	     data_size,
-	     LIBUNA_BASE64_VARIANT_ALPHABET_NORMAL | LIBUNA_BASE64_VARIANT_CHARACTER_LIMIT_NONE | LIBUNA_BASE64_VARIANT_PADDING_REQUIRED,
-	     LIBUNA_BASE64_FLAG_STRIP_WHITESPACE,
-	     error ) != 1 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_COPY_FAILED,
-		 "%s: unable to determine size of base64 encoded data.",
-		 function );
+		if( libuna_base64_stream_size_to_byte_stream(
+		     value_data,
+		     value_length,
+		     data_size,
+		     LIBUNA_BASE64_VARIANT_ALPHABET_NORMAL | LIBUNA_BASE64_VARIANT_CHARACTER_LIMIT_NONE | LIBUNA_BASE64_VARIANT_PADDING_REQUIRED,
+		     LIBUNA_BASE64_FLAG_STRIP_WHITESPACE,
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_COPY_FAILED,
+			 "%s: unable to determine size of base64 encoded data.",
+			 function );
 
-		return( -1 );
+			return( -1 );
+		}
 	}
 	return( 1 );
 }
@@ -480,46 +488,50 @@ int libfplist_property_get_value_data(
 
 		return( -1 );
 	}
-	value_data   = internal_property->value_tag->value;
-	value_length = internal_property->value_tag->value_size - 1;
-
-	/* The base64 conversion function does not like an empty first line
-	 */
-	if( ( value_data != NULL )
-	 && ( value_data[ 0 ] == '\n' ) )
+	if( ( internal_property->value_tag->value != NULL )
+	 && ( internal_property->value_tag->value_size != 0 ) )
 	{
-		value_data   += 1;
-		value_length -= 1;
-	}
+		value_data   = internal_property->value_tag->value;
+		value_length = internal_property->value_tag->value_size - 1;
+
+		/* The base64 conversion function does not like an empty first line
+		 */
+		if( ( value_data != NULL )
+		 && ( value_data[ 0 ] == '\n' ) )
+		{
+			value_data   += 1;
+			value_length -= 1;
+		}
 #if defined( HAVE_DEBUG_OUTPUT )
-	if( libcnotify_verbose != 0 )
-	{
-		libcnotify_printf(
-		 "%s: base64 encoded data:\n",
-		 function );
-		libcnotify_print_data(
-		 value_data,
-		 value_length,
-		 0 );
-	}
+		if( libcnotify_verbose != 0 )
+		{
+			libcnotify_printf(
+			 "%s: base64 encoded data:\n",
+			 function );
+			libcnotify_print_data(
+			 value_data,
+			 value_length,
+			 0 );
+		}
 #endif
-	if( libuna_base64_stream_copy_to_byte_stream(
-	     value_data,
-	     value_length,
-	     data,
-	     data_size,
-	     LIBUNA_BASE64_VARIANT_ALPHABET_NORMAL | LIBUNA_BASE64_VARIANT_CHARACTER_LIMIT_NONE | LIBUNA_BASE64_VARIANT_PADDING_REQUIRED,
-	     LIBUNA_BASE64_FLAG_STRIP_WHITESPACE,
-	     error ) != 1 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_COPY_FAILED,
-		 "%s: unable to copy base64 encoded data to byte stream.",
-		 function );
+		if( libuna_base64_stream_copy_to_byte_stream(
+		     value_data,
+		     value_length,
+		     data,
+		     data_size,
+		     LIBUNA_BASE64_VARIANT_ALPHABET_NORMAL | LIBUNA_BASE64_VARIANT_CHARACTER_LIMIT_NONE | LIBUNA_BASE64_VARIANT_PADDING_REQUIRED,
+		     LIBUNA_BASE64_FLAG_STRIP_WHITESPACE,
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_COPY_FAILED,
+			 "%s: unable to copy base64 encoded data to byte stream.",
+			 function );
 
-		return( -1 );
+			return( -1 );
+		}
 	}
 	return( 1 );
 }

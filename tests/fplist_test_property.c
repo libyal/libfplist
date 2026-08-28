@@ -1205,14 +1205,16 @@ int fplist_test_property_get_value_data_size(
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
-	 -1 );
+	 1 );
 
-	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	FPLIST_TEST_ASSERT_EQUAL_SIZE(
+	 "data_size",
+	 data_size,
+	 (size_t) 0 );
+
+	FPLIST_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-	libcerror_error_free(
-	 &error );
 
 	/* Clean up
 	 */
@@ -1747,14 +1749,11 @@ int fplist_test_property_get_value_data(
 	FPLIST_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
-	 -1 );
+	 1 );
 
-	FPLIST_TEST_ASSERT_IS_NOT_NULL(
+	FPLIST_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-	libcerror_error_free(
-	 &error );
 
 	/* Clean up
 	 */

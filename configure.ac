@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
   [libfplist],
-  [20260624],
+  [20260828],
   [https://github.com/libyal/libfplist/issues])
 
 AC_CONFIG_SRCDIR(
