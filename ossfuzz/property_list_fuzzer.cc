@@ -38,14 +38,29 @@ int LLVMFuzzerTestOneInput(
 	     &property_list,
 	     NULL ) != 1 )
 	{
-		return( 0 );
+		goto on_error;
 	}
-	libfplist_property_list_copy_from_byte_stream(
-	 property_list,
-	 data,
-	 size,
-	 NULL );
+	if( libfplist_property_list_copy_from_byte_stream(
+	     property_list,
+	     data,
+	     size,
+	     NULL ) == 1 )
+	{
+		libfplist_property_list_has_plist_root_element(
+		 NULL,
+		 NULL );
 
+		libfplist_property_list_has_plist_root_element(
+		 property_list,
+		 NULL );
+
+		libfplist_property_list_copy_from_byte_stream(
+		 property_list,
+		 data,
+		 size,
+		 NULL );
+	}
+on_error:
 	libfplist_property_list_free(
 	 &property_list,
 	 NULL );
@@ -54,4 +69,3 @@ int LLVMFuzzerTestOneInput(
 }
 
 } /* extern "C" */
-
